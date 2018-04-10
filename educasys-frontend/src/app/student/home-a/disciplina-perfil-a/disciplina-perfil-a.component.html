@@ -1,0 +1,28 @@
+<div class = "row">
+  <div class="disciplina-geral">
+    <div class="row disciplina-perfil">
+      <div class="col-md-6 disciplina-detalhes" (click)="goDisciplina()">
+        <h3>Discilpina: {{nome}}</h3>
+        <h4>Situação: {{status}}</h4>
+        <h4>Professor: {{professor}}</h4>
+      </div>
+      <div class="col-md-6 disciplina-foto">
+        <img src="{{img}}" alt="img-responsive thumbnail" >
+      </div>
+    </div>
+    <div class="row disciplina-dados">
+      <div class="col-md-4 text-center">
+        <h4>Faltas</h4>
+        <h2>{{falta}}%</h2>
+      </div>
+      <div class="col-md-4 text-center">
+        <h4>Nota Atual</h4>
+        <h2>{{nota}} pts</h2>
+      </div>
+      <div class="col-md-4 text-center">
+        <h4>Proxima Avaliação</h4>
+        <h2>{{proxProva}}</h2>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+.disciplina-geral{
+  width: 47vw;
+}
+
+.disciplina-detalhes{
+    background-color: #00bbd3;
+    color: #fff;
+    padding-left: 50px;
+    padding-top: 20px;
+    cursor:pointer;
+  transition: all 0.3s;
+}
+
+.disciplina-detalhes:hover {
+  background-color: #077e97;
+  color: #fff;
+  padding-left: 50px;
+  padding-top: 20px;
+}
+
+.disciplina-foto{
+    max-height: 200px;
+    overflow: hidden;
+    padding: 0px;
+}
+
+.thumbnail{
+   width:100%;
+   max-height:200px;
+   border: 0px!important;
+   padding: 0px;
+   border-radius: 0;
+   border: 0px!important;
+}
+
+.disciplina-dados{
+    background-color: #d8d6d6;
+  margin-bottom: 30px;
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  border-radius:2px;
+
+  -moz-box-shadow:  0px 5px 4px #b7b7b7;
+  -webkit-box-shadow: 0px 5px 4px #b7b7b7;
+}
+
+.disciplina-dados h2{
+    font-weight: 900;
+    color: white;
+    margin-top: 5px;
+}
+
+.disciplina-dados h4{
+    font-weight: 600;
+    color: #2a2a2a;
+    margin-top: 15px;
+    margin-bottom: 0px;
+}

@@ -1,0 +1,17 @@
+.background-area{
+  height: 100vh;
+  background-color: #bde5f2;
+
+}
+.carousel-area{
+  height: 100%;
+  width:100%;
+}
+
+.image-info{
+  max-width: 100%;
+  max-height: 100%;
+  margin:auto;
+  display:block;
+}
+

@@ -1,0 +1,115 @@
+.md-48 {
+  font-size: 48px;
+  cursor: pointer;
+}
+
+.perfil-data{
+  width: 100%;
+  height: 93%;
+  margin-top: 0;
+  margin-left:0;
+  margin-right: 0;
+  margin-bottom: 0;
+  background: #b0bec5;
+  -moz-box-shadow:  0 5px 4px #b7b7b7;
+  -webkit-box-shadow: 0 5px 4px #b7b7b7;
+  padding: 20px;
+}
+
+.open{
+  transform: translateX(15vw);
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #eee;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.content{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #eee;
+  padding: 30px;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.open-mobile{
+  transform: translateX(65vw);
+  padding: 30px;
+  width: 100vw;
+  height: 100%;
+  background: #eee;
+  transition: all 0.3s;
+  overflow: hidden;
+  position:fixed;
+  z-index: 100;
+  top: inherit;
+}
+
+.content-mobile{
+  width: 100vw;
+  height: 100%;
+  background: #eee;
+  padding: 30px;
+  transition: all 0.3s;
+  overflow: hidden;
+  position:fixed;
+  z-index: 100;
+  top: inherit;
+}
+
+.menu{
+  font-size: 36px;
+  display:block;
+  vertical-align: middle;
+  margin: 0;
+  padding:0;
+
+}
+
+.menu-button{
+  z-index:10;
+  padding-left: 0;
+  margin-left: 0;
+
+}
+
+.info-perfil{
+  border-right: solid #eeeeee;
+  text-align: center;
+}
+
+.data-perfil{
+
+}
+
+.user-img{
+  float: none;
+  margin: 0 auto;
+  padding-top: 10px;
+  display: block;
+  width: 30vh;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+}
+
+.edit-perfil{
+
+  width: 60%;
+  height: 100%;
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 15px;
+  overflow: hidden;
+}
+
+
+.btn-style{
+  background-color: #00bbd3;
+  border-color: #077e97;
+}

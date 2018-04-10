@@ -1,0 +1,199 @@
+<menua-component></menua-component>
+<div [ngClass]="open ? opened : closed">
+  <div class="row menu">
+    <mat-icon class="md-48" (click)="changeOpt()"	>reorder</mat-icon>
+  </div>
+  <div class="row disciplina-titulos">
+    <div class=" col-md-3">
+      <div class="title">
+        <h2>Disciplina</h2>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="title">
+        <h2>Notas</h2>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="title">
+        <h2>Faltas</h2>
+      </div>
+    </div>
+  </div>
+  <div class="row disciplina-info">
+    <div class=" col-md-3 info-disciplina">
+      <h2>Redes 1</h2>
+      <hr>
+      <h3>Professor: Everthon Valadão</h3>
+      <h3>Carga Horaria: 60 horas</h3>
+      <h3>Status: Matriculado</h3>
+    </div>
+
+    <div class="col-md-7 notas style-3">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Atividade</th>
+          <th scope="col" class="glyphicon-center-3" style="text-align: center;" >Valor</th>
+          <th scope="col" class="glyphicon-center-3" style="text-align: center;">Nota</th>
+          <th scope="col" class="glyphicon-center-3" style="text-align: center;">Data</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">Avaliação 1</th>
+          <td class="glyphicon-center-3" >20.0</td>
+          <td class="glyphicon-center-3" >15.5</td>
+          <td class="glyphicon-center-3" >24/09</td>
+        </tr>
+        <tr>
+          <th scope="row">Avaliação 2</th>
+          <td class="glyphicon-center-3" >20.0</td>
+          <td class="glyphicon-center-3" >20.0</td>
+          <td class="glyphicon-center-3" >01/10</td>
+        </tr>
+        <tr>
+          <th scope="row">Avaliação 3</th>
+          <td class="glyphicon-center-3" >20.0</td>
+          <td class="glyphicon-center-3" >10.8</td>
+          <td class="glyphicon-center-3" >12/11</td>
+        </tr>
+        <tr>
+          <th scope="row">Lista 1</th>
+          <td class="glyphicon-center-3" >5.0</td>
+          <td class="glyphicon-center-3" >2.5</td>
+          <td class="glyphicon-center-3" >12/09</td>
+        </tr>
+        <tr>
+          <th scope="row">Lista 2</th>
+          <td class="glyphicon-center-3" >5.0</td>
+          <td class="glyphicon-center-3" >4.5</td>
+          <td class="glyphicon-center-3" >28/09</td>
+        </tr>
+        <tr>
+          <th scope="row">Trabalho 1</th>
+          <td class="glyphicon-center-3" >15.0</td>
+          <td class="glyphicon-center-3" >13.0</td>
+          <td class="glyphicon-center-3" >19/10</td>
+        </tr>
+        <tr>
+          <th scope="row">Trabalho 2</th>
+          <td class="glyphicon-center-3" >15.0</td>
+          <td class="glyphicon-center-3" >9.0</td>
+          <td class="glyphicon-center-3" >06/12</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-2 graphic">
+      <canvas baseChart
+              height="100%"
+              [data]="pieChartData"
+              [labels]="pieChartLabels"
+              [chartType]="pieChartType"
+              [options]="pieChartOptions"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+    </div>
+  </div>
+  <div class="row disciplina-data">
+    <div class="col-md-6">
+      <div class="row title">
+        <h2>Material</h2>
+      </div>
+      <div class="table-area style-3">
+        <table class="table tabela ">
+          <thead>
+          <tr>
+            <th scope="col" style="width: 65%">Arquivo</th>
+            <th scope="col" style="width: 15%;" class="glyphicon-center-3 table-align">Tamanho</th>
+            <th scope="col" style="width: 20%;" class="glyphicon-center-3 table-align">Download</th>
+          </tr>
+          </thead>
+          <tbody class="body-table">
+          <tr>
+            <th scope="row">tabalho.pdf</th>
+            <td class="glyphicon-center-3">0.24 mb</td>
+            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_download</mat-icon></td>
+          </tr>
+          <tr>
+            <th scope="row">lista_1.pdf</th>
+            <td class="glyphicon-center-3">0.43 mb</td>
+            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_download</mat-icon></td>
+          </tr>
+          <tr>
+            <th scope="row">slide_web_das_coisas.pdf</th>
+            <td class="glyphicon-center-3">1.2 mb</td>
+            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_download</mat-icon></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row title">
+        <h2>Entregas</h2>
+      </div>
+
+      <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">Enviar - Trabalho 1</h4>
+        </div>
+        <div class="modal-body">
+          <span style="font-weight: bold;">Valor:</span> 15 Pontos
+          <br>
+          <span style="font-weight: bold;">Data Final da Entrega:</span> 19/10
+          <br>
+          <br>
+          <div class="input-group">
+            <input class="form-control" placeholder="Nome do arquivo..."
+                   name="dp" >
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary"  type="button">
+               ...
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="c(false)">Cancelar</button>
+          <button type="button" class="btn btn-outline-dark" (click)="c(true)">Enviar</button>
+        </div>
+      </ng-template>
+
+      <div class="table-area style-3">
+      <table class="table tabela ">
+        <thead>
+        <tr>
+          <th scope="col" style="width: 60%">Atividade</th>
+          <th scope="col" style="width: 10%;" class="glyphicon-center-3 table-align">Valor</th>
+          <th scope="col" style="width: 10%;" class="glyphicon-center-3 table-align">Data</th>
+          <th scope="col" style="width: 20%;" class="glyphicon-center-3 table-align">Entrega</th>
+        </tr>
+        </thead>
+        <tbody class="body-table">
+        <tr>
+          <th scope="row">Trabalho 1</th>
+          <td class="glyphicon-center-3">15.0</td>
+          <td class="glyphicon-center-3">19/10</td>
+          <td class="glyphicon-center-3"><mat-icon class="mouse-houver" value = "cacete" id="a" (click)="openc(content)">file_upload</mat-icon></td>
+        </tr>
+        <tr>
+          <th scope="row">Lista 1</th>
+          <td class="glyphicon-center-3">5.0</td>
+          <td class="glyphicon-center-3">12/09</td>
+          <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_upload</mat-icon></td>
+        </tr>
+        <tr>
+          <th scope="row">Lista 2</th>
+          <td class="glyphicon-center-3">5.0</td>
+          <td class="glyphicon-center-3">28/09</td>
+          <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_upload</mat-icon></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+</div>

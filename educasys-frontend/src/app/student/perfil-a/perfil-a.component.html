@@ -1,0 +1,64 @@
+<menua-component></menua-component>
+<div [ngClass]="open ? opened : closed">
+  <div class="row menu">
+    <div class="col-md-1 menu-button">
+      <mat-icon class="md-48" (click)="changeOpt()"	>reorder</mat-icon>
+    </div>
+  </div>
+
+  <div class="row perfil-data">
+      <div class="col-md-4 info-perfil">
+        <img src="http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png" class="user-img" alt="">
+        <br>
+        <hr>
+        <h1>Lucas Alves de Faria</h1>
+        <h2>Aluno - 0011916</h2>
+        <br>
+        <h3>CPF: 192.168.122-55</h3>
+        <br>
+        <hr>
+        <h3>Mãe: Edilamar Maria</h3>
+        <h3>Pai: Rafael José</h3>
+      </div>
+      <div class="col-md-8 data-perfil">
+        <div class="edit-perfil">
+            <h2>Endereço</h2>
+            <br>
+            <div class="row">
+              <div class="col-md-6">
+                <label for="cep">CEP</label>
+                <input type="text" class="form-control" style="width: 100%" id="cep" aria-describedby="emailHelp" placeholder="Digite seu CEP...">
+              </div>
+              <div class="col-md-6">
+                <label for="cidade">Cidade</label>
+                <input type="text" class="form-control" style="width: 100%" id="cidade" aria-describedby="emailHelp" placeholder="Digite sua cidade...">
+              </div>
+            </div>
+            <label for="rua">Rua</label>
+            <input type="text" class="form-control" id="rua" aria-describedby="emailHelp" placeholder="Digite sua rua e numero...">
+            <label for="bairro">Bairro</label>
+            <input type="text" class="form-control" id="bairro" aria-describedby="emailHelp" placeholder="Digite seu bairro...">
+          <hr>
+            <h2>Contato</h2>
+            <br>
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Digite seu email...">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="tel1">Telefone 1</label>
+                <input type="text" class="form-control" style="width: 100%" id="tel1" aria-describedby="emailHelp" placeholder="Digite seu primeiro numero...">
+              </div>
+              <div class="col-md-6">
+                <label for="tel2">Telefone 2</label>
+                <input type="text" class="form-control" style="width: 100%" id="tel2" aria-describedby="emailHelp" placeholder="Digite seu segundo numero...">
+              </div>
+            </div>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-primary btn-block btn-lg btn-style" style="float: right; width: 30%" >Salvar</button>
+
+        </div>
+      </div>
+
+  </div>
+</div>

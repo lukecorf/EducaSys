@@ -1,0 +1,74 @@
+.data-login{
+  width: 21vw;
+  background-color: rgba(37, 169, 212, 0.3);
+  padding-top: 2vh;
+  padding-bottom: 3vh;
+
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  border-radius:2px;
+
+  -moz-box-shadow:  0px 5px 4px #b7b7b7;
+  -webkit-box-shadow: 0px 5px 4px #b7b7b7;
+}
+
+.data-login-tablet{
+  width: 45vw;
+  background-color: rgba(37, 169, 212, 0.3);
+  padding-top: 2vh;
+  padding-bottom: 3vh;
+
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  border-radius:2px;
+
+  -moz-box-shadow:  0px 5px 4px #b7b7b7;
+  -webkit-box-shadow: 0px 5px 4px #b7b7b7;
+}
+
+.data-login-mobile{
+  width: 90vw;
+  background-color: rgba(37, 169, 212, 0.3);
+  padding-top: 2vh;
+  padding-bottom: 3vh;
+
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  border-radius:2px;
+
+  -moz-box-shadow:  0px 5px 4px #b7b7b7;
+  -webkit-box-shadow: 0px 5px 4px #b7b7b7;
+}
+
+.icon-login{
+  height: 10vh;
+  margin:auto;
+  display:block;
+}
+
+.title1{
+  text-align: center;
+  color: #001d23;
+  font-weight: 800;
+}
+
+.title2{
+  color: #001d23;
+}
+
+hr{
+  color:#001d23;
+}
+
+.btn-color{
+  background-color: rgba(0,29,35,0.8);
+  color: white;
+}
+
+.block{
+  display:block;
+}
+
+.esqueci{
+  float: right;
+}

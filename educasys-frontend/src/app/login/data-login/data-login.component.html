@@ -1,0 +1,29 @@
+<div (window:resize)="onResize($event)"></div>
+<div class="{{cssClass}}">
+  <img src="https://lh3.googleusercontent.com/a2ozJ_U1-BS2mi26uhHt1YuzjIrK0e6P4nGRrBbQxMlxwRzDyiYEsMVhgUCCUNJJdzoJ3nHm5C3FYYzynbZev6SWOSSVQzxcXTHKsHz5OWSjrOOsyNoPTrt5WdrR8wRmkAR77ZVWFfjQGzqwDlhHE3xMVsdzTRaevkltySDb2p50zvQ5AKToL0sZqrXZBCDcGhOyynM7SLUw5WIz7v-YnUL6bPcoYOPaLWuRw_WG9A3fju-wNvy-ODUdtM2LI2p6J7FZd0rIXU6tTi7-YQYWDfCpCLFlmQsYcUCla4WODkpFFCVkWvsxz9peZUd2WONTtUVPfyR7yzL1WGkptuWr9ZMrzhNr6DI_SM7J4TaYlSVzhXS3xAE35VjU30gz2wL4wCE6sxb9uUDfA3VoWW_gztPd3U6ur4Vzekdk2YMpie0G4ucREJRASUgArGty8gTu1h3Ww7DGJUheCVMd_Oc7IJxRd5IbO9Y2z0NhWzvMtvxM8QY7cFIB3YFcX-gNlLcI_Xs5f-KCKEnBWAV34SIzHpPyctuqnsWlXhBVa1rx_A6YpQt6Vrn2MzaNu3RdlzIwMu19EtlYY4mRqw9noFEcITrHP2B-kB_ufgko31U=w856-h864-no" class="icon-login">
+  <h2 class="title1">EDUCASYS</h2>
+  <hr>
+  <h2 class="title2">Entrar</h2>
+  <form #f="ngForm" (ngSubmit)="onSingin(f)" >
+    <div class="form-group">
+      <label for="code">Codigo de Usuario</label>
+      <input type="text" class="form-control" name="code" id="code" aria-describedby="codeHelp" placeholder="Digite o Codigo" ngModel>
+      <small id="codeHelp" class="form-text text-muted">Seu codigo é individual e imutavel.</small>
+    </div>
+    <div class="form-group">
+      <label for="password">Senha</label>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Senha" ngModel>
+    </div>
+
+    <div class="form-check">
+      <label class="form-check-label block">
+        <input type="checkbox" class="form-check-input">
+        Manter-me logado
+        <a href="" class="esqueci" >Esqueci minha senha!</a>
+      </label>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary btn-block btn-lg btn-color">Entrar</button>
+  </form>
+
+</div>

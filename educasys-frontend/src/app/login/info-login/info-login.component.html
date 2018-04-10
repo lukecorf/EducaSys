@@ -1,0 +1,11 @@
+<div class="background-area">
+  <ngb-carousel class="carousel-area">
+      <ng-template ngbSlide *ngFor="let item of infos">
+          <img src={{item.imagePath}} class="image-info">
+          <div class="carousel-caption">
+              <h3>{{item.title}}</h3>
+              <p>{{item.description}}</p>
+          </div>
+      </ng-template>
+  </ngb-carousel>
+</div>

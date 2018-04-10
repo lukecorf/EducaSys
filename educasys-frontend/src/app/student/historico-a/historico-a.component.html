@@ -1,0 +1,41 @@
+<menua-component></menua-component>
+<div [ngClass]="open ? opened : closed">
+  <div class="row menu">
+    <div class="col-md-1 menu-button">
+      <mat-icon class="md-48" (click)="changeOpt()"	>reorder</mat-icon>
+    </div>
+  </div>
+
+  <div class="row historico-data">
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-primary bootstrap-butom" id="dropdownBasic1" ngbDropdownToggle>{{periodo}}</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button class="dropdown-item" id="2016/1" (click)="changePeriod('2016/1')">2016/1</button>
+        <button class="dropdown-item" id="2016/2" (click)="changePeriod('2016/2')">2016/2</button>
+        <button class="dropdown-item" id="2017/1" (click)="changePeriod('2017/1')">2017/1</button>
+        <button class="dropdown-item" id="2017/2" (click)="changePeriod('2017/2')">2017/2</button>
+      </div>
+    </div>
+    <div class="historico-tabela style-3">
+      <table class="table tabela">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 70%">Disciplina</th>
+            <th scope="col" style="width: 10%" class="glyphicon-center-3">Carga Horaria</th>
+            <th scope="col" style="width: 10%" class="glyphicon-center-3">Nota</th>
+            <th scope="col" style="width: 10%" class="glyphicon-center-3">Status</th>
+          </tr>
+        </thead>
+        <tbody class="body-table">
+          <tr *ngFor="let item of periodoData">
+            <th scope="row">{{item.nome}}</th>
+            <td class="glyphicon-center-3">{{item.cargaHoraria}}</td>
+            <td class="glyphicon-center-3">{{item.nota}}</td>
+            <td class="glyphicon-center-3">{{item.status}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

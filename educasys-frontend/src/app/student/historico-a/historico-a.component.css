@@ -1,0 +1,126 @@
+.md-48 {
+  font-size: 48px;
+  cursor: pointer;
+}
+
+.bootstrap-butom{
+  background-color: #ffffff;
+  color: black;
+  border-color: #c3c3c3;
+}
+
+
+
+.historico-data{
+  width: 100%;
+  height: 93%;
+  margin-top: 0px;
+  margin-left:0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  background: #b0bec5;
+  -moz-box-shadow:  0px 5px 4px #b7b7b7;
+  -webkit-box-shadow: 0px 5px 4px #b7b7b7;
+  padding: 20px;
+}
+
+.historico-tabela{
+  width: 100%;
+  height: 93%;
+
+  padding-left:  15px;
+  padding-right: 15px;
+  margin-top:5px;
+
+  background-color: #ffffff;
+
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  border-radius:3px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.open{
+  transform: translateX(15vw);
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #eee;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.content{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #eee;
+  padding: 30px;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.open-mobile{
+  transform: translateX(65vw);
+  padding: 30px;
+  width: 100vw;
+  height: 100%;
+  background: #eee;
+  transition: all 0.3s;
+  overflow: hidden;
+  position:fixed;
+  z-index: 100;
+  top: inherit;
+}
+
+.content-mobile{
+  width: 100vw;
+  height: 100%;
+  background: #eee;
+  padding: 30px;
+  transition: all 0.3s;
+  overflow: hidden;
+  position:fixed;
+  z-index: 100;
+  top: inherit;
+}
+
+.menu{
+  font-size: 36px;
+  display:block;
+  vertical-align: middle;
+  margin: 0px;
+  padding:0px;
+
+}
+
+.menu-button{
+  z-index:10;
+  padding-left: 0px;
+  margin-left: 0px;
+
+}
+
+.glyphicon-center-3{
+  text-align:center;
+}
+
+.style-3::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
+}
+
+.style-3::-webkit-scrollbar
+{
+  width: 6px;
+  background-color: #F5F5F5;
+}
+
+.style-3::-webkit-scrollbar-thumb
+{
+  background-color: #000000;
+}

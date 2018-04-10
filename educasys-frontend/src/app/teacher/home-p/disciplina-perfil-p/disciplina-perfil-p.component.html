@@ -1,0 +1,25 @@
+<div class = "row teste">
+  <div class="disciplina-geral">
+    <div class="row disciplina-perfil">
+      <div class="col-md-6 disciplina-detalhes" (click)="goDisciplina()">
+        <h3>Discilpina: {{nome}}</h3>
+        <h4>Situação: {{status}}</h4>
+        <h4>Carga Horaria: {{horas}}</h4>
+      </div>
+      <div class="col-md-6 disciplina-foto">
+        <img src="{{img}}" alt="img-responsive thumbnail" >
+      </div>
+    </div>
+    <div class="row disciplina-dados">
+      <div class="col-md-4 text-center button-disciplina a">
+        <h2>Realizar <br> Chamada</h2>
+      </div>
+      <div class="col-md-4 text-center button-disciplina a">
+        <h2>Adicionar <br> Atividade</h2>
+      </div>
+      <div class="col-md-4 text-center button-disciplina">
+        <h2>Enviar <br> Material</h2>
+      </div>
+    </div>
+  </div>
+</div>

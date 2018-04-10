@@ -1,0 +1,109 @@
+.open{
+  transform: translateX(15vw);
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #eee;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.content{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #eee;
+  padding: 30px;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.open-mobile{
+  transform: translateX(65vw);
+  padding: 30px;
+  width: 100vw;
+  height: 100%;
+  background: #eee;
+  transition: all 0.3s;
+  overflow: hidden;
+  position:fixed;
+  z-index: 100;
+  top: inherit;
+}
+
+.content-mobile{
+  width: 100vw;
+  height: 100%;
+  background: #eee;
+  padding: 30px;
+  transition: all 0.3s;
+  overflow: hidden;
+  position:fixed;
+  z-index: 100;
+  top: inherit;
+}
+
+.disciplina-style{
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 86vh;
+}
+
+#scroll-style::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
+}
+
+#scroll-style::-webkit-scrollbar
+{
+  width: 6px;
+  background-color: #F5F5F5;
+}
+
+#scroll-style::-webkit-scrollbar-thumb
+{
+  background-color: #000000;
+}
+
+.menu-icon {
+  font-size: 48px;
+  cursor: pointer;
+}
+
+.menu-area{
+
+  height: 8vh;
+  font-size: 36px;
+  display:block;
+  vertical-align: middle;
+}
+
+.user-img{
+  float: none;
+  margin: 0 auto;
+  width: 30vh;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+}
+
+.student-info{
+  margin-left: 20px;
+}
+
+.student-info h2{
+  font-weight: 900;
+}
+
+.student-info h3{
+  font-weight: 600;
+}
+
+hr{
+  height: 1px;
+  color: #000000;
+  background-color: #000000;
+  border: none;
+}
