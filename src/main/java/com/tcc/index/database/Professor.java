@@ -1,4 +1,4 @@
-package com.tcc.professor.database;
+package com.tcc.index.database;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

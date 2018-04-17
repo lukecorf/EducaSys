@@ -1,4 +1,4 @@
-package com.tcc.aluno.database;
+package com.tcc.index.database;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -33,6 +33,17 @@ public class Disciplina {
 
     @ManyToOne
     Professor professorfk;
+
+    @OneToMany
+    Atividade atividadefk;
+
+    public Atividade getAtividadefk() {
+        return atividadefk;
+    }
+
+    public void setAtividadefk(Atividade atividadefk) {
+        this.atividadefk = atividadefk;
+    }
 
     public Professor getProfessorfk() {
         return professorfk;
