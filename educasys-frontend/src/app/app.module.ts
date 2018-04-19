@@ -30,6 +30,9 @@ import { DisciplinaPerfilPComponent } from './teacher/home-p/disciplina-perfil-p
 import { DisciplinaPComponent } from './teacher/disciplina-p/disciplina-p.component';
 import { TeacherDataService } from './teacher/home-p/services/teacher-data.service';
 import {UserData} from "./services/userdata.service";
+import { HomeSComponent } from './secretary/home-s/home-s.component';
+import { DisciplinaSComponent } from './secretary/disciplina-s/disciplina-s.component';
+import { MenuSComponent } from './secretary/menu-s/menu-s.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import {UserData} from "./services/userdata.service";
     HomePComponent,
     MenuPComponent,
     DisciplinaPerfilPComponent,
-    DisciplinaPComponent
+    DisciplinaPComponent,
+    HomeSComponent,
+    DisciplinaSComponent,
+    MenuSComponent
   ],
   imports: [
     BrowserModule,

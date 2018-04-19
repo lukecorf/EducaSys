@@ -1,0 +1,40 @@
+<menu-s-component></menu-s-component>
+<div [ngClass]="open ? opened : closed">
+  <div class="row menu-area">
+    <mat-icon class="menu-icon" (click)="changeOpt()"	>reorder</mat-icon>
+  </div>
+
+  <div class="col-md-12 data-area">
+    <div class="info-area">
+    <h2>Disciplinas</h2>
+    <button type="button" class="btn btn-sm btn-primary btn-cons" style="margin-bottom: 10px;">Cadastrar</button>
+    </div>
+    <div class="row" style="height: 100%;">
+    <div class="teste2">
+      <table class="table tabela">
+        <thead>
+        <tr style="background-color: #374046; color:white;">
+          <th scope="col">Disciplina</th>
+          <th scope="col" class="glyphicon-center-3" style="text-align: center;" >Professor</th>
+          <th scope="col" class="glyphicon-center-3" style="text-align: center;">Carga Horaria</th>
+          <th scope="col" class="glyphicon-center-3" style="text-align: center;">Periodo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let disciplina of disciplinas; let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
+          <td scope="row">{{disciplina.nome}}</td>
+          <td class="glyphicon-center-3" style="text-align: center;">{{disciplina.professor}}</td>
+          <td class="glyphicon-center-3" style="text-align: center;">{{disciplina.cargaH}}</td>
+          <td class="glyphicon-center-3" style="text-align: center;">{{disciplina.periodo}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-1">
+      <button type="button" style="margin-bottom:15px; margin-left: auto; margin-right: auto; display:block;" class="btn btn-primary btn-circle btn-xl"><i class="glyphicon glyphicon-list"><mat-icon>add</mat-icon></i></button>
+      <button type="button" style="margin-bottom:15px; margin-left: auto; margin-right: auto; display:block;" disabled class="btn btn-success btn-circle btn-xl"><i class="glyphicon glyphicon-link"><mat-icon>create</mat-icon></i></button>
+      <button type="button" style="margin-bottom:15px; margin-left: auto; margin-right: auto; display:block;" disabled class="btn btn-danger btn-circle btn-xl"><i class="glyphicon glyphicon-list"><mat-icon>delete</mat-icon></i></button>
+    </div>
+    </div>
+  </div>
+</div>
