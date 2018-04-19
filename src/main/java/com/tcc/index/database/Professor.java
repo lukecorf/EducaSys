@@ -15,45 +15,50 @@ public class Professor {
     @Id
     @Column(name = "ID_PROFESSOR")
     @NotNull
-    long id;
+    private long id;
 
     @NotNull
     @Column( name = "ST_NOME_PROFESSOR")
     @Size(max=100)
-    String nome;
+    private String nome;
 
     @NotNull
     @Column( name = "ST_ENDERECO")
     @Size(max=300)
-    String endereco;
+    private String endereco;
 
     @NotNull
     @Column( name = "CO_EMAIL")
     @Size(max=100)
-    String email;
+    private String email;
 
     @NotNull
     @Column( name = "CO_TELEFONE")
     @Size(max=11)
-    String telefone;
+    private String telefone;
 
     @NotNull
     @Column( name = "DT_DATA_NASC")
     @Size(max=100)
-    Date dataN;
+    private Date dataN;
 
     @NotNull
     @Column( name = "DC_CPF")
     @Size(max=11)
-    String cpf;
+    private String cpf;
 
     @NotNull
     @Column( name = "DC_RG")
     @Size(max=11)
-    String rg;
+    private String rg;
 
-    @Column( name = "URL_IMG_ALUNO")
-    String url;
+    @Column( name = "URL_IMG_PROFESSOR")
+    private String url;
+
+    @NotNull
+    @Column( name = "PW_SENHA_PROFESSOR")
+    @Size(max=50)
+    private String senha;
 
     public long getId() {
         return id;
@@ -135,8 +140,5 @@ public class Professor {
         this.senha = senha;
     }
 
-    @NotNull
-    @Column( name = "PW_SENHA_PROFESSOR")
-    @Size(max=50)
-    String senha;
+
 }

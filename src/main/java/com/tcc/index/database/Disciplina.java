@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "TBL_DISCIPLINA")
@@ -14,36 +15,26 @@ public class Disciplina {
     @Id
     @Column( name = "ID_DISCIPLINA")
     @NotNull
-    long codigo;
-
+    private long codigo;
 
     @NotNull
     @Column( name = "ST_NOME_DISCIPLINA")
     @Size(max = 100)
-    String nome;
+    private String nome;
 
     @NotNull
     @Column( name = "ST_NOME_PROFESSOR")
     @Size(max = 100)
-    String professor;
+    private String professor;
 
     @NotNull
     @Column( name = "URL_IMG")
-    String img;
+    private String img;
 
     @ManyToOne
-    Professor professorfk;
-
-    @OneToMany
-    Atividade atividadefk;
-
-    public Atividade getAtividadefk() {
-        return atividadefk;
-    }
-
-    public void setAtividadefk(Atividade atividadefk) {
-        this.atividadefk = atividadefk;
-    }
+    @NotNull
+    @JoinColumn(name = "ID_PROFESSOR",nullable = false, referencedColumnName = "ID_PROFESSOR")
+    private Professor professorfk;
 
     public Professor getProfessorfk() {
         return professorfk;

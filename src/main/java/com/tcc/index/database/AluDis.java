@@ -1,24 +1,46 @@
 package com.tcc.index.database;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TBL_ALU_DIS")
 public class AluDis {
 
-    @ManyToOne
-    Disciplina disciplinafk;
+    @Id
+    @NotNull
+    @Column(name = "ID_ALUDIS")
+    private long id;
 
     @ManyToOne
-    Aluno alunofk;
+    @NotNull
+    @JoinColumn(name = "ID_DISCIPLINA",nullable = false, referencedColumnName = "ID_DISCIPLINA")
+    private Disciplina disciplinafk;
+
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name = "ID_ALUNO",nullable = false, referencedColumnName = "ID_ALUNO")
+    private Aluno alunofk;
 
     @NotNull
     @Column(name = "NU_FALTAS")
-    float faltas;
+    private float faltas;
+
+    public float getFaltas() {
+        return faltas;
+    }
+
+    public void setFaltas(float faltas) {
+        this.faltas = faltas;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Disciplina getDisciplinafk() {
         return disciplinafk;
@@ -34,13 +56,5 @@ public class AluDis {
 
     public void setAlunofk(Aluno alunofk) {
         this.alunofk = alunofk;
-    }
-
-    public float getFaltas() {
-        return faltas;
-    }
-
-    public void setFaltas(float faltas) {
-        this.faltas = faltas;
     }
 }

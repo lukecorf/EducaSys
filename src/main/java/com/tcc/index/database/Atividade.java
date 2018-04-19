@@ -1,9 +1,6 @@
 package com.tcc.index.database;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Date;
@@ -15,25 +12,38 @@ public class Atividade {
     @Id
     @Column(name = "ID_ATIVIDADE")
     @NotNull
-    long id;
+    private long id;
 
     @NotNull
     @Column(name = "NU_VALOR_ATIVIDADE")
     @Size(max = 100)
-    float valor;
+    private float valor;
 
     @NotNull
     @Column(name = "ST_NOME_ATIVIDADE")
     @Size(max = 100)
-    String nome;
+    private String nome;
 
     @NotNull
     @Column(name = "DT_DATA")
-    Date data;
+    private Date data;
 
     @NotNull
     @Column(name = "BO_TIPO_ATIVIDADE")
-    boolean tipo;
+    private boolean tipo;
+
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name = "ID_DISCIPLINA",nullable = false, referencedColumnName = "ID_DISCIPLINA")
+    private Disciplina disciplinafk;
+
+    public Disciplina getDisciplinafk() {
+        return disciplinafk;
+    }
+
+    public void setDisciplinafk(Disciplina disciplinafk) {
+        this.disciplinafk = disciplinafk;
+    }
 
     public long getId() {
         return id;
