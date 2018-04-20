@@ -40,7 +40,7 @@
 }
 
 .info-area{
-  height: 12%;
+  height: 20%;
   /*border:solid red;*/
 }
 
@@ -51,7 +51,7 @@
 }
 .teste2{
   /*border:solid green;*/
-  height:88%;
+  height:80%;
   width:90%;
   padding:0;
   margin:0;
@@ -85,4 +85,26 @@
   font-size: 24px;
   line-height: 1.33;
   border-radius: 35px;
+}
+
+.inner-addon {
+  position: relative;
+}
+
+.search:hover{
+    border:solid red;
+  cursor:pointer;
+}
+
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+.right-addon .glyphicon {
+  right: 0px;
+}
+.right-addon input {
+  padding-right: 30px;
 }

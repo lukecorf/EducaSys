@@ -7,7 +7,17 @@
   <div class="col-md-12 data-area">
     <div class="info-area">
     <h2>Disciplinas</h2>
-    <button type="button" class="btn btn-sm btn-primary btn-cons" style="margin-bottom: 10px;">Cadastrar</button>
+    <div class="row">
+      <div class="input-group" style="width: 90%; margin-left: 15px; margin-bottom: 10px;">
+        <input class="form-control" placeholder="Buscar..." name="dp"  ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button">
+            <mat-icon style="vertical-align: middle;">search</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+      <button type="button" class="btn btn-primary btn-cons" style="margin-bottom: 10px;">Cadastrar</button>
     </div>
     <div class="row" style="height: 100%;">
     <div class="teste2">
@@ -31,7 +41,7 @@
       </table>
     </div>
     <div class="col-md-1">
-      <button type="button" style="margin-bottom:15px; margin-left: auto; margin-right: auto; display:block;" class="btn btn-primary btn-circle btn-xl"><i class="glyphicon glyphicon-list"><mat-icon>add</mat-icon></i></button>
+      <button type="button" style="margin-bottom:15px; margin-left: auto; margin-right: auto; display:block;" disabled class="btn btn-primary btn-circle btn-xl"><i class="glyphicon glyphicon-list"><mat-icon>visibility</mat-icon></i></button>
       <button type="button" style="margin-bottom:15px; margin-left: auto; margin-right: auto; display:block;" disabled class="btn btn-success btn-circle btn-xl"><i class="glyphicon glyphicon-link"><mat-icon>create</mat-icon></i></button>
       <button type="button" style="margin-bottom:15px; margin-left: auto; margin-right: auto; display:block;" disabled class="btn btn-danger btn-circle btn-xl"><i class="glyphicon glyphicon-list"><mat-icon>delete</mat-icon></i></button>
     </div>
