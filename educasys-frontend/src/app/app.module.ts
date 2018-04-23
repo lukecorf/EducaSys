@@ -35,6 +35,7 @@ import {UserData} from "./services/userdata.service";
 import { HomeSComponent } from './secretary/home-s/home-s.component';
 import { DisciplinaSComponent } from './secretary/disciplina-s/disciplina-s.component';
 import { MenuSComponent } from './secretary/menu-s/menu-s.component';
+import { DisciplinaCadastroComponent } from './secretary/disciplina-s/disciplina-cadastro.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { MenuSComponent } from './secretary/menu-s/menu-s.component';
     DisciplinaPComponent,
     HomeSComponent,
     DisciplinaSComponent,
-    MenuSComponent
+    MenuSComponent,
+    DisciplinaCadastroComponent
   ],
   imports: [
     BrowserModule,
