@@ -1,0 +1,50 @@
+<menu-s-component></menu-s-component>
+<div [ngClass]="open ? opened : closed">
+  <div class="row menu-area">
+    <mat-icon class="menu-icon" (click)="changeOpt()"	>reorder</mat-icon>
+  </div>
+
+  <div class="col-md-12 data-area">
+    <div class="info-area">
+      <h2>Alunos</h2>
+      <div class="row">
+        <div class="input-group" style="width: 90%; margin-left: 15px; margin-bottom: 10px;">
+          <input class="form-control" placeholder="Buscar..." name="dp"  ngbDatepicker #d="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">
+              <mat-icon style="vertical-align: middle;">search</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary btn-cons" style="margin-bottom: 10px;">Cadastrar</button>
+    </div>
+    <div class="row" style="height: 100%;">
+      <div class="teste2">
+        <table class="table tabela">
+          <thead>
+          <tr style="background-color: #374046; color:white;">
+            <th scope="col">Nome</th>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;" >Matricula</th>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;">CPF</th>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;">Data de Nascimento</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let disciplina of disciplinas; let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
+            <td scope="row">{{disciplina.nome}}</td>
+            <td class="glyphicon-center-3" style="text-align: center;">{{disciplina.professor}}</td>
+            <td class="glyphicon-center-3" style="text-align: center;">{{disciplina.cargaH}}</td>
+            <td class="glyphicon-center-3" style="text-align: center;">{{disciplina.periodo}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-1">
+        <button type="button" style="margin-bottom:15px; margin-left: auto; margin-right: auto; display:block;" disabled class="btn btn-primary btn-circle btn-xl"><i class="glyphicon glyphicon-list"><mat-icon>visibility</mat-icon></i></button>
+        <button type="button" style="margin-bottom:15px; margin-left: auto; margin-right: auto; display:block;" disabled class="btn btn-success btn-circle btn-xl"><i class="glyphicon glyphicon-link"><mat-icon>create</mat-icon></i></button>
+        <button type="button" style="margin-bottom:15px; margin-left: auto; margin-right: auto; display:block;" disabled class="btn btn-danger btn-circle btn-xl"><i class="glyphicon glyphicon-list"><mat-icon>delete</mat-icon></i></button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,7 +7,6 @@ import { ChartsModule } from 'ng2-charts';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {} from '@ng-bootstrap/ng-bootstrap';
 
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { InfoLoginComponent } from './login/info-login/info-login.component';
@@ -36,6 +35,8 @@ import { HomeSComponent } from './secretary/home-s/home-s.component';
 import { DisciplinaSComponent } from './secretary/disciplina-s/disciplina-s.component';
 import { MenuSComponent } from './secretary/menu-s/menu-s.component';
 import { DisciplinaCadastroComponent } from './secretary/disciplina-s/disciplina-cadastro.component';
+import { AlunoSComponent } from './secretary/aluno-s/aluno-s.component';
+import { AlunoCadastroComponent } from './secretary/aluno-s/aluno-cadastro.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,9 @@ import { DisciplinaCadastroComponent } from './secretary/disciplina-s/disciplina
     HomeSComponent,
     DisciplinaSComponent,
     MenuSComponent,
-    DisciplinaCadastroComponent
+    DisciplinaCadastroComponent,
+    AlunoSComponent,
+    AlunoCadastroComponent
   ],
   imports: [
     BrowserModule,

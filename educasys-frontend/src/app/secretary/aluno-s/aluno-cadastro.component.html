@@ -1,0 +1,110 @@
+<menu-s-component></menu-s-component>
+<div [ngClass]="open ? opened : closed">
+  <div class="row menu-area">
+    <mat-icon class="menu-icon" (click)="changeOpt()"	>reorder</mat-icon>
+  </div>
+  <div class="col-md-12 data-area">
+    <h2 style="text-align: center;">Aluno</h2>
+    <div class="row data">
+      <div class="col-md-12">
+        <div class="profile-data">
+          <h3>Informações Pessoais</h3>
+          <div class="row">
+            <div class="col-md-8" style="padding-bottom: 10px;">
+              <div class="input-group">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" disabled type="button">
+                    <mat-icon style="vertical-align: middle;">account_circle</mat-icon>
+                  </button>
+                </div>
+                <input class="form-control" placeholder="Digite o nome..." name="nome" >
+              </div>
+            </div>
+            <div class="col-md-4" style="padding-bottom: 10px;">
+              <div class="input-group">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" disabled type="button">
+                    <mat-icon style="vertical-align: middle;">date_range</mat-icon>
+                  </button>
+                </div>
+                <input class="form-control" placeholder="dd/mm/aaaa" name="dp" >
+              </div>
+            </div>
+            <div class="col-md-6" style="padding-bottom: 10px;">
+              <div class="input-group">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" disabled type="button">
+                    <mat-icon style="vertical-align: middle;">account_box</mat-icon>
+                  </button>
+                </div>
+                <input type="text" class="form-control" placeholder="Nome do pai..." name="dp" >
+              </div>
+            </div>
+            <div class="col-md-6" style="padding-bottom: 10px;">
+              <div class="input-group">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" disabled type="button">
+                    <mat-icon style="vertical-align: middle;">account_box</mat-icon>
+                  </button>
+                </div>
+                <input type="text" class="form-control" placeholder="Nome da mãe..." name="dp" >
+              </div>
+            </div>
+            <div class="col-md-6" style="padding-bottom: 10px;">
+              <div class="input-group">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" disabled type="button">
+                    <mat-icon style="vertical-align: middle;">https</mat-icon>
+                  </button>
+                </div>
+                <input type="password" class="form-control" placeholder="Senha..." name="dp" >
+              </div>
+            </div>
+            <div class="col-md-6" style="padding-bottom: 10px;">
+              <div class="input-group">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" disabled type="button">
+                    <mat-icon style="vertical-align: middle;">https</mat-icon>
+                  </button>
+                </div>
+                <input type="password" class="form-control" placeholder="Repita a senha..." name="dp" >
+              </div>
+            </div>
+          </div>
+          <h3>Contato</h3>
+          <div class="row">
+            <div class="col-md-6" style="padding-bottom: 10px;">
+              <div class="input-group">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" disabled type="button">
+                    <mat-icon style="vertical-align: middle;">call</mat-icon>
+                  </button>
+                </div>
+                <input type="text" class="form-control" placeholder="Telefone..." name="dp" >
+              </div>
+            </div>
+            <div class="col-md-6" style="padding-bottom: 10px;">
+              <div class="input-group">
+
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" disabled type="button">
+                    <mat-icon style="vertical-align: middle;">chat</mat-icon>
+                  </button>
+                </div>
+                <input type="email" class="form-control" placeholder="Email..." id="email" >
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="Descricao">Endereço:</label>
+              <textarea class="form-control" rows="5" id="descricao"></textarea>
+            </div>
+            <div class="col-md-12" style="margin-top: 15px;">
+              <button type="button" class="btn btn-outline-danger"  (click)="goBack()">Cancelar</button>
+              <button type="button" class="btn btn-outline-success align-bottom float-right">Salvar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
