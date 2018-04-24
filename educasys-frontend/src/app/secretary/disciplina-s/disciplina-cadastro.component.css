@@ -33,6 +33,7 @@
 }
 
 .data-area{
+  padding-top: 10px;
   background: #d8d6d7;
   height: 92%;
 }
@@ -48,6 +49,18 @@
 }
 
 .tabela{
-  /*border: solid red;*/
+  width: 100%;
+
 }
 
+.btn-salvar{
+  position: absolute;
+  bottom: 0;
+  right:0;
+  margin-right: 15px;
+}
+
+.table tr.active td {
+  background-color:#123456 !important;
+  color: white;
+}

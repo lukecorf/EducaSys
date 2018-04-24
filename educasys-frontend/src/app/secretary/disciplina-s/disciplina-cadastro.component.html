@@ -8,31 +8,49 @@
     <h2>Cadastro Disciplina</h2>
     <div class="row" style="height:100%;">
       <div class="col-md-6 teste">
-        <div class="row">
+        <div class="row" style="height: 50%">
           <div class="col-md-6">
             <label for="nome-disciplina">Nome Disciplina:</label>
             <input type="text" id="nome-disciplina" class="form-control" placeholder="Digite o nome...">
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 ">
             <label for="hora-disciplina">Cagar Horaria:</label>
             <input type="number" max="120" min="1" id="hora-disciplina" class="form-control" placeholder="Insira a carga horaria...">
           </div>
-        </div>
-        <div class="row">
           <div class="col-md-12">
             <label for="Descricao">Descrição:</label>
             <textarea class="form-control" rows="5" id="descricao"></textarea>
           </div>
         </div>
+        <div class="row" style="height: 50%">
+
+          <div class="col-md-12">
+          <button type="button" class="btn btn-outline-danger" style="position: absolute; bottom: 0;" (click)="goBack()">Cancelar</button>
+          <button type="button" class="btn btn-outline-success align-bottom float-right btn-salvar">Salvar</button>
+          </div>
+        </div>
       </div>
       <div class="col-md-6">
-        <div class="row tabela" style="height: 90%;">
+        <div class="row" style="height: 90%;">
           <div style="height: 10%; width:100%;">
-            <button class="btn btn-lg btn-outline-primary " style="display: inline-flex; vertical-align: middle;"><mat-icon>add</mat-icon></button>
-            <button class="btn btn-lg btn-outline-danger" disabled style="display: inline-flex; vertical-align: middle;"><mat-icon >delete</mat-icon></button>
+            <button class="btn btn-lg btn-outline-primary " style="display: inline-flex; vertical-align: middle;" (click)="openM(content)"><mat-icon>add</mat-icon></button>
+            <button class="btn btn-lg btn-outline-danger" [disabled]="(selectedRow < 0)" style="display: inline-flex; vertical-align: middle;"><mat-icon >delete</mat-icon></button>
           </div>
           <div style="height: 90%; width:100%; background-color: white; margin-right: 15px;">
-
+            <table class="table tabela">
+              <thead>
+              <tr style="background-color: #374046; color:white;">
+                <th scope="col" style="width:25%;">Matricula</th>
+                <th scope="col" style="width:75%;"class="glyphicon-center-3"  >Nome Aluno</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let aluno of alunos; let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
+                <td scope="row">{{aluno.codigo}}</td>
+                <td class="glyphicon-center-3">{{aluno.nome}}</td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -40,3 +58,25 @@
   </div>
 
 </div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Inserir Aluno</h4>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="input-group" style="width: 90%; margin-left: 15px; margin-bottom: 10px;">
+      <input class="form-control" placeholder="Buscar..." name="dp"  ngbDatepicker #d="ngbDatepicker">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button">
+          <mat-icon style="vertical-align: middle;">search</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click)="c('Close click')">Inserir</button>
+  </div>
+</ng-template>

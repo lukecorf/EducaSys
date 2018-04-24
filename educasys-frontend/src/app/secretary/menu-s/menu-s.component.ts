@@ -27,8 +27,8 @@ export class MenuSComponent implements OnInit {
 
   }
 
-  goHistorico(){
-    this.router.navigate(['historico-a/'+this.code]);
+  goDisciplinas(){
+    this.router.navigate(['disciplina-s']);
   }
 
   goHome(){
