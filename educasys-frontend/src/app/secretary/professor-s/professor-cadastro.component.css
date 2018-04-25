@@ -31,3 +31,28 @@
   vertical-align: middle;
   margin:0;
 }
+
+.data-area{
+  padding-top: 10px;
+  background: #d8d6d7;
+  height: 92%;
+}
+
+.data{
+  height: 90%;
+}
+
+.profile-data{
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 15px;
+  overflow: hidden;
+}
+
+.btn-salvar{
+  position: absolute;
+  bottom: 0;
+  right:0;
+  margin-right: 15px;
+}

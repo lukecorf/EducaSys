@@ -32,11 +32,14 @@ export class MenuSComponent implements OnInit {
   }
 
   goHome(){
-    this.router.navigate(['home-aluno/'+this.code]);
+    this.router.navigate(['home-secretaria/'+this.code]);
   }
 
-  goPerfil(){
-    this.router.navigate(['perfil-a/'+this.code]);
+  goProfessor(){
+    this.router.navigate(['professor-s']);
   }
 
+  goAluno(){
+    this.router.navigate(['aluno-s']);
+  }
 }

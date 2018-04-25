@@ -3,45 +3,46 @@ import {Subscription} from "rxjs/Subscription";
 import {Observable} from "rxjs/Observable";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SecretariaService} from "../secretaria.service";
-import {Aluno} from "./aluno-s.model";
+import {Professor} from "./professor-s.model";
 
 @Component({
-  selector: 'aluno-cadastro-component',
-  templateUrl: './aluno-cadastro.component.html',
-  styleUrls: ['./aluno-cadastro.component.css']
+  selector: 'professor-cadastro-component',
+  templateUrl: './professor-cadastro.component.html',
+  styleUrls: ['./professor-cadastro.component.css']
 })
-export class AlunoCadastroComponent implements OnInit {
+export class ProfessorCadastroComponent implements OnInit {
 
   private timer;
   private sub: Subscription;
   open: boolean = true;
   opened: string = 'open';
   closed: string = 'content';
-  disabledEdit: boolean = false;
   title: string;
+  disabledEdit: boolean = false;
   id: number;
-  aluno: Aluno;
+  professor: Professor;
 
-  constructor(private router: Router, private route:ActivatedRoute, private secretariaService: SecretariaService) {
-    this.aluno = new Aluno();
+  constructor(private router: Router, private route: ActivatedRoute, private secretariaService: SecretariaService) {
+    this.professor = new Professor();
+
     if(route.snapshot.params['type'] == 1){
       this.title = "Cadastrar"
     }else if(route.snapshot.params['type'] == 2){
       this.disabledEdit = true;
       this.title= 'Visualizar';
       this.id = route.snapshot.params['id'];
-      this.getAluno();
+      this.getProfessor();
     }else if(route.snapshot.params['type'] == 3){
       this.title= 'Editar';
       this.id = route.snapshot.params['id'];
-      this.getAluno();
+      this.getProfessor();
     }
   }
 
-  getAluno(){
-    this.secretariaService.getAlunoById(this.id).subscribe(
-      aluno => {
-        this.aluno = aluno;
+  getProfessor(){
+    this.secretariaService.getProfessorById(this.id).subscribe(
+      professor => {
+        this.professor = professor;
       }
     );
   }
@@ -56,7 +57,6 @@ export class AlunoCadastroComponent implements OnInit {
   }
 
   goBack(){
-    this.router.navigate(['aluno-s']);
+    this.router.navigate(['professor-s']);
   }
-
 }

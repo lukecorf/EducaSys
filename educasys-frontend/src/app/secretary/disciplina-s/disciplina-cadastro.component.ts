@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Subscription} from "rxjs/Subscription";
 import {Observable} from "rxjs/Observable";
-import {Aluno} from "./disciplina-cadastro.model";
+import {Disciplina} from "./disciplina-s.model";
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {SecretariaService} from "../secretaria.service";
 
 @Component({
   selector: 'disciplina-cadastro-component',
@@ -19,22 +20,46 @@ export class DisciplinaCadastroComponent implements OnInit {
   closed: string = 'content';
   selectedRow: number = -1;
   setClickedRow : Function;
-  alunos: Aluno[];
   closeResult: string;
+  disabledEdit: boolean = false;
+  id: number;
+  title: string = 'Cadastrar';
+  disciplina: Disciplina;
 
-  constructor( private modalService: NgbModal,private router: Router ) {
+  constructor( private modalService: NgbModal,private router: Router, private route:ActivatedRoute, private secretariaService: SecretariaService ) {
+
+    this.disciplina = new Disciplina();
+
+    if(route.snapshot.params['type'] == 1){
+      this.title = "Cadastrar"
+    }else if(route.snapshot.params['type'] == 2){
+      this.disabledEdit = true;
+      this.title= 'Visualizar';
+      this.id = route.snapshot.params['id'];
+      this.getDisciplina();
+    }else if(route.snapshot.params['type'] == 3){
+      this.title= 'Editar';
+      this.id = route.snapshot.params['id'];
+      this.getDisciplina();
+    }
+
     this.setClickedRow = function(index){
       this.selectedRow = index;
     }
+
+  }
+
+  getDisciplina(){
+    this.secretariaService.getDisciplinaById(this.id).subscribe(
+      disciplina => {
+        this.disciplina = disciplina;
+      }
+    );
   }
 
   ngOnInit() {
     this.timer = Observable.timer(500);
     this.sub = this.timer.subscribe(t => this.changeOpt());
-    this.alunos = [
-      new Aluno('001','Lucas Alves'),
-      new Aluno('002','Nastya Marova')
-    ];
   }
 
   changeOpt(){

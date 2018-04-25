@@ -1,3 +1,6 @@
-<p>
-  home-s works!
-</p>
+<menu-s-component></menu-s-component>
+<div [ngClass]="open ? opened : closed">
+  <div class="row menu-area">
+    <mat-icon class="menu-icon" (click)="changeOpt()"	>reorder</mat-icon>
+  </div>
+</div>

@@ -32,6 +32,12 @@
   margin:0;
 }
 
+.buttons{
+  display: inline-flex;
+  vertical-align: middle;
+  margin-bottom:15px;
+}
+
 .data-area{
   margin: 0;
   padding: 0;

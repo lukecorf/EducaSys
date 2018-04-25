@@ -4,6 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {AppRoutingModule} from './app-routing.module';
 import { MatIconModule} from "@angular/material";
 import { ChartsModule } from 'ng2-charts';
+import {NgxMaskModule} from 'ngx-mask';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {} from '@ng-bootstrap/ng-bootstrap';
 
@@ -37,6 +38,9 @@ import { MenuSComponent } from './secretary/menu-s/menu-s.component';
 import { DisciplinaCadastroComponent } from './secretary/disciplina-s/disciplina-cadastro.component';
 import { AlunoSComponent } from './secretary/aluno-s/aluno-s.component';
 import { AlunoCadastroComponent } from './secretary/aluno-s/aluno-cadastro.component';
+import { ProfessorSComponent } from './secretary/professor-s/professor-s.component';
+import { ProfessorCadastroComponent } from './secretary/professor-s/professor-cadastro.component';
+import {SecretariaService} from "./secretary/secretaria.service";
 
 @NgModule({
   declarations: [
@@ -60,7 +64,9 @@ import { AlunoCadastroComponent } from './secretary/aluno-s/aluno-cadastro.compo
     MenuSComponent,
     DisciplinaCadastroComponent,
     AlunoSComponent,
-    AlunoCadastroComponent
+    AlunoCadastroComponent,
+    ProfessorSComponent,
+    ProfessorCadastroComponent
   ],
   imports: [
     BrowserModule,
@@ -69,9 +75,10 @@ import { AlunoCadastroComponent } from './secretary/aluno-s/aluno-cadastro.compo
     FormsModule,
     MatIconModule,
     ChartsModule,
+    NgxMaskModule.forRoot(),
     NgbModule.forRoot()
   ],
-  providers: [LoginService, TeacherDataService, UserDataService, LoginInfoService, AuthService, AuthGuard, UserData],
+  providers: [LoginService, TeacherDataService, SecretariaService, UserDataService, LoginInfoService, AuthService, AuthGuard, UserData],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

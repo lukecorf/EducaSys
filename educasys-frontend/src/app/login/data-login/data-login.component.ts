@@ -48,6 +48,8 @@ export class DataLoginComponent implements OnInit {
         this.router.navigate(['home-aluno/' + user.matricula]);
       }else if(user.tipo === 1){
         this.router.navigate(['home-professor/' + user.matricula]);
+      }else if(user.tipo === 2){
+        this.router.navigate(['home-secretaria/' + user.matricula]);
       }else{
 
       }

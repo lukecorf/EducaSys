@@ -5,36 +5,37 @@
   </div>
 
   <div class="col-md-12 data-area">
-    <h2>Cadastro Disciplina</h2>
+    <h2>{{title}} Disciplina</h2>
     <div class="row" style="height:100%;">
       <div class="col-md-6 teste">
         <div class="row" style="height: 50%">
           <div class="col-md-6">
             <label for="nome-disciplina">Nome Disciplina:</label>
-            <input type="text" id="nome-disciplina" class="form-control" placeholder="Digite o nome...">
+            <input type="text" name="st_nome" #st_nome = "ngModel" [(ngModel)]="disciplina.st_nome" id="nome-disciplina" [disabled]="disabledEdit" class="form-control" placeholder="Digite o nome...">
           </div>
           <div class="col-md-6 ">
             <label for="hora-disciplina">Cagar Horaria:</label>
-            <input type="number" max="120" min="1" id="hora-disciplina" class="form-control" placeholder="Insira a carga horaria...">
+            <input type="number" name="nu_carga_horaria" #nu_carga_horaria = "ngModel" [(ngModel)]="disciplina.nu_carga_horaria" max="120" min="1" id="hora-disciplina" [disabled]="disabledEdit" class="form-control" placeholder="Insira a carga horaria...">
           </div>
           <div class="col-md-12">
             <label for="Descricao">Descrição:</label>
-            <textarea class="form-control" rows="5" id="descricao"></textarea>
+            <textarea class="form-control" name="tx_descricao" #tx_descricao = "ngModel" [(ngModel)]="disciplina.tx_descricao" [disabled]="disabledEdit" rows="5" id="descricao"></textarea>
           </div>
         </div>
         <div class="row" style="height: 50%">
 
           <div class="col-md-12">
-          <button type="button" class="btn btn-outline-danger" style=" margin-bottom: 0; position: absolute; bottom: 0;" (click)="goBack()">Cancelar</button>
-          <button type="button" class="btn btn-outline-success align-bottom float-right btn-salvar">Salvar</button>
+          <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-danger" style=" margin-bottom: 0; position: absolute; bottom: 0;" (click)="goBack()">Cancelar</button>
+          <button *ngIf="disabledEdit" type="button" class="btn btn-outline-danger" style=" margin-bottom: 0; position: absolute; bottom: 0;" (click)="goBack()">Voltar</button>
+          <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-success align-bottom float-right btn-salvar">Salvar</button>
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="row" style="height: 90%;">
           <div style="height: 10%; width:100%;">
-            <button class="btn btn-lg btn-outline-primary " style="display: inline-flex; vertical-align: middle;" (click)="openM(content)"><mat-icon>add</mat-icon></button>
-            <button class="btn btn-lg btn-outline-danger" [disabled]="(selectedRow < 0)" style="display: inline-flex; vertical-align: middle;"><mat-icon >delete</mat-icon></button>
+            <button *ngIf="!disabledEdit" class="btn btn-lg btn-outline-primary " style="display: inline-flex; vertical-align: middle;" (click)="openM(content)"><mat-icon>add</mat-icon></button>
+            <button *ngIf="!disabledEdit" class="btn btn-lg btn-outline-danger" [disabled]="(selectedRow < 0)" style="display: inline-flex; vertical-align: middle;"><mat-icon >delete</mat-icon></button>
           </div>
           <div style="height: 90%; width:100%; background-color: white; margin-right: 15px;">
             <table class="table tabela">
@@ -45,9 +46,9 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let aluno of alunos; let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
-                <td scope="row">{{aluno.codigo}}</td>
-                <td class="glyphicon-center-3">{{aluno.nome}}</td>
+              <tr *ngFor="let aluno of disciplina.ls_alunos; let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
+                <td scope="row">{{aluno.id_aluno}}</td>
+                <td class="glyphicon-center-3">{{aluno.st_nome_aluno}}</td>
               </tr>
               </tbody>
             </table>

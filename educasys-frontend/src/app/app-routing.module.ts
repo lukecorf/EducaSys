@@ -19,15 +19,25 @@ import {HomePComponent} from "./teacher/home-p/home-p.component";
 import {DisciplinaPComponent} from "./teacher/disciplina-p/disciplina-p.component";
 import {DisciplinaSComponent} from "./secretary/disciplina-s/disciplina-s.component";
 import {DisciplinaCadastroComponent} from "./secretary/disciplina-s/disciplina-cadastro.component";
+import {AlunoCadastroComponent} from "./secretary/aluno-s/aluno-cadastro.component";
+import {ProfessorCadastroComponent} from "./secretary/professor-s/professor-cadastro.component";
+import {AlunoSComponent} from "./secretary/aluno-s/aluno-s.component";
+import {ProfessorSComponent} from "./secretary/professor-s/professor-s.component";
+import {HomeSComponent} from "./secretary/home-s/home-s.component";
 
 const appRoutes: Routes = [
   { path: '' , component: LoginComponent},
   { path: 'home-aluno/:id',canActivate: [AuthGuard] , component: HomeAComponent },
   { path: 'home-professor/:id',canActivate: [AuthGuard] , component: HomePComponent },
+  { path: 'home-secretaria/:id',canActivate: [AuthGuard] , component: HomeSComponent },
   { path: 'disciplina-a/:id',canActivate: [AuthGuard] , component: DisciplinaAComponent},
   { path: 'disciplina-p/:id',canActivate: [AuthGuard] , component: DisciplinaPComponent},
   { path: 'disciplina-s', canActivate: [AuthGuard] , component: DisciplinaSComponent},
-  { path: 'disciplina-cadastro', canActivate: [AuthGuard] , component: DisciplinaCadastroComponent},
+  { path: 'aluno-s', canActivate: [AuthGuard] , component: AlunoSComponent},
+  { path: 'professor-s', canActivate: [AuthGuard] , component: ProfessorSComponent},
+  { path: 'disciplina-s-cadastro/:type/:id', canActivate: [AuthGuard] , component: DisciplinaCadastroComponent},
+  { path: 'aluno-s-cadastro/:type/:id', canActivate: [AuthGuard] , component: AlunoCadastroComponent},
+  { path: 'professor-s-cadastro/:type/:id', canActivate: [AuthGuard] , component: ProfessorCadastroComponent},
   { path: 'historico-a/:id', canActivate: [AuthGuard] , component: HistoricoAComponent},
   { path: 'perfil-a/:id', canActivate: [AuthGuard] , component: PerfilAComponent},
 

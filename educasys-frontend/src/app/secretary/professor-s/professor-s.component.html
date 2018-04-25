@@ -6,7 +6,7 @@
 
   <div class="col-md-12 data-area">
     <div class="info-area">
-      <h2>Alunos</h2>
+      <h2>Professores</h2>
       <div class="row">
         <div class="input-group" style="width: 90%; margin-left: 15px; margin-bottom: 10px;">
           <input class="form-control" placeholder="Buscar..." name="dp"  ngbDatepicker #d="ngbDatepicker">
@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-primary btn-cons" (click)="goNew()" style="margin-bottom: 10px;">Cadastrar</button>
+      <button type="button" class="btn btn-primary btn-cons"(click)="goNew()" style="margin-bottom: 10px;">Cadastrar</button>
     </div>
     <div class="row" style="height: 100%;">
       <div class="teste2">
@@ -31,11 +31,11 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let aluno of alunos; let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
-            <td scope="row">{{aluno.st_nome_aluno}}</td>
-            <td class="glyphicon-center-3" style="text-align: center;">{{aluno.id_aluno}}</td>
-            <td class="glyphicon-center-3" style="text-align: center;">{{aluno.dt_data_nasc}}</td>
-            <td class="glyphicon-center-3" style="text-align: center;">{{aluno.co_telefone}}</td>
+          <tr *ngFor="let professor of professores; let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
+            <td scope="row">{{professor.st_nome_prof}}</td>
+            <td class="glyphicon-center-3" style="text-align: center;">{{professor.id_professor}}</td>
+            <td class="glyphicon-center-3" style="text-align: center;">{{professor.dt_data_nasc}}</td>
+            <td class="glyphicon-center-3" style="text-align: center;">{{professor.co_telefone}}</td>
           </tr>
           </tbody>
         </table>

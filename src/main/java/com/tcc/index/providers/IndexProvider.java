@@ -32,6 +32,8 @@ public class IndexProvider {
             return gson.toJson(new Usuario("001","Lucas Alves de Faria","2018/1","10/12/1995",true,"luke@email.com","37999999999","111111111-11","MG 111.111-11",0));
         }else  if(verify(loginO) == 1) {
             return gson.toJson(new Usuario("002", "Bruno Ferreira", "2018/1", "10/12/1995", true, "luke@email.com", "37999999999", "111111111-11", "MG 111.111-11", 1));
+        }else  if(verify(loginO) == 2) {
+            return gson.toJson(new Usuario("003", "Nastya Katyo", "2018/1", "10/12/1995", true, "luke@email.com", "37999999999", "111111111-11", "MG 111.111-11", 2));
         }else{
             return gson.toJson(new Usuario("ERROR", "ERROR-LOGIN", "", "", true, "", "", "", "",0));
         }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {Subscription} from "rxjs/Subscription";
+import {SecretariaService} from "../secretaria.service";
+import {Router} from "@angular/router";
+import {AlunoList} from "./aluno-s.model";
 
 @Component({
   selector: 'aluno-s-component',
@@ -14,26 +17,21 @@ export class AlunoSComponent implements OnInit {
   open: boolean = true;
   opened: string = 'open';
   closed: string = 'content';
-  selectedRow : Number;
+  selectedRow : number = -1;
   setClickedRow : Function;
 
-  disciplinas = [{
-    nome : "Web Avançado",
-    professor: "Bruno Ferreira",
-    cargaH : "60",
-    periodo: "2018/01"
-  },
-    {
-      nome : "Redes",
-      professor: "Everthon Valadão",
-      cargaH : "60",
-      periodo: "2018/01"
-    }];
+  alunos : AlunoList[];
 
-  constructor() {
+  constructor(private router: Router, private secretariaService: SecretariaService) {
     this.setClickedRow = function(index){
       this.selectedRow = index;
     }
+
+    secretariaService.getAlunos().subscribe(
+      alunos => {
+        this.alunos = alunos;
+      }
+    );
   }
 
   ngOnInit() {
@@ -43,5 +41,17 @@ export class AlunoSComponent implements OnInit {
 
   changeOpt(){
     this.open = !this.open;
+  }
+
+  goNew(){
+    this.router.navigate(['aluno-s-cadastro',1,0]);
+  }
+
+  goView(){
+    this.router.navigate(['aluno-s-cadastro',2,this.alunos[this.selectedRow].id_aluno]);
+  }
+
+  goEdit(){
+    this.router.navigate(['aluno-s-cadastro',3,this.alunos[this.selectedRow].id_aluno]);
   }
 }

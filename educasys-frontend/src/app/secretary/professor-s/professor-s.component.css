@@ -68,12 +68,31 @@
   color: white;
 }
 
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
+
 .inner-addon {
   position: relative;
 }
 
 .search:hover{
-    border:solid red;
+  border:solid red;
   cursor:pointer;
 }
 
