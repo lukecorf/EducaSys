@@ -55,4 +55,9 @@ export class ProfessorSComponent implements OnInit {
     this.router.navigate(['professor-s-cadastro',3,this.professores[this.selectedRow].id_professor]);
   }
 
+  goDelete(){
+    this.secretariaService.deleteById(this.professores[this.selectedRow].id_professor);
+    this.router.navigate(['professor-s']);
+  }
+
 }

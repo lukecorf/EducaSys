@@ -15,11 +15,17 @@ export class SecretariaService{
   private urlAById = 'http://localhost:8099/getAlunoById';
   private urlPById = 'http://localhost:8099/getProfessorById';
   private urlPSet = 'http://localhost:8099/saveProfessor';
+  private urlPUpdate = 'http://localhost:8099/updateProfessor';
+  private urlPDelete = 'http://localhost:8099/deleteProfessor';
 
   constructor(private http: HttpClient){}
 
   setProfessor(p:Professor):Observable<Professor>{
     return this.http.post(this.urlPSet,p);
+  }
+
+  updateProfessor(p:Professor):Observable<Professor>{
+    return this.http.post(this.urlPUpdate,p);
   }
 
   getDisciplinas():Observable<DisciplinaList[]>{
@@ -44,6 +50,10 @@ export class SecretariaService{
 
   getProfessorById(id: number):Observable<Professor>{
     return this.http.get<Professor>(this.urlPById+'/'+id);
+  }
+
+  deleteById(id: number): Observable<boolean>{
+    return this.http.delete(this.urlPDelete+'/'+id);
   }
 
 }

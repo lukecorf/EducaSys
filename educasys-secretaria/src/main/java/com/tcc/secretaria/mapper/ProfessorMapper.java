@@ -17,7 +17,7 @@ public class ProfessorMapper {
         pro.setDataN(null);
         pro.setEmail(p.getCo_email());
         pro.setEndereco(p.getSt_endereco());
-        pro.setId(p.getId_professor());
+        pro.setId(0);
         pro.setNome(p.getSt_nome_professor());
         pro.setRg(p.getdc_rg());
         pro.setSenha(p.getPw_senha_prof());

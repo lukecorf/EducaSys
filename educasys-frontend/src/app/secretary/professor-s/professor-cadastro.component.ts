@@ -61,8 +61,18 @@ export class ProfessorCadastroComponent implements OnInit {
   }
 
   goSave(){
-    this.professor.id_professor = 8;
-    console.log(this.professor);
-    this.secretariaService.setProfessor(this.professor);
+    this.professor.dt_data_nasc = null;
+    this.professor.url_img_professor = "";
+
+      this.secretariaService.setProfessor(this.professor).subscribe(professor => {
+        if(professor.st_nome_professor !== null){
+          this.router.navigate(['professor-s']);
+        }
+      });
+
+  }
+
+  goDelete(){
+
   }
 }

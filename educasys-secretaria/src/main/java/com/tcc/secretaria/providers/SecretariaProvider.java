@@ -6,6 +6,7 @@ import com.tcc.secretaria.Repositories.ProfessorRepository;
 import com.tcc.secretaria.database.Professor;
 import com.tcc.secretaria.mapper.ProfessorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -99,10 +100,17 @@ public class SecretariaProvider {
 
     }
 
-    @PostMapping("/saveProfessor")
+    @PostMapping(path="/saveProfessor",  consumes = "application/json", produces = "application/json")
     public String createProfessor(@RequestBody ProfessorDTO professorDTO){
             System.out.println("Entrou");
             Professor p = ProfessorMapper.DTOtoEntity(professorDTO);
             return gson.toJson(professorRepository.save(p));
+    }
+
+    @DeleteMapping("/deleteProfessor/{id}")
+    public String deleteProfessor(@PathVariable Long id) {
+        System.out.println("Delete");
+        professorRepository.deleteById(id);
+        return gson.toJson(false);
     }
 }
