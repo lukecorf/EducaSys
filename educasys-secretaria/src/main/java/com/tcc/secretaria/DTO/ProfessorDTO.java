@@ -12,8 +12,9 @@ public class ProfessorDTO {
     private String st_endereco ;
     private String pw_senha_prof;
     private Date dt_data_nasc;
+    private String url_img_professor;
 
-    public ProfessorDTO(Long id_professor, String st_nome_professor, String co_telefone, String co_email, String dc_cpf, String dc_rg, String st_endereco, String pw_senha_prof, Date dt_data_nasc) {
+    public ProfessorDTO(Long id_professor, String st_nome_professor, String co_telefone, String co_email, String dc_cpf, String dc_rg, String st_endereco, String pw_senha_prof, Date dt_data_nasc, String url_img_professor) {
         this.id_professor = id_professor;
         this.st_nome_professor = st_nome_professor;
         this.co_telefone = co_telefone;
@@ -23,6 +24,19 @@ public class ProfessorDTO {
         this.st_endereco = st_endereco;
         this.pw_senha_prof= pw_senha_prof;
         this.dt_data_nasc = dt_data_nasc;
+        this.url_img_professor = url_img_professor;
+    }
+
+    public ProfessorDTO() {
+
+    }
+
+    public String getUrl_img_professor() {
+        return url_img_professor;
+    }
+
+    public void setUrl_img_professor(String url_img_professor) {
+        this.url_img_professor = url_img_professor;
     }
 
     public Long getId_professor() {
@@ -95,5 +109,20 @@ public class ProfessorDTO {
 
     public void setDt_data_nasc(Date dt_data_nasc) {
         this.dt_data_nasc = dt_data_nasc;
+    }
+
+    @Override
+    public String toString() {
+        return "ProfessorDTO{" +
+                "id_professor=" + id_professor +
+                ", st_nome_professor='" + st_nome_professor + '\'' +
+                ", co_telefone='" + co_telefone + '\'' +
+                ", co_email='" + co_email + '\'' +
+                ", dc_cpf='" + dc_cpf + '\'' +
+                ", dc_rg='" + dc_rg + '\'' +
+                ", st_endereco='" + st_endereco + '\'' +
+                ", pw_senha_prof='" + pw_senha_prof + '\'' +
+                ", dt_data_nasc=" + dt_data_nasc +
+                '}';
     }
 }

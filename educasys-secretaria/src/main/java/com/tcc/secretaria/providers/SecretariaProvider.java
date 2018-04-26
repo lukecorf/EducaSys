@@ -2,17 +2,25 @@ package com.tcc.secretaria.providers;
 
 import com.google.gson.Gson;
 import com.tcc.secretaria.DTO.*;
+import com.tcc.secretaria.Repositories.ProfessorRepository;
+import com.tcc.secretaria.database.Professor;
+import com.tcc.secretaria.mapper.ProfessorMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class SecretariaProvider {
     Gson gson = new Gson();
+
+    @Autowired
+    ProfessorRepository professorRepository;
 
     @GetMapping(value = "/getDisciplinas")
     public @ResponseBody String getDisciplinas(){
@@ -38,17 +46,7 @@ public class SecretariaProvider {
         return gson.toJson(list);
     }
 
-    @GetMapping(value = "/getProfessores")
-    public @ResponseBody String getProfessores(){
-        ArrayList<ProfessorListDTO> list = new ArrayList<ProfessorListDTO>();
 
-        list.add(new ProfessorListDTO(1L,"Lucas Alves","10/12/1995","3799998888"));
-        list.add(new ProfessorListDTO(2L,"Rafaela Bitencourt","10/12/1995","3799998888"));
-        list.add(new ProfessorListDTO(3L,"João Paulo","10/12/1995","3799998888"));
-        list.add(new ProfessorListDTO(4L,"Rodrigo Silva","10/12/1995","3799998888"));
-
-        return gson.toJson(list);
-    }
 
     @GetMapping("/getDisciplinaById/{id}")
     public @ResponseBody String getDisciplinaById(@PathVariable Long id) {
@@ -85,21 +83,26 @@ public class SecretariaProvider {
 
     }
 
+    @GetMapping(value = "/getProfessores")
+    public @ResponseBody String getProfessores(){
+        System.out.println("Entrou no get professor");
+        List<Professor> list;
+        list = professorRepository.findAll();
+        return gson.toJson(ProfessorMapper.ListEntitytoListDTO(list));
+    }
+
     @GetMapping("/getProfessorById/{id}")
     public @ResponseBody String getProfessorById(@PathVariable Long id) {
-        System.out.println("ID: "+id);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        try {
-            date = sdf.parse("27/07/2008");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Professor p = professorRepository.getOne(id);
+        return gson.toJson(ProfessorMapper.EntitytoDTO(p));
 
-        ProfessorDTO professor = new ProfessorDTO(1L,"Lucas Alves","3399999999","luke@email.com","111111111111","mg11111111","Rua Dona Hortencia 158","123",date);
+    }
 
-        return gson.toJson(professor);
-
+    @PostMapping("/saveProfessor")
+    public String createProfessor(@RequestBody ProfessorDTO professorDTO){
+            System.out.println("Entrou");
+            Professor p = ProfessorMapper.DTOtoEntity(professorDTO);
+            return gson.toJson(professorRepository.save(p));
     }
 }

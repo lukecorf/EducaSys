@@ -59,4 +59,10 @@ export class ProfessorCadastroComponent implements OnInit {
   goBack(){
     this.router.navigate(['professor-s']);
   }
+
+  goSave(){
+    this.professor.id_professor = 8;
+    console.log(this.professor);
+    this.secretariaService.setProfessor(this.professor);
+  }
 }

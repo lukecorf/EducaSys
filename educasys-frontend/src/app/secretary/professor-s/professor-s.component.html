@@ -26,15 +26,15 @@
           <tr style="background-color: #374046; color:white;">
             <th scope="col">Nome</th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;" >Matricula</th>
-            <th scope="col" class="glyphicon-center-3" style="text-align: center;">Data de Nascimento</th>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;">Email</th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;">Telefone</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let professor of professores; let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
-            <td scope="row">{{professor.st_nome_prof}}</td>
+            <td scope="row">{{professor.st_nome_professor}}</td>
             <td class="glyphicon-center-3" style="text-align: center;">{{professor.id_professor}}</td>
-            <td class="glyphicon-center-3" style="text-align: center;">{{professor.dt_data_nasc}}</td>
+            <td class="glyphicon-center-3" style="text-align: center;">{{professor.co_email}}</td>
             <td class="glyphicon-center-3" style="text-align: center;">{{professor.co_telefone}}</td>
           </tr>
           </tbody>

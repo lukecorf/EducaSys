@@ -101,7 +101,7 @@
             <div class="col-md-12" style="margin-top: 15px;">
               <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-danger"  (click)="goBack()">Cancelar</button>
               <button *ngIf="disabledEdit" type="button" class="btn btn-outline-danger"  (click)="goBack()">Voltar</button>
-              <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-success align-bottom float-right">Salvar</button>
+              <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-success align-bottom float-right" (click)="goSave()">Salvar</button>
             </div>
           </div>
         </div>

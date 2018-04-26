@@ -14,8 +14,13 @@ export class SecretariaService{
   private urlDById = 'http://localhost:8099/getDisciplinaById';
   private urlAById = 'http://localhost:8099/getAlunoById';
   private urlPById = 'http://localhost:8099/getProfessorById';
+  private urlPSet = 'http://localhost:8099/saveProfessor';
 
   constructor(private http: HttpClient){}
+
+  setProfessor(p:Professor):Observable<Professor>{
+    return this.http.post(this.urlPSet,p);
+  }
 
   getDisciplinas():Observable<DisciplinaList[]>{
     return this.http.get<DisciplinaList[]>(this.urlD);
