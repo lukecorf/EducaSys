@@ -56,7 +56,17 @@ export class ProfessorSComponent implements OnInit {
   }
 
   goDelete(){
-    this.secretariaService.deleteById(this.professores[this.selectedRow].id_professor);
+    this.secretariaService.deleteById(this.professores[this.selectedRow].id_professor).subscribe(() => {
+      this.secretariaService.getProfessores().subscribe(
+        professores => {
+          this.professores = professores;
+        }
+      );
+      console.log("Excluido com sucesso");
+
+    },error => {
+      console.log("Erro ao excluir");
+    });
     this.router.navigate(['professor-s']);
   }
 

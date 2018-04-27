@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
+import { Response } from '@angular/http';
 import {Observable} from "rxjs/Observable";
 import {Disciplina, DisciplinaList} from "./disciplina-s/disciplina-s.model";
 import {Aluno, AlunoList} from "./aluno-s/aluno-s.model";
@@ -52,7 +53,7 @@ export class SecretariaService{
     return this.http.get<Professor>(this.urlPById+'/'+id);
   }
 
-  deleteById(id: number): Observable<boolean>{
+  deleteById(id: number): Observable<Response>{
     return this.http.delete(this.urlPDelete+'/'+id);
   }
 

@@ -6,6 +6,8 @@ import com.tcc.secretaria.Repositories.ProfessorRepository;
 import com.tcc.secretaria.database.Professor;
 import com.tcc.secretaria.mapper.ProfessorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -108,9 +110,11 @@ public class SecretariaProvider {
     }
 
     @DeleteMapping("/deleteProfessor/{id}")
-    public String deleteProfessor(@PathVariable Long id) {
+    public ResponseEntity deleteProfessor(@PathVariable Long id) {
         System.out.println("Delete");
         professorRepository.deleteById(id);
-        return gson.toJson(false);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("MyResponseHeader", "MyValue");
+        return new ResponseEntity<String>("Hello World", responseHeaders, HttpStatus.OK);
     }
 }
