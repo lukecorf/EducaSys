@@ -56,7 +56,8 @@ export class ProfessorSComponent implements OnInit {
   }
 
   goDelete(){
-    this.secretariaService.deleteById(this.professores[this.selectedRow].id_professor).subscribe(() => {
+    this.secretariaService.deleteProfessorById(this.professores[this.selectedRow].id_professor).subscribe(id => {
+      console.log('This is my ID: '+id);
       this.secretariaService.getProfessores().subscribe(
         professores => {
           this.professores = professores;

@@ -11,9 +11,12 @@ public class AlunoDTO {
     private String st_nome_mae ;
     private String st_endereco ;
     private String pw_senha_aluno ;
+    private String dc_cpf;
+    private String dc_rg;
     private Date dt_data_nasc;
+    private String url_img_aluno;
 
-    public AlunoDTO(Long id_aluno, String st_nome_aluno, String co_telefone, String co_email, String st_nome_pai, String st_nome_mae, String st_endereco, String pw_senha_aluno, Date dt_data_nasc) {
+    public AlunoDTO(Long id_aluno, String st_nome_aluno, String co_telefone, String co_email, String st_nome_pai, String st_nome_mae, String st_endereco, String pw_senha_aluno, String dc_cpf, String dc_rg, Date dt_data_nasc, String url_img_aluno) {
         this.id_aluno = id_aluno;
         this.st_nome_aluno = st_nome_aluno;
         this.co_telefone = co_telefone;
@@ -22,7 +25,38 @@ public class AlunoDTO {
         this.st_nome_mae = st_nome_mae;
         this.st_endereco = st_endereco;
         this.pw_senha_aluno = pw_senha_aluno;
+        this.dc_cpf = dc_cpf;
+        this.dc_rg = dc_rg;
         this.dt_data_nasc = dt_data_nasc;
+        this.url_img_aluno = url_img_aluno;
+    }
+
+    public AlunoDTO(){
+
+    }
+
+    public String getDc_cpf() {
+        return dc_cpf;
+    }
+
+    public void setDc_cpf(String dc_cpf) {
+        this.dc_cpf = dc_cpf;
+    }
+
+    public String getDc_rg() {
+        return dc_rg;
+    }
+
+    public void setDc_rg(String dc_rg) {
+        this.dc_rg = dc_rg;
+    }
+
+    public String getUrl_img_aluno() {
+        return url_img_aluno;
+    }
+
+    public void setUrl_img_aluno(String url_img_aluno) {
+        this.url_img_aluno = url_img_aluno;
     }
 
     public Long getId_aluno() {
@@ -95,5 +129,23 @@ public class AlunoDTO {
 
     public void setDt_data_nasc(Date dt_data_nasc) {
         this.dt_data_nasc = dt_data_nasc;
+    }
+
+    @Override
+    public String toString() {
+        return "AlunoDTO{" +
+                "id_aluno=" + id_aluno +
+                ", st_nome_aluno='" + st_nome_aluno + '\'' +
+                ", co_telefone='" + co_telefone + '\'' +
+                ", co_email='" + co_email + '\'' +
+                ", st_nome_pai='" + st_nome_pai + '\'' +
+                ", st_nome_mae='" + st_nome_mae + '\'' +
+                ", st_endereco='" + st_endereco + '\'' +
+                ", pw_senha_aluno='" + pw_senha_aluno + '\'' +
+                ", dc_cpf='" + dc_cpf + '\'' +
+                ", dc_rg='" + dc_rg + '\'' +
+                ", dt_data_nasc=" + dt_data_nasc +
+                ", url_img_aluno='" + url_img_aluno + '\'' +
+                '}';
     }
 }

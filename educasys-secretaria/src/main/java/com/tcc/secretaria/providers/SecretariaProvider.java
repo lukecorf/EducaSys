@@ -2,8 +2,11 @@ package com.tcc.secretaria.providers;
 
 import com.google.gson.Gson;
 import com.tcc.secretaria.DTO.*;
+import com.tcc.secretaria.Repositories.AlunoRepository;
 import com.tcc.secretaria.Repositories.ProfessorRepository;
+import com.tcc.secretaria.database.Aluno;
 import com.tcc.secretaria.database.Professor;
+import com.tcc.secretaria.mapper.AlunoMapper;
 import com.tcc.secretaria.mapper.ProfessorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +28,9 @@ public class SecretariaProvider {
     @Autowired
     ProfessorRepository professorRepository;
 
+    @Autowired
+    AlunoRepository alunoRepository;
+
     @GetMapping(value = "/getDisciplinas")
     public @ResponseBody String getDisciplinas(){
         ArrayList<DisciplinaListDTO> disciplinas = new ArrayList<DisciplinaListDTO>();
@@ -37,17 +43,7 @@ public class SecretariaProvider {
         return gson.toJson(disciplinas);
     }
 
-    @GetMapping(value = "/getAlunos")
-    public @ResponseBody String getAlunos(){
-        ArrayList<AlunoListDTO> list = new ArrayList<AlunoListDTO>();
 
-        list.add(new AlunoListDTO(1L,"Lucas Alves","10/12/1995","3799998888"));
-        list.add(new AlunoListDTO(2L,"Rafaela Bitencourt","10/12/1995","3799998888"));
-        list.add(new AlunoListDTO(3L,"João Paulo","10/12/1995","3799998888"));
-        list.add(new AlunoListDTO(4L,"Rodrigo Silva","10/12/1995","3799998888"));
-
-        return gson.toJson(list);
-    }
 
 
 
@@ -68,22 +64,36 @@ public class SecretariaProvider {
 
     }
 
+    @GetMapping(value = "/getAlunos")
+    public @ResponseBody String getAlunos(){
+        System.out.println("Entrou no get professor");
+        List<Aluno> list;
+        list = alunoRepository.findAll();
+        return gson.toJson(AlunoMapper.ListEntitytoListDTO(list));
+
+    }
+
     @GetMapping("/getAlunoById/{id}")
     public @ResponseBody String getAlunoById(@PathVariable Long id) {
-        System.out.println("ID: "+id);
+        Aluno a = alunoRepository.getOne(id);
+        return gson.toJson(AlunoMapper.EntitytoDTO(a));
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        try {
-            date = sdf.parse("27/07/2006");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    }
 
-        AlunoDTO aluno = new AlunoDTO(1L,"Lucas Alves","3399999999","luke@email.com","Rafael Jose","Edilamar Maria","Rua Dona Hortencia 158","123",date);
+    @PostMapping(path="/saveAluno",  consumes = "application/json", produces = "application/json")
+    public String createAluno(@RequestBody AlunoDTO alunoDTO){
+        System.out.println("Entrou no save Aluno");
+        System.out.println(alunoDTO.toString());
+        Aluno a = AlunoMapper.DTOtoEntity(alunoDTO);
+        return gson.toJson(alunoRepository.save(a));
+    }
 
-        return gson.toJson(aluno);
+    @DeleteMapping("/deleteAluno/{id}")
+    public String deleteAluno(@PathVariable Long id) {
+        System.out.println("Delete");
+        alunoRepository.deleteById(id);
 
+        return gson.toJson(id);
     }
 
     @GetMapping(value = "/getProfessores")
@@ -110,11 +120,10 @@ public class SecretariaProvider {
     }
 
     @DeleteMapping("/deleteProfessor/{id}")
-    public ResponseEntity deleteProfessor(@PathVariable Long id) {
+    public String deleteProfessor(@PathVariable Long id) {
         System.out.println("Delete");
         professorRepository.deleteById(id);
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("MyResponseHeader", "MyValue");
-        return new ResponseEntity<String>("Hello World", responseHeaders, HttpStatus.OK);
+
+        return gson.toJson(id);
     }
 }

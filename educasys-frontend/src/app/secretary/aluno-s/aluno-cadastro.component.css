@@ -36,6 +36,8 @@
   padding-top: 10px;
   background: #d8d6d7;
   height: 92%;
+  overflow-x: hidden;
+  overflow-y:auto;
 }
 
 .data{

@@ -54,4 +54,20 @@ export class AlunoSComponent implements OnInit {
   goEdit(){
     this.router.navigate(['aluno-s-cadastro',3,this.alunos[this.selectedRow].id_aluno]);
   }
+
+  goDelete(){
+    this.secretariaService.deleteAlunoById(this.alunos[this.selectedRow].id_aluno).subscribe(id => {
+      console.log('This is my ID: '+id);
+      this.secretariaService.getAlunos().subscribe(
+        alunos => {
+          this.alunos = alunos;
+        }
+      );
+      console.log("Excluido com sucesso");
+
+    },error => {
+      console.log("Erro ao excluir");
+    });
+    this.router.navigate(['aluno-s']);
+  }
 }

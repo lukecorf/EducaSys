@@ -26,7 +26,7 @@
           <tr style="background-color: #374046; color:white;">
             <th scope="col">Nome</th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;" >Matricula</th>
-            <th scope="col" class="glyphicon-center-3" style="text-align: center;">Data de Nascimento</th>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;">Email</th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;">Telefone</th>
           </tr>
           </thead>
@@ -34,7 +34,7 @@
           <tr *ngFor="let aluno of alunos; let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
             <td scope="row">{{aluno.st_nome_aluno}}</td>
             <td class="glyphicon-center-3" style="text-align: center;">{{aluno.id_aluno}}</td>
-            <td class="glyphicon-center-3" style="text-align: center;">{{aluno.dt_data_nasc}}</td>
+            <td class="glyphicon-center-3" style="text-align: center;">{{aluno.co_email}}</td>
             <td class="glyphicon-center-3" style="text-align: center;">{{aluno.co_telefone}}</td>
           </tr>
           </tbody>
@@ -43,7 +43,7 @@
       <div class="col-md-1">
         <button class="btn btn-lg btn-outline-primary buttons" [disabled]="(selectedRow<0)" (click)="goView()"><mat-icon>visibility</mat-icon></button><br>
         <button class="btn btn-lg btn-outline-success buttons" [disabled]="(selectedRow<0)" (click)="goEdit()"><mat-icon>create</mat-icon></button><br>
-        <button class="btn btn-lg btn-outline-danger buttons"  [disabled]="(selectedRow<0)" ><mat-icon>delete</mat-icon></button>
+        <button class="btn btn-lg btn-outline-danger buttons"  [disabled]="(selectedRow<0)" (click)="goDelete()"><mat-icon>delete</mat-icon></button>
       </div>
     </div>
   </div>

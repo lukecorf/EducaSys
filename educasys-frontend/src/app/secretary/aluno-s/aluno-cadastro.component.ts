@@ -59,4 +59,16 @@ export class AlunoCadastroComponent implements OnInit {
     this.router.navigate(['aluno-s']);
   }
 
+  goSave(){
+    this.aluno.dt_data_nasc = null;
+    this.aluno.url_img_aluno = "";
+
+    this.secretariaService.setAluno(this.aluno).subscribe(aluno => {
+      if(aluno.st_nome_aluno !== null){
+        this.router.navigate(['aluno-s']);
+      }
+    });
+
+  }
+
 }
