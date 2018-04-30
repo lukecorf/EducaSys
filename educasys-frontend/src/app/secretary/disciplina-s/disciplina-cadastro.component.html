@@ -8,7 +8,19 @@
     <h2>{{title}} Disciplina</h2>
     <div class="row" style="height:100%;">
       <div class="col-md-6 teste">
+
         <div class="row" style="height: 50%">
+          <div class = "row" style="width: 100%; margin-right: 0; margin-left: 0;" >
+            <div class="col-md-6">
+              <div ngbDropdown class="d-inline-block" style="margin-top: 15px; width: 100%;">
+                <button class="btn btn-outline-dark" id="dropdownBasic1" style="width: 60%" ngbDropdownToggle>{{professorText}}</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button class="dropdown-item"*ngFor="let professor of professores; let i = index" (click)="setClickedRow3(i)" [class.active]="i == selectedRow3">{{professor.st_nome_professor}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="width: 100%; margin-right: 0; margin-left: 0;">
           <div class="col-md-6">
             <label for="nome-disciplina">Nome Disciplina:</label>
             <input type="text" name="st_nome" #st_nome = "ngModel" [(ngModel)]="disciplina.st_nome" id="nome-disciplina" [disabled]="disabledEdit" class="form-control" placeholder="Digite o nome...">
@@ -21,13 +33,14 @@
             <label for="Descricao">Descrição:</label>
             <textarea class="form-control" name="tx_descricao" #tx_descricao = "ngModel" [(ngModel)]="disciplina.tx_descricao" [disabled]="disabledEdit" rows="5" id="descricao"></textarea>
           </div>
+          </div>
         </div>
         <div class="row" style="height: 50%">
 
           <div class="col-md-12">
           <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-danger" style=" margin-bottom: 0; position: absolute; bottom: 0;" (click)="goBack()">Cancelar</button>
           <button *ngIf="disabledEdit" type="button" class="btn btn-outline-danger" style=" margin-bottom: 0; position: absolute; bottom: 0;" (click)="goBack()">Voltar</button>
-          <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-success align-bottom float-right btn-salvar">Salvar</button>
+          <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-success align-bottom float-right btn-salvar"(click)="goSave()">Salvar</button>
           </div>
         </div>
       </div>
@@ -67,7 +80,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body" style="max-height: 80%; overflow-y: auto;">
     <div class="input-group" style="width: 90%; margin-left: 15px; margin-bottom: 10px;">
       <input class="form-control" placeholder="Buscar..." name="dp"  ngbDatepicker #d="ngbDatepicker">
       <div class="input-group-append">
@@ -75,6 +88,18 @@
           <mat-icon style="vertical-align: middle;">search</mat-icon>
         </button>
       </div>
+      <table class="table tabela" style="margin-top: 10px;">
+        <thead>
+        <tr style="background-color: #374046; color:white;">
+          <th scope="col" style="width:75%;"class="glyphicon-center-3"  >Nome Aluno</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let a of alunos; let j = index" (click)="setClickedRow2(j)" [class.active]="j == selectedRow2" >
+          <td class="glyphicon-center-3">{{a.st_nome_aluno}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="modal-footer">

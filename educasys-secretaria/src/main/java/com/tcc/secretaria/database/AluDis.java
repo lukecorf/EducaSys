@@ -1,4 +1,4 @@
-package com.tcc.index.database;
+package com.tcc.secretaria.database;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,6 +26,12 @@ public class AluDis {
     @NotNull
     @Column(name = "NU_FALTAS")
     private float faltas;
+
+    public AluDis(@NotNull Disciplina disciplinafk, @NotNull Aluno alunofk, @NotNull float faltas) {
+        this.disciplinafk = disciplinafk;
+        this.alunofk = alunofk;
+        this.faltas = faltas;
+    }
 
     public float getFaltas() {
         return faltas;

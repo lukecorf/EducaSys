@@ -14,6 +14,10 @@ public class AlunoListDTO {
         this.co_telefone = co_telefone;
     }
 
+    public AlunoListDTO(){
+
+    }
+
     public Long getId_aluno() {
         return id_aluno;
     }

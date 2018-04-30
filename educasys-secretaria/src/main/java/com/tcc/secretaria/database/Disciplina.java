@@ -1,9 +1,8 @@
-package com.tcc.index.database;
+package com.tcc.secretaria.database;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 
 @Entity
 @Table(name = "TBL_DISCIPLINA")
@@ -100,5 +99,18 @@ public class Disciplina {
 
     public void setProfessorfk(Professor professorfk) {
         this.professorfk = professorfk;
+    }
+
+    @Override
+    public String toString() {
+        return "Disciplina{" +
+                "codigo=" + codigo +
+                ", nome='" + nome + '\'' +
+                ", professor='" + professor + '\'' +
+                ", cargaH=" + cargaH +
+                ", descricao='" + descricao + '\'' +
+                ", img='" + img + '\'' +
+                ", professorfk=" + professorfk +
+                '}';
     }
 }

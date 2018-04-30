@@ -2,11 +2,16 @@ package com.tcc.secretaria.providers;
 
 import com.google.gson.Gson;
 import com.tcc.secretaria.DTO.*;
+import com.tcc.secretaria.Repositories.AluDisRepository;
 import com.tcc.secretaria.Repositories.AlunoRepository;
+import com.tcc.secretaria.Repositories.DisciplinaRepository;
 import com.tcc.secretaria.Repositories.ProfessorRepository;
+import com.tcc.secretaria.database.AluDis;
 import com.tcc.secretaria.database.Aluno;
+import com.tcc.secretaria.database.Disciplina;
 import com.tcc.secretaria.database.Professor;
 import com.tcc.secretaria.mapper.AlunoMapper;
+import com.tcc.secretaria.mapper.DisciplinaMapper;
 import com.tcc.secretaria.mapper.ProfessorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -31,21 +36,20 @@ public class SecretariaProvider {
     @Autowired
     AlunoRepository alunoRepository;
 
+    @Autowired
+    DisciplinaRepository disciplinaRepository;
+
+    @Autowired
+    AluDisRepository aluDisRepository;
+
     @GetMapping(value = "/getDisciplinas")
     public @ResponseBody String getDisciplinas(){
         ArrayList<DisciplinaListDTO> disciplinas = new ArrayList<DisciplinaListDTO>();
 
-        disciplinas.add(new DisciplinaListDTO(1L,"Web Avançado","Bruno Ferreira",60,"23/12"));
-        disciplinas.add(new DisciplinaListDTO(2L,"Redes","Everthon Valadão",60,"11/11"));
-        disciplinas.add(new DisciplinaListDTO(3L,"Banco de Dados","Patricia Proença",30,"10/12"));
-        disciplinas.add(new DisciplinaListDTO(4L,"Mobile","Diego Mello",30,"13/10"));
-
-        return gson.toJson(disciplinas);
+        List<Disciplina> list;
+        list = disciplinaRepository.findAll();
+        return gson.toJson(DisciplinaMapper.ListEntitytoListDTO(list));
     }
-
-
-
-
 
     @GetMapping("/getDisciplinaById/{id}")
     public @ResponseBody String getDisciplinaById(@PathVariable Long id) {
@@ -58,10 +62,27 @@ public class SecretariaProvider {
         list.add(new AlunoListDTO(3L,"João Paulo","10/12/1995","3799998888"));
         list.add(new AlunoListDTO(4L,"Rodrigo Silva","10/12/1995","3799998888"));
 
-        DisciplinaDTO disciplina = new DisciplinaDTO(1l,"Web Avançado",60,"Abrange as mais novas tecnologias de desenvolvimento web","Bruno Ferreira",list);
+        DisciplinaDTO disciplina = new DisciplinaDTO(1l,"Web Avançado",60,"Abrange as mais novas tecnologias de desenvolvimento web","Bruno Ferreira","",1L,list);
 
         return gson.toJson(disciplina);
 
+    }
+
+    @PostMapping(path="/saveDisciplina",  consumes = "application/json", produces = "application/json")
+    public String createDisciplna (@RequestBody DisciplinaDTO disciplinaDTO){
+        System.out.println("Entrou no save Disciplina");
+        System.out.println(disciplinaDTO.toString());
+
+        Disciplina d = DisciplinaMapper.DTOtoEntity(disciplinaDTO);
+        Disciplina d2 = disciplinaRepository.save(d);
+
+        for(AlunoListDTO aluno : disciplinaDTO.getLs_alunos()){
+            Aluno a = new Aluno();
+            a.setId(aluno.getId_aluno());
+            aluDisRepository.save(new AluDis(d2,a,0));
+        }
+
+        return gson.toJson(disciplinaDTO);
     }
 
     @GetMapping(value = "/getAlunos")

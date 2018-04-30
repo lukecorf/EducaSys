@@ -8,15 +8,23 @@ public class DisciplinaDTO {
     private int nu_carga_horaria;
     private String tx_descricao;
     private String st_nome_prof;
+    private String url_img;
+    private Long id_professor;
     private ArrayList<AlunoListDTO> ls_alunos;
 
-    public DisciplinaDTO(Long id_disciplina, String st_nome, int nu_carga_horaria, String tx_descricao, String st_nome_prof, ArrayList<AlunoListDTO> ls_alunos) {
+    public DisciplinaDTO(Long id_disciplina, String st_nome, int nu_carga_horaria, String tx_descricao, String st_nome_prof, String url_img, Long id_professor, ArrayList<AlunoListDTO> ls_alunos) {
         this.id_disciplina = id_disciplina;
         this.st_nome = st_nome;
         this.nu_carga_horaria = nu_carga_horaria;
         this.tx_descricao = tx_descricao;
         this.st_nome_prof = st_nome_prof;
+        this.url_img = url_img;
+        this.id_professor = id_professor;
         this.ls_alunos = ls_alunos;
+    }
+
+    public DisciplinaDTO(){
+
     }
 
     public Long getId_disciplina() {
@@ -57,6 +65,22 @@ public class DisciplinaDTO {
 
     public void setSt_nome_prof(String st_nome_prof) {
         this.st_nome_prof = st_nome_prof;
+    }
+
+    public String getUrl_img() {
+        return url_img;
+    }
+
+    public void setUrl_img(String url_img) {
+        this.url_img = url_img;
+    }
+
+    public Long getId_professor() {
+        return id_professor;
+    }
+
+    public void setId_professor(Long id_professor) {
+        this.id_professor = id_professor;
     }
 
     public ArrayList<AlunoListDTO> getLs_alunos() {

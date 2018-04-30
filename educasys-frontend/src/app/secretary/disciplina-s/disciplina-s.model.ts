@@ -15,6 +15,8 @@ export class Disciplina{
               public nu_carga_horaria?: number,
               public tx_descricao?: string,
               public st_nome_prof?: string,
-              public ls_alunos?: AlunoList[],
+              public url_img?: string,
+              public ls_alunos?: Array<AlunoList>,
+              public id_professor?: number,
   ){}
 }

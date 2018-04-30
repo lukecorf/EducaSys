@@ -9,9 +9,9 @@ import {Professor, ProfessorList} from "./professor-s/professor-s.model";
 export class SecretariaService{
 
   private urlD = 'http://localhost:8099/getDisciplinas';
-
-
   private urlDById = 'http://localhost:8099/getDisciplinaById';
+  private urlDSet = 'http://localhost:8099/saveDisciplina';
+
   private urlA = 'http://localhost:8099/getAlunos';
   private urlAById = 'http://localhost:8099/getAlunoById';
   private urlASet = 'http://localhost:8099/saveAluno';
@@ -26,20 +26,17 @@ export class SecretariaService{
 
   constructor(private http: HttpClient){}
 
-
-
-
-
   getDisciplinas():Observable<DisciplinaList[]>{
     return this.http.get<DisciplinaList[]>(this.urlD);
   }
 
-
-
-
-
   getDisciplinaById(id: number):Observable<Disciplina>{
     return this.http.get<Disciplina>(this.urlDById+'/'+id);
+  }
+
+  setDisciplina(d:Disciplina):Observable<Disciplina>{
+    console.log("Enviei a disciplina");
+    return this.http.post(this.urlDSet,d);
   }
 
   getAlunos():Observable<AlunoList[]>{
