@@ -61,7 +61,7 @@ export class AlunoCadastroComponent implements OnInit {
 
   goSave(){
     this.aluno.dt_data_nasc = null;
-    this.aluno.url_img_aluno = "";
+    this.aluno.url_img_aluno = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
 
     this.secretariaService.setAluno(this.aluno).subscribe(aluno => {
       if(aluno.st_nome_aluno !== null){

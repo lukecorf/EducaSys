@@ -5,12 +5,14 @@ import {Disciplina, DisciplinaList} from "./disciplina-s/disciplina-s.model";
 import {Aluno, AlunoList} from "./aluno-s/aluno-s.model";
 import {Professor, ProfessorList} from "./professor-s/professor-s.model";
 
+
 @Injectable()
 export class SecretariaService{
 
   private urlD = 'http://localhost:8099/getDisciplinas';
   private urlDById = 'http://localhost:8099/getDisciplinaById';
   private urlDSet = 'http://localhost:8099/saveDisciplina';
+  private urlDDelete = 'http://localhost:8099/deleteDisciplina';
 
   private urlA = 'http://localhost:8099/getAlunos';
   private urlAById = 'http://localhost:8099/getAlunoById';
@@ -49,6 +51,10 @@ export class SecretariaService{
 
   setAluno(a:Aluno):Observable<Aluno>{
     return this.http.post(this.urlASet,a);
+  }
+
+  deleteDisciplinaById(id: number): Observable<any>{
+    return this.http.delete(this.urlDDelete+'/'+id);
   }
 
   updateAluno(p:Professor):Observable<Professor>{

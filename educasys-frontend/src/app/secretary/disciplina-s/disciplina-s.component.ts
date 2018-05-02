@@ -55,4 +55,20 @@ export class DisciplinaSComponent implements OnInit {
     this.router.navigate(['disciplina-s-cadastro',3,this.disciplinas[this.selectedRow].nuId]);
   }
 
+  goDelete(){
+    this.secretariaService.deleteDisciplinaById(this.disciplinas[this.selectedRow].nuId).subscribe(id => {
+      console.log('This is my ID: '+id);
+      this.secretariaService.getDisciplinas().subscribe(
+        disciplinas => {
+          this.disciplinas = disciplinas;
+        }
+      );
+      console.log("Excluido com sucesso");
+
+    },error => {
+      console.log("Erro ao excluir");
+    });
+    this.router.navigate(['disciplina-s']);
+  }
+
 }

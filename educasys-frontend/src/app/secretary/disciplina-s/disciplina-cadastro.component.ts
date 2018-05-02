@@ -6,7 +6,9 @@ import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SecretariaService} from "../secretaria.service";
 import {AlunoList} from "../aluno-s/aluno-s.model";
-import {ProfessorList} from "../professor-s/professor-s.model";
+import {Professor, ProfessorList} from "../professor-s/professor-s.model";
+import {Upload} from "../secretaria.model";
+import {FirebaseService} from "../firebase.service";
 
 @Component({
   selector: 'disciplina-cadastro-component',
@@ -34,8 +36,10 @@ export class DisciplinaCadastroComponent implements OnInit {
   disciplina: Disciplina;
   alunos: AlunoList[];
   professores: ProfessorList[];
+  selectedFiles: FileList;
+  currentUpload: Upload;
 
-  constructor( private modalService: NgbModal,private router: Router, private route:ActivatedRoute, private secretariaService: SecretariaService ) {
+  constructor( private modalService: NgbModal,private router: Router, private route:ActivatedRoute, private secretariaService: SecretariaService, private firebaseService: FirebaseService ) {
 
     this.disciplina = new Disciplina();
     this.disciplina.ls_alunos = [];
@@ -47,6 +51,7 @@ export class DisciplinaCadastroComponent implements OnInit {
       this.title= 'Visualizar';
       this.id = route.snapshot.params['id'];
       this.getDisciplina();
+      this.getProfessores()
     }else if(route.snapshot.params['type'] == 3){
       this.title= 'Editar';
       this.id = route.snapshot.params['id'];
@@ -68,20 +73,24 @@ export class DisciplinaCadastroComponent implements OnInit {
     }
   }
 
-  getProfessores(){
-    this.secretariaService.getProfessores().subscribe(
-      professores => {
-        this.professores = professores;
-      }
-    );
-  }
-
   getDisciplina(){
     this.secretariaService.getDisciplinaById(this.id).subscribe(
       disciplina => {
         this.disciplina = disciplina;
       }
     );
+  }
+
+  getProfessores(){
+    this.secretariaService.getProfessores().subscribe(
+      professores => {
+        this.professores = professores;
+      }
+    );
+
+    // if(this.route.snapshot.params['type'] == 2 || this.route.snapshot.params['type'] == 3){
+    //   this.professorText = this.professores.find(i => i.id_professor === this.disciplina.id_professor).st_nome_professor;
+    // }
   }
 
   ngOnInit() {
@@ -128,15 +137,15 @@ export class DisciplinaCadastroComponent implements OnInit {
   }
 
   goSave(){
+    let file = this.selectedFiles.item(0)
+    this.currentUpload = new Upload(file);
     this.disciplina.id_professor = this.professores[this.selectedRow3].id_professor;
     this.disciplina.st_nome_prof = this.professores[this.selectedRow3].st_nome_professor;
-    this.disciplina.url_img = "";
     this.disciplina.id_disciplina = 0;
+    this.firebaseService.pushUpload(this.currentUpload,this.disciplina);
+  }
 
-    this.secretariaService.setDisciplina(this.disciplina).subscribe(disciplina => {
-      if(disciplina.st_nome !== null){
-        this.router.navigate(['disciplina-s']);
-      }
-    });
+  selectFile(event){
+    this.selectedFiles = event.target.files;
   }
 }

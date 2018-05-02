@@ -4,8 +4,10 @@ import {FormsModule} from "@angular/forms";
 import {AppRoutingModule} from './app-routing.module';
 import { MatIconModule} from "@angular/material";
 import { ChartsModule } from 'ng2-charts';
-import {NgxMaskModule} from 'ngx-mask';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgxMaskModule } from 'ngx-mask';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FirebaseConfig } from './../environments/firebase.config';
+import { AngularFireModule } from 'angularfire2/index';
 import {} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
@@ -41,6 +43,8 @@ import { AlunoCadastroComponent } from './secretary/aluno-s/aluno-cadastro.compo
 import { ProfessorSComponent } from './secretary/professor-s/professor-s.component';
 import { ProfessorCadastroComponent } from './secretary/professor-s/professor-cadastro.component';
 import {SecretariaService} from "./secretary/secretaria.service";
+import {AngularFireDatabase} from "angularfire2/database";
+import {FirebaseService} from "./secretary/firebase.service";
 
 @NgModule({
   declarations: [
@@ -75,10 +79,11 @@ import {SecretariaService} from "./secretary/secretaria.service";
     FormsModule,
     MatIconModule,
     ChartsModule,
+    AngularFireModule.initializeApp(FirebaseConfig),
     NgxMaskModule.forRoot(),
-    NgbModule.forRoot()
-  ],
-  providers: [LoginService, TeacherDataService, SecretariaService, UserDataService, LoginInfoService, AuthService, AuthGuard, UserData],
+    NgbModule.forRoot(),
+ ],
+  providers: [LoginService, TeacherDataService, SecretariaService, UserDataService, LoginInfoService, AuthService, AuthGuard, UserData, AngularFireDatabase, FirebaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -62,7 +62,7 @@ export class ProfessorCadastroComponent implements OnInit {
 
   goSave(){
     this.professor.dt_data_nasc = null;
-    this.professor.url_img_professor = "";
+    this.professor.url_img_professor = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
 
       this.secretariaService.setProfessor(this.professor).subscribe(professor => {
         if(professor.st_nome_professor !== null){

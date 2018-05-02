@@ -44,8 +44,6 @@ public class SecretariaProvider {
 
     @GetMapping(value = "/getDisciplinas")
     public @ResponseBody String getDisciplinas(){
-        ArrayList<DisciplinaListDTO> disciplinas = new ArrayList<DisciplinaListDTO>();
-
         List<Disciplina> list;
         list = disciplinaRepository.findAll();
         return gson.toJson(DisciplinaMapper.ListEntitytoListDTO(list));
@@ -53,19 +51,7 @@ public class SecretariaProvider {
 
     @GetMapping("/getDisciplinaById/{id}")
     public @ResponseBody String getDisciplinaById(@PathVariable Long id) {
-        System.out.println("ID: "+id);
-
-        ArrayList<AlunoListDTO> list = new ArrayList<AlunoListDTO>();
-
-        list.add(new AlunoListDTO(1L,"Lucas Alves","10/12/1995","3799998888"));
-        list.add(new AlunoListDTO(2L,"Rafaela Bitencourt","10/12/1995","3799998888"));
-        list.add(new AlunoListDTO(3L,"João Paulo","10/12/1995","3799998888"));
-        list.add(new AlunoListDTO(4L,"Rodrigo Silva","10/12/1995","3799998888"));
-
-        DisciplinaDTO disciplina = new DisciplinaDTO(1l,"Web Avançado",60,"Abrange as mais novas tecnologias de desenvolvimento web","Bruno Ferreira","",1L,list);
-
-        return gson.toJson(disciplina);
-
+        return gson.toJson(DisciplinaMapper.EntitytoDTO(disciplinaRepository.getOne(id)));
     }
 
     @PostMapping(path="/saveDisciplina",  consumes = "application/json", produces = "application/json")
@@ -83,6 +69,14 @@ public class SecretariaProvider {
         }
 
         return gson.toJson(disciplinaDTO);
+    }
+
+    @DeleteMapping("/deleteDisciplina/{id}")
+    public String deleteDisciplina(@PathVariable Long id) {
+        System.out.println("Delete");
+        disciplinaRepository.deleteById(id);
+        aluDisRepository.deleteByIdDisciplina(id);
+        return gson.toJson(id);
     }
 
     @GetMapping(value = "/getAlunos")
@@ -113,7 +107,7 @@ public class SecretariaProvider {
     public String deleteAluno(@PathVariable Long id) {
         System.out.println("Delete");
         alunoRepository.deleteById(id);
-
+        aluDisRepository.deleteByIdAluno(id);
         return gson.toJson(id);
     }
 

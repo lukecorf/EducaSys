@@ -30,6 +30,10 @@
             <input type="number" name="nu_carga_horaria" #nu_carga_horaria = "ngModel" [(ngModel)]="disciplina.nu_carga_horaria" max="120" min="1" id="hora-disciplina" [disabled]="disabledEdit" class="form-control" placeholder="Insira a carga horaria...">
           </div>
           <div class="col-md-12">
+            <label for="imagem-input">Imagem Disciplina:</label><br>
+            <input type="file" id="imagem-input" (change)="selectFile($event)"/>
+          </div>
+          <div class="col-md-12">
             <label for="Descricao">Descrição:</label>
             <textarea class="form-control" name="tx_descricao" #tx_descricao = "ngModel" [(ngModel)]="disciplina.tx_descricao" [disabled]="disabledEdit" rows="5" id="descricao"></textarea>
           </div>
