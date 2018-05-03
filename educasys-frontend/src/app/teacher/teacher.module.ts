@@ -1,4 +1,4 @@
-import {Disciplina} from "../student/home-a/models/materia.model";
+
 export class Atividade{
   id_atividade : number;
   dt_data : Date;

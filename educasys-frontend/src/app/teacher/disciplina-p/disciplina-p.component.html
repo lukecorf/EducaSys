@@ -42,79 +42,22 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-
-          <th scope="row">Avaliação 1</th>
-          <td class="glyphicon-center-3" >20.0</td>
-          <td class="glyphicon-center-3" >24/09</td>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">delete</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
-        </tr>
-        <tr>
-          <th scope="row">Avaliação 2</th>
-          <td class="glyphicon-center-3" >20.0</td>
-          <td class="glyphicon-center-3" >01/10</td>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">delete</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
-        </tr>
-        <tr>
-          <th scope="row">Avaliação 3</th>
-          <td class="glyphicon-center-3" >20.0</td>
-          <td class="glyphicon-center-3" >12/11</td>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">delete</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
-        </tr>
-        <tr>
-          <th scope="row">Lista 1</th>
-          <td class="glyphicon-center-3" >5.0</td>
-          <td class="glyphicon-center-3" >12/09</td>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">delete</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
-        </tr>
-        <tr>
-          <th scope="row">Lista 2</th>
-          <td class="glyphicon-center-3" >5.0</td>
-          <td class="glyphicon-center-3" >28/09</td>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">delete</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
-        </tr>
-        <tr>
-          <th scope="row">Trabalho 1</th>
-          <td class="glyphicon-center-3" >15.0</td>
-          <td class="glyphicon-center-3" >19/10</td>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">delete</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
-        </tr>
-        <tr>
-          <th scope="row">Trabalho 2</th>
-          <td class="glyphicon-center-3" >15.0</td>
-          <td class="glyphicon-center-3" >06/12</td>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">delete</mat-icon></th>
-          <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
-        </tr>
+          <tr *ngFor="let atividade of atividades; let i = index">
+            <td scope="row">{{atividade.st_nome_atividade}}</td>
+            <td class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
+            <td class="glyphicon-center-3" >{{atividade.dt_data}}</td>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon (click)="deleteAtividade(atividade.id_atividade)" style="cursor: pointer;">delete</mat-icon></th>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
+          </tr>
         </tbody>
       </table>
     </div>
-    <div class="col-md-2 buttom-area">
-      <div class="text-center button-disciplina button-border" (click)="openModal(1);openM(content)">
-        <h2>Realizar Chamada</h2>
-      </div>
-      <div class="text-center button-disciplina button-border" (click)="openModal(2);openM(content)">
-        <h2>Criar Avaliação</h2>
-      </div>
-      <div class="text-center button-disciplina button-border" (click)="openModal(3);openM(content)">
-        <h2>Enviar Material</h2>
-      </div>
-      <div class="text-center button-disciplina">
-        <h2>Enviar Email</h2>
-      </div>
+    <div class="col-md-2">
+      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="openModal(1);openM(content)"><mat-icon class="buttons">assignment</mat-icon> Efetuar chamada</button><br>
+      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="openModal(2);openM(content)"><mat-icon class="buttons">create</mat-icon> Criar avaliação</button><br>
+      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="openModal(3);openM(content)"><mat-icon class="buttons">cloud_upload</mat-icon> Enviar material</button><br>
+      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="goEdit()"><mat-icon class="buttons">email</mat-icon> Enviar Email</button><br>
     </div>
   </div>
 
@@ -134,23 +77,11 @@
           </tr>
           </thead>
           <tbody class="body-table">
-          <tr>
-            <th scope="row">tabalho.pdf</th>
-            <td class="glyphicon-center-3">0.24 mb</td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">delete</mat-icon></td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_download</mat-icon></td>
-          </tr>
-          <tr>
-            <th scope="row">lista_1.pdf</th>
-            <td class="glyphicon-center-3">0.43 mb</td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">delete</mat-icon></td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_download</mat-icon></td>
-          </tr>
-          <tr>
-            <th scope="row">slide_web_das_coisas.pdf</th>
-            <td class="glyphicon-center-3">1.2 mb</td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">delete</mat-icon></td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_download</mat-icon></td>
+          <tr *ngFor="let arquivo of arquivos; let i = index"  >
+            <td scope="row">{{arquivo.st_nome_arquivo}}</td>
+            <td class="glyphicon-center-3" >{{(arquivo.nu_tamanho_arquivo/1024)/1024}} mb</td>
+            <td class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="deleteArquivo(arquivo.id_arquivo)">delete</mat-icon></td>
+            <td class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="openUrl(arquivo.url_arquivo)">file_download</mat-icon></td>
           </tr>
           </tbody>
         </table>
@@ -199,26 +130,12 @@
           </tr>
           </thead>
           <tbody class="body-table">
-          <tr>
-            <th scope="row">Trabalho 1</th>
-            <td class="glyphicon-center-3">15.0</td>
-            <td class="glyphicon-center-3">19/10</td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">mode_edit</mat-icon></td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">delete</mat-icon></td>
-          </tr>
-          <tr>
-            <th scope="row">Lista 1</th>
-            <td class="glyphicon-center-3">5.0</td>
-            <td class="glyphicon-center-3">12/09</td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">mode_edit</mat-icon></td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">delete</mat-icon></td>
-          </tr>
-          <tr>
-            <th scope="row">Lista 2</th>
-            <td class="glyphicon-center-3">5.0</td>
-            <td class="glyphicon-center-3">28/09</td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">mode_edit</mat-icon></td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">delete</mat-icon></td>
+          <tr *ngFor="let atividade of atividades; let i = index"  >
+            <td *ngIf="atividade.bo_tipo_atividade" scope="row">{{atividade.st_nome_atividade}}</td>
+            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
+            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.dt_data}}</td>
+            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver">mode_edit</mat-icon></td>
+            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="deleteAtividade(atividade.id_atividade)" >delete</mat-icon></td>
           </tr>
           </tbody>
         </table>
@@ -238,7 +155,21 @@
   </div>
   <div class="modal-body" style="max-height: 80%; overflow-y: auto;">
     <div *ngIf="opc===1">
-
+      Selecione os alunos que faltaram
+      <table class="table tabela" style="margin-top: 10px;">
+        <thead>
+          <tr style="background-color: #374046; color:white;">
+            <th scope="col" style="width:75%;"class="glyphicon-center-3"  >Nome Aluno</th>
+            <th scope="col" style="width:25%;"class="glyphicon-center-3"  >Faltas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of alunos; let j = index" >
+            <td class="glyphicon-center-3">{{a.st_nome_aluno}}</td>
+            <td class="glyphicon-center-3"><input type="checkbox"/></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div *ngIf="opc===2">
       <div style="padding-bottom: 10px;" class="input-group">
@@ -271,13 +202,16 @@
       </div>
     </div>
     <div *ngIf="opc===3">
+
       <div style="padding-bottom: 10px;" class="input-group">
         <input type="file" id="imagem-input" (change)="selectFile($event)"/>
       </div>
     </div>
   </div>
   <div class="modal-footer">
+    <button *ngIf="opc ===1" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Concluir</button>
     <button *ngIf="opc ===2" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Inserir</button>
     <button *ngIf="opc ===3" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Enviar</button>
   </div>
 </ng-template>
+

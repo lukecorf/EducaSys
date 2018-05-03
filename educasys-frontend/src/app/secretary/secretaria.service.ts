@@ -29,6 +29,7 @@ export class SecretariaService{
 
   private urlMenu= 'http://localhost:8099/getSecretariaByCode';
 
+
   constructor(private http: HttpClient){}
 
   getDisciplinas():Observable<DisciplinaList[]>{

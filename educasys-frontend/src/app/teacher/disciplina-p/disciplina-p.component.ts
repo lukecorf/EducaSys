@@ -7,6 +7,7 @@ import {Disciplina} from "../../student/home-a/models/materia.model";
 import {Arquivo, Atividade} from "../teacher.module";
 import {Upload} from "../../secretary/secretaria.model";
 import {FirebaseService} from "../../secretary/firebase.service";
+import {AlunoList} from "../../secretary/aluno-s/aluno-s.model";
 
 @Component({
   selector: 'disciplina-p-component',
@@ -23,6 +24,9 @@ export class DisciplinaPComponent implements OnInit {
   opc: number = -1;
   disciplina: Disciplina = new Disciplina(-1,"",-1,"","","",-1,-1);
   atividade: Atividade = new Atividade();
+  atividades: Atividade[];
+  arquivos: Arquivo[];
+  alunos: AlunoList[]
   closeResult: string;
   selectedFiles: FileList;
   currentUpload: Upload;
@@ -48,17 +52,67 @@ export class DisciplinaPComponent implements OnInit {
         this.disciplina = disciplina;
       }
     );
+
+    this.getAtividades();
+
+    this.getArquivos();
+  }
+
+  getAtividades(){
+    this.teacherService.getAtividadesByIdDisciplina(this.id).subscribe(
+      atividades =>{
+        this.atividades = atividades;
+      }
+    );
+  }
+
+  getArquivos(){
+    this.teacherService.getArquivosByIdDisciplina(this.id).subscribe(
+      arquivos =>{
+        this.arquivos = arquivos;
+      }
+    );
   }
 
   changeOpt(){
     this.open = !this.open;
   }
 
+
   openModal(idModal){
     this.opc = idModal;
   }
 
+  openUrl(url:string){
+    window.open(url, "_blank");
+  }
+
+  deleteArquivo(id: number){
+    this.teacherService.deleteFileById(id).subscribe(
+      id=>{
+        this.getArquivos();
+      }
+    );
+  }
+
+  deleteAtividade(id: number){
+    this.teacherService.deleteAtividadeById(id).subscribe(
+      atividade =>{
+        this.getAtividades();
+      }
+    )
+  }
+
   openM(content) {
+
+    if(this.opc === 1){
+      console.log("ENTREI AQUI");
+      this.teacherService.getAlunosByIdDisciplina(this.disciplina.id_disciplina).subscribe(
+        alunos=>{
+          this.alunos = alunos;
+        }
+      );
+    }
 
     this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -68,9 +122,12 @@ export class DisciplinaPComponent implements OnInit {
           this.atividade.id_atividade = -1;
           this.teacherService.setAtividade(this.atividade).subscribe(
             atividade=>{
-
+              if(atividade.st_nome_atividade !== null) {
+                this.getAtividades();
+              }
             }
           )
+
         }else if(this.opc === 3){
           let file = this.selectedFiles.item(0)
           this.currentUpload = new Upload(file);

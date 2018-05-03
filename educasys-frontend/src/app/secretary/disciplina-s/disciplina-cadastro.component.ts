@@ -103,10 +103,8 @@ export class DisciplinaCadastroComponent implements OnInit {
   }
 
   openM(content) {
-    console.log("Entrei defora");
     this.secretariaService.getAlunos().subscribe(
       alunos => {
-        console.log("ENTREI AQUI");
         this.alunos = alunos;
       }
     );

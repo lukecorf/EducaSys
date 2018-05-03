@@ -248,3 +248,8 @@
 .text-center{
   display: table;
 }
+
+.buttons{
+  display: inline-flex;
+  vertical-align: middle;
+}

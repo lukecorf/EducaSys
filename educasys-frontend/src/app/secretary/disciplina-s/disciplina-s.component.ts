@@ -57,7 +57,6 @@ export class DisciplinaSComponent implements OnInit {
 
   goDelete(){
     this.secretariaService.deleteDisciplinaById(this.disciplinas[this.selectedRow].nuId).subscribe(id => {
-      console.log('This is my ID: '+id);
       this.secretariaService.getDisciplinas().subscribe(
         disciplinas => {
           this.disciplinas = disciplinas;

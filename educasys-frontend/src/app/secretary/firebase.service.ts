@@ -9,6 +9,7 @@ import {SecretariaService} from "./secretaria.service";
 import {Router} from "@angular/router";
 import {Arquivo} from "../teacher/teacher.module";
 import {TeacherService} from "../teacher/teacher.service";
+import {DisciplinaPComponent} from "../teacher/disciplina-p/disciplina-p.component";
 
 @Injectable()
 export class FirebaseService{
@@ -63,6 +64,7 @@ export class FirebaseService{
         console.log("Erro ao efetuar upload!");
         // upload failed
         console.log(error);
+
       },
       () => {
         console.log("Upload Efetuado!")
@@ -70,11 +72,7 @@ export class FirebaseService{
         upload.url = uploadTask.snapshot.downloadURL
         upload.name = upload.file.name
         arquivo.url_arquivo= upload.url;
-        this.teacherService.setArquivo(arquivo).subscribe(arquivo => {
-          if(arquivo.st_nome_arquivo !== null){
-            //this.router.navigate(['disciplina-s']);
-          }
-        });
+        console.log("Entrei aqui 1");
 
       }
     );

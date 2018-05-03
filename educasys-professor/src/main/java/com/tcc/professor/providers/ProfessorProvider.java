@@ -6,10 +6,7 @@ import com.tcc.professor.DTO.AtividadeDTO;
 import com.tcc.professor.DTO.DisciplinaPDTO;
 import com.tcc.professor.Repositories.*;
 import com.tcc.professor.database.*;
-import com.tcc.professor.mapper.ArquivoMapper;
-import com.tcc.professor.mapper.AtividadeMapper;
-import com.tcc.professor.mapper.DisciplinaMapper;
-import com.tcc.professor.mapper.ProfessorMapper;
+import com.tcc.professor.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -88,10 +85,48 @@ public class ProfessorProvider {
         }
 
         return gson.toJson(atividade);
+
     }
 
     @PostMapping(path="/saveArquivo",  consumes = "application/json", produces = "application/json")
     public String createArquivo(@RequestBody ArquivoDTO arquivoDTO){
         return gson.toJson(arquivoRepository.save(ArquivoMapper.DTOtoEntity(arquivoDTO)));
+    }
+
+    @GetMapping("/getAtividades/{id}")
+    public @ResponseBody String getAtividadesByIdDisciplina(@PathVariable Long id) {
+        return gson.toJson(AtividadeMapper.ListEntitytoListDTO(atividadeRepository.getAtividadeByIdDisciplina(id)));
+    }
+
+    @GetMapping("/getArquivos/{id}")
+    public @ResponseBody String getArquivosByIdDisciplina(@PathVariable Long id) {
+        return gson.toJson(ArquivoMapper.ListEntitytoListDTO(arquivoRepository.getArquivosByIdDisciplina(id)));
+    }
+
+    @GetMapping("/getAlunosByDisciplina/{id}")
+    public @ResponseBody String getAlunosByDisciplina(@PathVariable Long id) {
+        List<AluDis> l = aluDisRepository.getAluDisByIdDisciplina(id);
+        List<Long> ll= new ArrayList<>();
+        for(AluDis a: l){
+            ll.add(a.getAlunofk().getId());
+        }
+
+        List<Aluno> la = alunoRepository.getAlunoByListId(ll);
+        System.out.println("Tamanho da lista de ids: "+ll.size());
+        System.out.println("Tamanho da lista de alunos: "+la.size());
+        return gson.toJson(AlunoMapper.ListEntitytoListDTO(la));
+
+    }
+
+    @DeleteMapping("/deleteArquivo/{id}")
+    public String deleteArquivo(@PathVariable Long id) {
+        arquivoRepository.deleteById(id);
+        return gson.toJson(id);
+    }
+
+    @DeleteMapping("/deleteAtividade/{id}")
+    public String deleteAtividade(@PathVariable Long id) {
+        atividadeRepository.deleteById(id);
+        return gson.toJson(id);
     }
 }

@@ -4,6 +4,9 @@ import com.tcc.professor.DTO.ArquivoDTO;
 import com.tcc.professor.database.Arquivo;
 import com.tcc.professor.database.Disciplina;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by lukew on 03/05/2018.
  */
@@ -20,6 +23,26 @@ public class ArquivoMapper {
         arq.setDisciplinafk(d);
 
         return arq;
+    }
+
+    public static ArquivoDTO EntitytoDTO(Arquivo a){
+        ArquivoDTO arq = new ArquivoDTO();
+        arq.setId_arquivo(a.getId());
+        arq.setUrl_arquivo(a.getLink());
+        arq.setSt_nome_arquivo(a.getNome());
+        arq.setNu_tamanho_arquivo(a.getTamanho());
+        arq.setId_disciplina(a.getDisciplinafk().getCodigo());
+
+        return arq;
+    }
+
+    public static List<ArquivoDTO> ListEntitytoListDTO(List<Arquivo>la){
+        List<ArquivoDTO> adto = new ArrayList<>();
+
+        for(Arquivo a: la){
+            adto.add(EntitytoDTO(a));
+        }
+        return adto;
     }
 
 }
