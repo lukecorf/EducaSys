@@ -35,6 +35,7 @@ public class Professor {
     @Size(max=11)
     private String telefone;
 
+
     @Column( name = "DT_DATA_NASC")
     private Date dataN;
 
@@ -55,6 +56,26 @@ public class Professor {
     @Column( name = "PW_SENHA_PROFESSOR")
     @Size(max=50)
     private String senha;
+
+    public Professor(){
+
+    }
+
+    @Override
+    public String toString() {
+        return "Professor{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", email='" + email + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", dataN=" + dataN +
+                ", cpf='" + cpf + '\'' +
+                ", rg='" + rg + '\'' +
+                ", url='" + url + '\'' +
+                ", senha='" + senha + '\'' +
+                '}';
+    }
 
     public long getId() {
         return id;

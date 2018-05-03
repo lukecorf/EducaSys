@@ -46,7 +46,7 @@
 
 .disciplina-style{
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 86vh;
 }
 

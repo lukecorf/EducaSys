@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import {Disciplina, DisciplinaList} from "./disciplina-s/disciplina-s.model";
 import {Aluno, AlunoList} from "./aluno-s/aluno-s.model";
 import {Professor, ProfessorList} from "./professor-s/professor-s.model";
+import {Secretaria} from "./secretaria.model";
 
 
 @Injectable()
@@ -26,6 +27,8 @@ export class SecretariaService{
   private urlPUpdate = 'http://localhost:8099/updateProfessor';
   private urlPDelete = 'http://localhost:8099/deleteProfessor';
 
+  private urlMenu= 'http://localhost:8099/getSecretariaByCode';
+
   constructor(private http: HttpClient){}
 
   getDisciplinas():Observable<DisciplinaList[]>{
@@ -37,7 +40,6 @@ export class SecretariaService{
   }
 
   setDisciplina(d:Disciplina):Observable<Disciplina>{
-    console.log("Enviei a disciplina");
     return this.http.post(this.urlDSet,d);
   }
 
@@ -83,6 +85,10 @@ export class SecretariaService{
 
   deleteProfessorById(id: number): Observable<any>{
     return this.http.delete(this.urlPDelete+'/'+id);
+  }
+
+  getSecretariaByCode(id: string):Observable<Secretaria>{
+    return this.http.get<Secretaria>(this.urlMenu+'/'+id);
   }
 
 }

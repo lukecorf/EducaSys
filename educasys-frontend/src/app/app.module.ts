@@ -22,7 +22,6 @@ import { DisciplinaPerfilAComponent } from './student/home-a/disciplina-perfil-a
 import { LoginInfoService } from './login/info-login/info-login.service';
 import { LoginService } from './login/data-login/data-login.service';
 import { AuthService } from './auth.service';
-import { UserDataService } from './student/home-a/services/user-data.service';
 import {AuthGuard} from './auth-guard.service';
 import {HttpClientModule} from "@angular/common/http";
 import { DisciplinaAComponent } from './student/disciplina-a/disciplina-a.component';
@@ -32,7 +31,6 @@ import { HomePComponent } from './teacher/home-p/home-p.component';
 import { MenuPComponent } from './teacher/menu-p/menu-p.component';
 import { DisciplinaPerfilPComponent } from './teacher/home-p/disciplina-perfil-p/disciplina-perfil-p.component';
 import { DisciplinaPComponent } from './teacher/disciplina-p/disciplina-p.component';
-import { TeacherDataService } from './teacher/home-p/services/teacher-data.service';
 import {UserData} from "./services/userdata.service";
 import { HomeSComponent } from './secretary/home-s/home-s.component';
 import { DisciplinaSComponent } from './secretary/disciplina-s/disciplina-s.component';
@@ -45,6 +43,8 @@ import { ProfessorCadastroComponent } from './secretary/professor-s/professor-ca
 import {SecretariaService} from "./secretary/secretaria.service";
 import {AngularFireDatabase} from "angularfire2/database";
 import {FirebaseService} from "./secretary/firebase.service";
+import {StudentService} from "./student/student.service";
+import {TeacherService} from "./teacher/teacher.service";
 
 @NgModule({
   declarations: [
@@ -83,7 +83,7 @@ import {FirebaseService} from "./secretary/firebase.service";
     NgxMaskModule.forRoot(),
     NgbModule.forRoot(),
  ],
-  providers: [LoginService, TeacherDataService, SecretariaService, UserDataService, LoginInfoService, AuthService, AuthGuard, UserData, AngularFireDatabase, FirebaseService],
+  providers: [LoginService, StudentService, TeacherService, SecretariaService, LoginInfoService, AuthService, AuthGuard, UserData, AngularFireDatabase, FirebaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

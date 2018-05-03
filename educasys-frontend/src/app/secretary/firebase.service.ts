@@ -7,12 +7,14 @@ import {Observable} from "rxjs/Observable";
 import {Disciplina} from "./disciplina-s/disciplina-s.model";
 import {SecretariaService} from "./secretaria.service";
 import {Router} from "@angular/router";
+import {Arquivo} from "../teacher/teacher.module";
+import {TeacherService} from "../teacher/teacher.service";
 
 @Injectable()
 export class FirebaseService{
   private baseImagePath:string = '/images';
 
-  constructor(private db: AngularFireDatabase, private secretariaService: SecretariaService, private router : Router){}
+  constructor(private db: AngularFireDatabase, private secretariaService: SecretariaService, private teacherService: TeacherService, private router : Router){}
 
   pushUpload(upload: Upload, disciplina: Disciplina){
     let storageRef = firebase.storage().ref();
@@ -44,6 +46,43 @@ export class FirebaseService{
       }
     );
   }
+
+
+
+  pushUploadFile(upload: Upload, arquivo: Arquivo){
+    let storageRef = firebase.storage().ref();
+    let uploadTask = storageRef.child(`${this.baseImagePath}/${upload.file.name}`).put(upload.file);
+
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) =>  {
+        console.log("Efetuando Upload...");
+        // upload in progress
+        upload.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      },
+      (error) => {
+        console.log("Erro ao efetuar upload!");
+        // upload failed
+        console.log(error);
+      },
+      () => {
+        console.log("Upload Efetuado!")
+        // upload success
+        upload.url = uploadTask.snapshot.downloadURL
+        upload.name = upload.file.name
+        arquivo.url_arquivo= upload.url;
+        this.teacherService.setArquivo(arquivo).subscribe(arquivo => {
+          if(arquivo.st_nome_arquivo !== null){
+            //this.router.navigate(['disciplina-s']);
+          }
+        });
+
+      }
+    );
+  }
+
+
+
+
 
   // Writes the file details to the realtime db
   private saveFileData(upload: Upload) {

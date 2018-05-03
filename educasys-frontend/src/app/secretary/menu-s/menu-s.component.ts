@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {UserData} from "../../services/userdata.service";
+import {SecretariaService} from "../secretaria.service";
+import {Secretaria} from "../secretaria.model";
 
 @Component({
   selector: 'menu-s-component',
@@ -9,13 +11,11 @@ import {UserData} from "../../services/userdata.service";
 })
 export class MenuSComponent implements OnInit {
 
-  name: string;
   code: string;
-
+  secretaria: Secretaria = new Secretaria(0,"","","");
   cssType: string;
-  constructor(private router: Router) {
-    this.name = UserData.getUsuario().nome;
-    this.code = UserData.getUsuario().matricula;
+  constructor(private router: Router, private secretariaService: SecretariaService) {
+    this.code = UserData.getUserCode();
   }
 
   ngOnInit() {
@@ -24,6 +24,13 @@ export class MenuSComponent implements OnInit {
     }else{
       this.cssType = 'sidebar fixed-sidebar';
     }
+
+    this.secretariaService.getSecretariaByCode(this.code).subscribe(
+      secretaria =>{
+        console.log(secretaria);
+        this.secretaria = secretaria;
+      }
+    );
 
   }
 

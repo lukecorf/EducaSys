@@ -10,7 +10,7 @@ export class DisciplinaPerfilAComponent implements OnInit {
 
   @Input() codigo: string;
   @Input() nome: string;
-  @Input() status: string;
+  @Input() idProf: number;
   @Input() professor:string;
   @Input() proxProva: string;
   @Input() img: string;

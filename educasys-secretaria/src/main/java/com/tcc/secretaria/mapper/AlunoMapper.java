@@ -20,7 +20,7 @@ public class AlunoMapper {
         alu.setId(0);
         alu.setNome(a.getSt_nome_aluno());
         alu.setSenha(a.getPw_senha_aluno());
-        alu.setUrl("");
+        alu.setUrl(a.getUrl_img_aluno());
         alu.setNomeP(a.getSt_nome_pai());
         alu.setNomeM(a.getSt_nome_mae());
         return alu;

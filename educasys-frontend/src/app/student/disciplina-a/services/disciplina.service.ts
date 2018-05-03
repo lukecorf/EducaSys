@@ -1,6 +1,5 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {Materia} from "../../home-a/models/materia.model";
 import {Aluno} from "../../home-a/models/aluno.model";
 import {Observable} from "rxjs/Observable";
 

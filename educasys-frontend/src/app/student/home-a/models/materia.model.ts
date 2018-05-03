@@ -1,10 +1,12 @@
-export class Materia{
-  constructor(public codigo: string,
-              public nome: string,
-              public status: string,
-              public professor:string,
-              public proxProva: string,
-              public img: string,
-              public falta: number,
-              public nota: number) {}
+export class Disciplina{
+  constructor(public id_disciplina?: number,
+              public st_nome?: string,
+              public nu_carga_horaria?: number,
+              public tx_descricao?: string,
+              public st_nome_prof?: string,
+              public url_img?: string,
+              public nu_faltas?:number,
+              public id_professor?: number,
+  ){}
 }
+

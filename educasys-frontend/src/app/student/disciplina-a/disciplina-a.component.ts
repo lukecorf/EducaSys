@@ -4,6 +4,8 @@ import {ModalModel} from "./models/modal.model";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 import {Observable} from "rxjs/Observable";
+import {StudentService} from "../student.service";
+import {Disciplina} from "../home-a/models/materia.model";
 
 @Component({
   selector: 'disciplina-a',
@@ -16,6 +18,8 @@ export class DisciplinaAComponent implements OnInit {
   open: boolean = true;
   opened: string;
   closed: string;
+  id: number;
+  disciplina: Disciplina = new Disciplina(-1,"",-1,"","","",-1,-1);
   selectedJob: string = "";
   modalInfo: ModalModel = new ModalModel("",0,"");
 
@@ -24,7 +28,9 @@ export class DisciplinaAComponent implements OnInit {
   public pieChartType:string = 'pie';
   public pieChartOptions: any = {responsive: true, maintainAspectRatio: false}
 
-  constructor(private modalService: NgbModal, private route: ActivatedRoute) { }
+  constructor(private modalService: NgbModal, private route: ActivatedRoute, private studentService: StudentService) {
+    this.id = this.route.snapshot.params['id'];
+  }
 
   ngOnInit() {
     if(window.screen.width < 768){
@@ -35,7 +41,13 @@ export class DisciplinaAComponent implements OnInit {
       this.closed = 'content';
     }
 
-    console.log('Codigo da Disciplina: '+ this.route.snapshot.params['id']);
+    this.studentService.getDisciplinaById(this.id).subscribe(
+      disciplina =>{
+        this.disciplina = disciplina;
+      }
+    )
+
+    console.log('Codigo da Disciplina: ');
 
     this.timer = Observable.timer(500);
     this.sub = this.timer.subscribe(t => this.changeOpt());

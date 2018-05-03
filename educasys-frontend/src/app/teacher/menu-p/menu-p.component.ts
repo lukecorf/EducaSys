@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {UserData} from "../../services/userdata.service";
+import {TeacherService} from "../teacher.service";
+import {Professor} from "../../secretary/professor-s/professor-s.model";
 
 @Component({
   selector: 'menup-component',
@@ -9,13 +11,11 @@ import {UserData} from "../../services/userdata.service";
 })
 export class MenuPComponent implements OnInit {
 
-  name: string;
   code: string;
-
+  professor: Professor = new Professor(-1,"","","","","","","");
   cssType: string;
-  constructor(private router: Router) {
-    this.name = UserData.getUsuario().nome;
-    this.code = UserData.getUsuario().matricula;
+  constructor(private router: Router, private teacherService: TeacherService) {
+    this.code = UserData.getUserCode();
   }
 
   ngOnInit() {
@@ -24,6 +24,12 @@ export class MenuPComponent implements OnInit {
     }else{
       this.cssType = 'sidebar fixed-sidebar';
     }
+
+    this.teacherService.getProfessorByCode(this.code).subscribe(
+      professor =>{
+        this.professor = professor;
+      }
+    );
 
   }
 

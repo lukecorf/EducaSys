@@ -48,6 +48,7 @@ public class Aluno {
     @Column( name = "DT_DATA_NASC")
     private Date dataN;
 
+    @NotNull
     @Column( name = "DC_CPF")
     @Size(max=11)
     private String cpf;

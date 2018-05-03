@@ -11,3 +11,11 @@ export class Upload {
     this.file = file;
   }
 }
+
+export class Secretaria {
+  constructor( public id_secretaria ?: number,
+               public st_nome_secretaria ?:string,
+               public st_code ?:string,
+               public pw_senha_secretaria ?:string,
+  ){}
+}

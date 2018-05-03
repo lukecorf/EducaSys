@@ -1,10 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import { Observable } from 'rxjs/Observable';
-import { Login } from'./models/login.model';
+import {Login, LoginObject} from'./models/login.model';
 import 'rxjs/add/operator/catch';
-import {Usuario} from "../../models/usuario.model";
-
 
 @Injectable()
 export class LoginService{
@@ -13,7 +11,7 @@ export class LoginService{
 
   constructor(private http: HttpClient){}
 
-  loginQuery(login: Login):Observable<Usuario>{
-      return this.http.post<Usuario>(this.url,JSON.stringify(login));
+  loginQuery(login: LoginObject):Observable<Login>{
+      return this.http.post<Login>(this.url,JSON.stringify(login));
   }
 }

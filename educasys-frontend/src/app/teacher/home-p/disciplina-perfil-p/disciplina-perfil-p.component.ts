@@ -8,15 +8,14 @@ import {Router} from "@angular/router";
 })
 export class DisciplinaPerfilPComponent implements OnInit {
 
-  @Input() codigo: string = '001';
-  @Input() nome: string ='Redes';
-  @Input() status: string = 'Em andamento';
-  @Input() professor:string = 'Bruno Ferreira';
-  @Input() proxProva: string = '26/12';
-  @Input() img: string = 'http://helpdigitalti.com.br/wp-content/uploads/2017/02/rede1.jpg';
-  @Input() falta: number = 25;
-  @Input() nota: number = 22;
-  @Input() horas: number = 60;
+  @Input() codigo: string;
+  @Input() nome: string;
+  @Input() status: string;
+  @Input() professor:string;
+  @Input() proxProva: string;
+  @Input() img: string;
+  @Input() falta: number;
+  @Input() horas: number;
 
 
   constructor(private router: Router) { }

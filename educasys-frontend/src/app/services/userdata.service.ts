@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
-import {Usuario} from "../models/usuario.model";
+import {Login} from "../login/data-login/models/login.model";
 
 @Injectable()
 export class UserData {
-    static user: Usuario = new Usuario("err","err","","",false,"","","","",-1);
+    static login: Login= new Login();
 
-    public  static setUsuario(usuario: Usuario){
-      this.user = usuario;
+    public  static setUser(login: Login){
+      this.login = login;
     }
 
-    public static getUsuario(){
-      return this.user;
+    public static getUserCode(){
+      return this.login.nu_code;
+    }
+
+    public static getUserType(){
+      return this.login.nu_type;
     }
 }

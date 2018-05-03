@@ -1,12 +1,13 @@
+import {TeacherService} from "../teacher.service";
 import { Component, OnInit } from '@angular/core';
-import {Aluno} from "../../student/home-a/models/aluno.model";
-import {Materia} from "../../student/home-a/models/materia.model";
+
+import {Disciplina} from "../../student/home-a/models/materia.model";
 import {ActivatedRoute} from "@angular/router";
 import { Observable, Subscription } from 'rxjs/Rx';
-import {TeacherDataService} from "./services/teacher-data.service";
+
 import {Usuario} from "../../models/usuario.model";
-import {UserDataService} from "../../student/home-a/services/user-data.service";
 import {UserData} from "../../services/userdata.service";
+import {Professor} from "../../secretary/professor-s/professor-s.model";
 
 @Component({
   selector: 'app-home-p',
@@ -19,20 +20,24 @@ export class HomePComponent implements OnInit {
   open: boolean = true;
   opened: string;
   closed: string;
-  aluno: Usuario = new Usuario("","","","",false,"","","","",-1);
+  id: string;
+  professor: Professor = new Professor(-1,"","","","","","","");
 
-  materias: Materia[];
+  materias: Disciplina[];
 
-  constructor(private teacherData: TeacherDataService, userData: UserData, private route: ActivatedRoute) {
-    console.log(route.snapshot.params['id']);
+  constructor(private teacherService: TeacherService, userData: UserData, private route: ActivatedRoute) {
+    this.id = route.snapshot.params['id'];
 
-    teacherData.getDisciplinas().subscribe(
-      disciplinas => {
-        this.materias = disciplinas;
+    this.teacherService.getProfessorByCode(this.id).subscribe(
+      professor =>{
+        this.professor = professor;
+        this.teacherService.getDisciplinas(this.professor.id_professor).subscribe(
+          disciplinas=>{
+            this.materias = disciplinas;
+          }
+        );
       }
     );
-
-    this.aluno = UserData.getUsuario();
 
   }
 

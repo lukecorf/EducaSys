@@ -2,17 +2,12 @@ package com.tcc.secretaria.providers;
 
 import com.google.gson.Gson;
 import com.tcc.secretaria.DTO.*;
-import com.tcc.secretaria.Repositories.AluDisRepository;
-import com.tcc.secretaria.Repositories.AlunoRepository;
-import com.tcc.secretaria.Repositories.DisciplinaRepository;
-import com.tcc.secretaria.Repositories.ProfessorRepository;
-import com.tcc.secretaria.database.AluDis;
-import com.tcc.secretaria.database.Aluno;
-import com.tcc.secretaria.database.Disciplina;
-import com.tcc.secretaria.database.Professor;
+import com.tcc.secretaria.Repositories.*;
+import com.tcc.secretaria.database.*;
 import com.tcc.secretaria.mapper.AlunoMapper;
 import com.tcc.secretaria.mapper.DisciplinaMapper;
 import com.tcc.secretaria.mapper.ProfessorMapper;
+import com.tcc.secretaria.mapper.SecretariaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -41,6 +36,12 @@ public class SecretariaProvider {
 
     @Autowired
     AluDisRepository aluDisRepository;
+
+    @Autowired
+    LoginRepository loginRepository;
+
+    @Autowired
+    SecretariaRepository secretariaRepository;
 
     @GetMapping(value = "/getDisciplinas")
     public @ResponseBody String getDisciplinas(){
@@ -100,6 +101,7 @@ public class SecretariaProvider {
         System.out.println("Entrou no save Aluno");
         System.out.println(alunoDTO.toString());
         Aluno a = AlunoMapper.DTOtoEntity(alunoDTO);
+        loginRepository.save(new Login(alunoDTO.getDc_cpf(),alunoDTO.getPw_senha_aluno(),1));
         return gson.toJson(alunoRepository.save(a));
     }
 
@@ -131,6 +133,7 @@ public class SecretariaProvider {
     public String createProfessor(@RequestBody ProfessorDTO professorDTO){
             System.out.println("Entrou");
             Professor p = ProfessorMapper.DTOtoEntity(professorDTO);
+            loginRepository.save(new Login(professorDTO.getdc_cpf(),professorDTO.getPw_senha_prof(),2));
             return gson.toJson(professorRepository.save(p));
     }
 
@@ -141,4 +144,10 @@ public class SecretariaProvider {
 
         return gson.toJson(id);
     }
+
+    @GetMapping("/getSecretariaByCode/{id}")
+    public @ResponseBody String getSecretariaByCode(@PathVariable String id) {
+        return gson.toJson(SecretariaMapper.EntitytoDTO(secretariaRepository.getSecretariaByCode(id)));
+    }
+
 }

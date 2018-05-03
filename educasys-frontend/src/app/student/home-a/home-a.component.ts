@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import {Materia} from "./models/materia.model";
-import {Aluno} from "./models/aluno.model";
-import {UserDataService} from "./services/user-data.service";
+import {Disciplina} from "./models/materia.model";
+import {Aluno} from "../student.model";
 import {ActivatedRoute} from "@angular/router";
-import {UserData} from "../../services/userdata.service";
-import {Usuario} from "../../models/usuario.model";
 import {Observable} from "rxjs/Observable";
 import {Subscription} from "rxjs/Subscription";
+import {StudentService} from "../student.service";
 
 
 @Component({
@@ -21,20 +19,23 @@ export class HomeAComponent implements OnInit {
   open: boolean = true;
   opened: string;
   closed: string;
-  aluno: Usuario = new Usuario("","","","",false,"","","","",-1);
+  aluno: Aluno = new Aluno(-1,"","","","","","","","","","","");
+  id: string;
+  materias: Disciplina[];
 
-  materias: Materia[];
+  constructor(private studentService: StudentService, private route: ActivatedRoute) {
+    this.id = route.snapshot.params['id'];
 
-  constructor(private userData: UserDataService, private route: ActivatedRoute) {
-    console.log(route.snapshot.params['id'])
-
-    userData.getDisciplinas().subscribe(
-        disciplinas => {
-          this.materias = disciplinas;
+    studentService.getAlunoByCode(this.id).subscribe(
+        student => {
+          this.aluno = student;
+          studentService.getDisciplinas(this.aluno.id_aluno).subscribe(
+            disciplinas => {
+              this.materias = disciplinas;
+            }
+          );
         }
     );
-
-    this.aluno = UserData.getUsuario();
   }
 
   ngOnInit() {

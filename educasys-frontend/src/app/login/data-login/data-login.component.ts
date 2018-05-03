@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 
 import { LoginService } from './data-login.service';
-import { Login } from './models/login.model';
+import {Login, LoginObject} from './models/login.model';
 import {NgForm} from "@angular/forms";
 import {AuthService} from "../../auth.service";
 import {UserData} from "../../services/userdata.service";
@@ -39,17 +39,17 @@ export class DataLoginComponent implements OnInit {
     }
   }
 
-  verifyLogin(user: Usuario){
+  verifyLogin(login: Login){
 
-    if(user.nome !== 'ERROR-LOGIN'){
+    if(login.id_login !== -1){
       this.authService.login();
-      UserData.setUsuario(user);
-      if(user.tipo === 0) {
-        this.router.navigate(['home-aluno/' + user.matricula]);
-      }else if(user.tipo === 1){
-        this.router.navigate(['home-professor/' + user.matricula]);
-      }else if(user.tipo === 2){
-        this.router.navigate(['home-secretaria/' + user.matricula]);
+      UserData.setUser(login);
+      if(login.nu_type === 1) {
+        this.router.navigate(['home-aluno/' + login.nu_code]);
+      }else if(login.nu_type === 2){
+        this.router.navigate(['home-professor/' + login.nu_code]);
+      }else if(login.nu_type === 3){
+        this.router.navigate(['home-secretaria/' + login.nu_code]);
       }else{
 
       }
@@ -57,13 +57,12 @@ export class DataLoginComponent implements OnInit {
       console.log('ERROR');
     }
 
-
   }
 
   onSingin(form: NgForm){
 
     if( (form.value.code !== '') && (form.value.password !== '')){
-      this.loginService.loginQuery(new Login(form.value.code, form.value.password)).
+      this.loginService.loginQuery(new LoginObject(form.value.code, form.value.password)).
       subscribe(
         result => this.verifyLogin(result)
        );

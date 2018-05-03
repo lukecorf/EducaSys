@@ -11,6 +11,7 @@ public class Arquivo {
     @Id
     @Column( name = "ID_ARQUIVO")
     @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @NotNull
@@ -30,6 +31,17 @@ public class Arquivo {
     @NotNull
     @JoinColumn(name = "ID_DISCIPLINA",nullable = false, referencedColumnName = "ID_DISCIPLINA")
     private Disciplina disciplinafk;
+
+    public Arquivo(@NotNull String link, @NotNull @Size(max = 100) String nome, @NotNull double tamanho, @NotNull Disciplina disciplinafk) {
+        this.link = link;
+        this.nome = nome;
+        this.tamanho = tamanho;
+        this.disciplinafk = disciplinafk;
+    }
+
+    public Arquivo(){
+
+    }
 
     public Disciplina getDisciplinafk() {
         return disciplinafk;

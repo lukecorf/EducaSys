@@ -22,7 +22,7 @@ public class ProfessorMapper {
         pro.setRg(p.getdc_rg());
         pro.setSenha(p.getPw_senha_prof());
         pro.setTelefone(p.getCo_telefone());
-        pro.setUrl("");
+        pro.setUrl(p.getUrl_img_professor());
         return pro;
 
     }

@@ -1,19 +1,41 @@
 package com.tcc.professor.providers;
 
 import com.google.gson.Gson;
+import com.tcc.professor.DTO.ArquivoDTO;
+import com.tcc.professor.DTO.AtividadeDTO;
+import com.tcc.professor.DTO.DisciplinaPDTO;
+import com.tcc.professor.Repositories.ArquivoRepository;
+import com.tcc.professor.Repositories.AtividadeRepository;
+import com.tcc.professor.Repositories.DisciplinaRepository;
+import com.tcc.professor.Repositories.ProfessorRepository;
 import com.tcc.professor.TADs.Aluno;
-import com.tcc.professor.TADs.Disciplina;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.tcc.professor.database.Disciplina;
+import com.tcc.professor.mapper.ArquivoMapper;
+import com.tcc.professor.mapper.AtividadeMapper;
+import com.tcc.professor.mapper.DisciplinaMapper;
+import com.tcc.professor.mapper.ProfessorMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class ProfessorProvider {
     Gson gson = new Gson();
+
+    @Autowired
+    ProfessorRepository professorRepository;
+
+    @Autowired
+    DisciplinaRepository disciplinaRepository;
+
+    @Autowired
+    AtividadeRepository atividadeRepository;
+
+    @Autowired
+    ArquivoRepository arquivoRepository;
 
     @GetMapping(value = "/getAluno")
     public @ResponseBody
@@ -24,16 +46,33 @@ public class ProfessorProvider {
         return gson.toJson(aluno);
     }
 
-    @GetMapping(value = "/getDisciplinas")
-    public @ResponseBody String getDisciplinas(){
-        System.out.println("PEGANDO MATERIAS");
-        ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
+    @GetMapping(value = "/getDisciplinas/{id}")
+    public @ResponseBody
+    String getDisciplinas(@PathVariable Long id){
 
-        disciplinas.add(new Disciplina("001","Web Avançado","Matriculado","Bruno Ferreira","23/12","http://s3.envato.com/files/217699422/cover.__large_preview.jpg",(float)26.0,(float)12.4));
-        disciplinas.add(new Disciplina("002","Redes","Matriculado","Everthon Valadão","11/11","http://helpdigitalti.com.br/wp-content/uploads/2017/02/rede1.jpg",(float)3.0,(float)30.6));
-        disciplinas.add(new Disciplina("003","Banco de Dados","Matriculado","Patricia Proença","10/12","https://d2tycqyw09ngo1.cloudfront.net/be-content/uploads/2017/03/10114900/curso-online-de-banco-de-dados-relacional-e-linguagem-sql-BECODE-new-1.png",(float)11,(float)22.8));
-        disciplinas.add(new Disciplina("004","Mobile","Matriculado","Diego Mello","13/10","http://blog.newrelic.com/wp-content/uploads/shutterstock_241331182.jpg",(float)26,(float)12.4));
+        List<Disciplina> disciplinas = disciplinaRepository.getDisciplinaByIdProfesor(id);
 
-        return gson.toJson(disciplinas);
+        return gson.toJson(DisciplinaMapper.ListEntitytoListADTO(disciplinas));
+    }
+
+    @GetMapping("/getProfessorByCode/{id}")
+    public @ResponseBody String getSecretariaByCode(@PathVariable String id) {
+        return gson.toJson(ProfessorMapper.EntitytoDTO(professorRepository.getProfessorByCode(id)));
+    }
+
+    @GetMapping("/getDisciplinaById/{id}")
+    public @ResponseBody String getDisciplinaById(@PathVariable Long id) {
+        return gson.toJson(DisciplinaMapper.EntitytoDTO(disciplinaRepository.getOne(id)));
+    }
+
+    @PostMapping(path="/saveAtividade",  consumes = "application/json", produces = "application/json")
+    public String createAtividade(@RequestBody AtividadeDTO atividadeDTO){
+
+        return gson.toJson(atividadeRepository.save(AtividadeMapper.DTOtoEntity(atividadeDTO)));
+    }
+
+    @PostMapping(path="/saveArquivo",  consumes = "application/json", produces = "application/json")
+    public String createArquivo(@RequestBody ArquivoDTO arquivoDTO){
+        return gson.toJson(arquivoRepository.save(ArquivoMapper.DTOtoEntity(arquivoDTO)));
     }
 }

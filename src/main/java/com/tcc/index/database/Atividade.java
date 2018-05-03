@@ -1,6 +1,7 @@
 package com.tcc.index.database;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Date;
@@ -12,12 +13,13 @@ public class Atividade {
     @Id
     @Column(name = "ID_ATIVIDADE")
     @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @NotNull
     @Column(name = "NU_VALOR_ATIVIDADE")
-    @Size(max = 100)
-    private float valor;
+    @DecimalMax("100.0")
+    private Float valor;
 
     @NotNull
     @Column(name = "ST_NOME_ATIVIDADE")
