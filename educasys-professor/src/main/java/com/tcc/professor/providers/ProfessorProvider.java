@@ -4,12 +4,8 @@ import com.google.gson.Gson;
 import com.tcc.professor.DTO.ArquivoDTO;
 import com.tcc.professor.DTO.AtividadeDTO;
 import com.tcc.professor.DTO.DisciplinaPDTO;
-import com.tcc.professor.Repositories.ArquivoRepository;
-import com.tcc.professor.Repositories.AtividadeRepository;
-import com.tcc.professor.Repositories.DisciplinaRepository;
-import com.tcc.professor.Repositories.ProfessorRepository;
-import com.tcc.professor.TADs.Aluno;
-import com.tcc.professor.database.Disciplina;
+import com.tcc.professor.Repositories.*;
+import com.tcc.professor.database.*;
 import com.tcc.professor.mapper.ArquivoMapper;
 import com.tcc.professor.mapper.AtividadeMapper;
 import com.tcc.professor.mapper.DisciplinaMapper;
@@ -37,14 +33,23 @@ public class ProfessorProvider {
     @Autowired
     ArquivoRepository arquivoRepository;
 
-    @GetMapping(value = "/getAluno")
-    public @ResponseBody
-    String getAluno() {
-        System.out.println("PEGANDO ALUNO");
-        Aluno aluno = new Aluno("0001","Lucas Alves de Faria","2018/1","10/12/1995",true,"luke@email.com","(37) 999597899","127.831.956-58","MG-19.319.265");
+    @Autowired
+    AluDisRepository aluDisRepository;
 
-        return gson.toJson(aluno);
-    }
+    @Autowired
+    AlunoRepository alunoRepository;
+
+    @Autowired
+    AluAtividadeRepository aluAtividadeRepository;
+
+//    @GetMapping(value = "/getAluno")
+//    public @ResponseBody
+//    String getAluno() {
+//        System.out.println("PEGANDO ALUNO");
+//        //Aluno aluno = new Aluno("0001","Lucas Alves de Faria","2018/1","10/12/1995",true,"luke@email.com","(37) 999597899","127.831.956-58","MG-19.319.265");
+//
+//        return gson.toJson(aluno);
+//    }
 
     @GetMapping(value = "/getDisciplinas/{id}")
     public @ResponseBody
@@ -68,7 +73,21 @@ public class ProfessorProvider {
     @PostMapping(path="/saveAtividade",  consumes = "application/json", produces = "application/json")
     public String createAtividade(@RequestBody AtividadeDTO atividadeDTO){
 
-        return gson.toJson(atividadeRepository.save(AtividadeMapper.DTOtoEntity(atividadeDTO)));
+        List<AluDis> l = aluDisRepository.getAluDisByIdDisciplina(atividadeDTO.getId_diciplina());
+
+        Atividade atividade = atividadeRepository.save(AtividadeMapper.DTOtoEntity(atividadeDTO));
+
+        Disciplina disciplina = new Disciplina();
+        disciplina.setCodigo(atividadeDTO.getId_diciplina());
+
+        for(AluDis a: l){
+            Aluno aluno = new Aluno();
+            aluno.setId(alunoRepository.getOne(a.getAlunofk().getId()).getId());
+            AluAtividade alua = new AluAtividade(disciplina,aluno,atividade,-1);
+            aluAtividadeRepository.save(alua);
+        }
+
+        return gson.toJson(atividade);
     }
 
     @PostMapping(path="/saveArquivo",  consumes = "application/json", produces = "application/json")

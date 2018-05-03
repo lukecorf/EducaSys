@@ -14,7 +14,6 @@ export class TeacherService{
   private urlSAtividade= 'http://localhost:8090/saveAtividade';
   private urlSArquivo= 'http://localhost:8090/saveArquivo';
 
-
   constructor(private  http: HttpClient){}
 
   getProfessorByCode(id: string):Observable<Professor>{
