@@ -129,4 +129,10 @@ public class ProfessorProvider {
         atividadeRepository.deleteById(id);
         return gson.toJson(id);
     }
+
+    @PostMapping(path="/updateAtividade",  consumes = "application/json", produces = "application/json")
+    public String updateAtividade(@RequestBody AtividadeDTO a){
+        atividadeRepository.updateAtividade(AtividadeMapper.DTOtoEntity(a),a.getId_atividade());
+        return gson.toJson(a.getId_atividade());
+    }
 }

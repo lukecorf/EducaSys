@@ -55,6 +55,22 @@ export class ProfessorSComponent implements OnInit {
     this.router.navigate(['professor-s-cadastro',3,this.professores[this.selectedRow].id_professor]);
   }
 
+  goSearch(search: string){
+    if(search === ''){
+      this.secretariaService.getProfessores().subscribe(
+        professores =>{
+          this.professores= professores;
+        }
+      );
+    }else{
+      this.secretariaService.searchProfessores(search).subscribe(
+        professores =>{
+          this.professores= professores;
+        }
+      );
+    }
+  }
+
   goDelete(){
     this.secretariaService.deleteProfessorById(this.professores[this.selectedRow].id_professor).subscribe(id => {
       console.log('This is my ID: '+id);

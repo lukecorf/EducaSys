@@ -19,6 +19,7 @@ export class TeacherService{
   private urlDArquivo= 'http://localhost:8090/deleteArquivo';
   private urlDAtividade= 'http://localhost:8090/deleteAtividade';
   private urlGAlunos= 'http://localhost:8090/getAlunosByDisciplina';
+  private urlUAtividade= 'http://localhost:8090//updateAtividade';
 
   constructor(private  http: HttpClient){}
 
@@ -62,6 +63,9 @@ export class TeacherService{
     return this.http.delete(this.urlDAtividade+'/'+id);
   }
 
+  updateAtividade(atividade: Atividade): Observable<number>{
+    return this.http.post<number>(this.urlUAtividade,atividade);
+  }
 
 
 }

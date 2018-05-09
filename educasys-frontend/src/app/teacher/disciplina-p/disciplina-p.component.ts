@@ -78,6 +78,10 @@ export class DisciplinaPComponent implements OnInit {
     this.open = !this.open;
   }
 
+  setAtividade(i: number){
+    this.atividade = this.atividades[i];
+    this.opc = 4;
+  }
 
   openModal(idModal){
     this.opc = idModal;
@@ -125,6 +129,7 @@ export class DisciplinaPComponent implements OnInit {
               if(atividade.st_nome_atividade !== null) {
                 this.getAtividades();
               }
+              this.atividade = new Atividade();
             }
           )
 
@@ -137,7 +142,15 @@ export class DisciplinaPComponent implements OnInit {
           arquivo.nu_tamanho_arquivo = file.size;
           arquivo.st_nome_arquivo = file.name;
           this.firebaseService.pushUploadFile(this.currentUpload,arquivo);
+        }else if(this.opc === 4){
+          this.teacherService.updateAtividade(this.atividade).subscribe(
+            atividade=>{
+              this.getAtividades();
+            }
+          )
         }
+      }else{
+        this.atividade = new Atividade();
       }
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

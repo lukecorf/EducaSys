@@ -55,6 +55,22 @@ export class DisciplinaSComponent implements OnInit {
     this.router.navigate(['disciplina-s-cadastro',3,this.disciplinas[this.selectedRow].nuId]);
   }
 
+  goSearch(search: string){
+    if(search === ''){
+      this.secretariaService.getDisciplinas().subscribe(
+        disciplinas =>{
+          this.disciplinas = disciplinas;
+        }
+      );
+    }else{
+      this.secretariaService.searchDisciplinas(search).subscribe(
+        disciplinas =>{
+          this.disciplinas = disciplinas;
+        }
+      );
+    }
+  }
+
   goDelete(){
     this.secretariaService.deleteDisciplinaById(this.disciplinas[this.selectedRow].nuId).subscribe(id => {
       this.secretariaService.getDisciplinas().subscribe(

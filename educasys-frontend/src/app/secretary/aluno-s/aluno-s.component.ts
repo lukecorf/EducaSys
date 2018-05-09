@@ -55,6 +55,25 @@ export class AlunoSComponent implements OnInit {
     this.router.navigate(['aluno-s-cadastro',3,this.alunos[this.selectedRow].id_aluno]);
   }
 
+  goSearch(search: string){
+    console.log('Buscando por:');
+    console.log(search);
+    if(search === ''){
+      this.secretariaService.getAlunos().subscribe(
+        alunos =>{
+          this.alunos = alunos;
+        }
+      );
+    }else{
+      console.log('fui no certo');
+      this.secretariaService.searchAlunos(search).subscribe(
+        alunos =>{
+          this.alunos = alunos;
+        }
+      );
+    }
+  }
+
   goDelete(){
     this.secretariaService.deleteAlunoById(this.alunos[this.selectedRow].id_aluno).subscribe(id => {
       console.log('This is my ID: '+id);

@@ -89,6 +89,25 @@ public class SecretariaProvider {
 
     }
 
+    @GetMapping(value = "/searchAlunos/{name}")
+    public @ResponseBody String searchAlunos(@PathVariable String name){
+        List<Aluno> list = alunoRepository.searchAluno(name);
+        return gson.toJson(AlunoMapper.ListEntitytoListDTO(list));
+
+    }
+
+    @GetMapping(value = "/searchDisciplinas/{name}")
+    public @ResponseBody String searchDisciplinas(@PathVariable String name){
+        List<Disciplina> list = disciplinaRepository.searchDisciplina(name);
+        return gson.toJson(DisciplinaMapper.ListEntitytoListDTO(list));
+    }
+
+    @GetMapping(value = "/searchProfessores/{name}")
+    public @ResponseBody String searchProfessores(@PathVariable String name){
+        List<Professor> list = professorRepository.searchProfessor(name);
+        return gson.toJson(ProfessorMapper.ListEntitytoListDTO(list));
+    }
+
     @GetMapping("/getAlunoById/{id}")
     public @ResponseBody String getAlunoById(@PathVariable Long id) {
         Aluno a = alunoRepository.getOne(id);

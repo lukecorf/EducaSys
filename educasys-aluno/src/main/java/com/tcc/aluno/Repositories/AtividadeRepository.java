@@ -1,6 +1,6 @@
-package com.tcc.professor.Repositories;
+package com.tcc.aluno.Repositories;
 
-import com.tcc.professor.database.Atividade;
+import com.tcc.aluno.database.Atividade;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface AtividadeRepository extends JpaRepository<Atividade,Long> {
     @Query("SELECT a FROM Atividade a WHERE a.disciplinafk.codigo = :codigo")
-    List<Atividade> getAtividadeByIdDisciplina(@Param("codigo")Long codigo);
+    List<Atividade> getAtividadeByIdDisciplina(@Param("codigo") Long codigo);
 
     @Query("UPDATE Atividade a SET a = :atividade WHERE a.id = :id")
-    void updateAtividade(@Param("atividade")Atividade atividade, @Param("id") Long id);
+    void updateAtividade(@Param("atividade") Atividade atividade, @Param("id") Long id);
 }

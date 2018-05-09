@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 import {Observable} from "rxjs/Observable";
-import {ActivatedRoute, Router} from "@angular/router";
 import {SecretariaService} from "../secretaria.service";
 import {Professor} from "./professor-s.model";
 
@@ -60,19 +60,19 @@ export class ProfessorCadastroComponent implements OnInit {
     this.router.navigate(['professor-s']);
   }
 
-  goSave(){
-    this.professor.dt_data_nasc = null;
-    this.professor.url_img_professor = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
+  goSave(password: string){
+
+    if(password === this.professor.pw_senha_prof) {
+      this.professor.dt_data_nasc = null;
+      this.professor.url_img_professor = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
 
       this.secretariaService.setProfessor(this.professor).subscribe(professor => {
-        if(professor.st_nome_professor !== null){
+        if (professor.st_nome_professor !== null) {
           this.router.navigate(['professor-s']);
         }
       });
-
+    }else{
+    }
   }
 
-  goDelete(){
-
-  }
 }

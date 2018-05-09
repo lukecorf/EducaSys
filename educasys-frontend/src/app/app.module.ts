@@ -45,6 +45,7 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {FirebaseService} from "./secretary/firebase.service";
 import {StudentService} from "./student/student.service";
 import {TeacherService} from "./teacher/teacher.service";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import {TeacherService} from "./teacher/teacher.service";
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,

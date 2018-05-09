@@ -46,7 +46,7 @@
             <td scope="row">{{atividade.st_nome_atividade}}</td>
             <td class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
             <td class="glyphicon-center-3" >{{atividade.dt_data}}</td>
-            <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;" (click)="setAtividade(i);openModal(2);openM(content)"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon (click)="deleteAtividade(atividade.id_atividade)" style="cursor: pointer;">delete</mat-icon></th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
           </tr>
@@ -77,7 +77,7 @@
           </tr>
           </thead>
           <tbody class="body-table">
-          <tr *ngFor="let arquivo of arquivos; let i = index"  >
+          <tr *ngFor="let arquivo of arquivos; let j = index"  >
             <td scope="row">{{arquivo.st_nome_arquivo}}</td>
             <td class="glyphicon-center-3" >{{(arquivo.nu_tamanho_arquivo/1024)/1024}} mb</td>
             <td class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="deleteArquivo(arquivo.id_arquivo)">delete</mat-icon></td>
@@ -130,11 +130,11 @@
           </tr>
           </thead>
           <tbody class="body-table">
-          <tr *ngFor="let atividade of atividades; let i = index"  >
+          <tr *ngFor="let atividade of atividades; let k = index"  >
             <td *ngIf="atividade.bo_tipo_atividade" scope="row">{{atividade.st_nome_atividade}}</td>
             <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
             <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.dt_data}}</td>
-            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver">mode_edit</mat-icon></td>
+            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="setAtividade(k);openModal(2);openM(content)">mode_edit</mat-icon></td>
             <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="deleteAtividade(atividade.id_atividade)" >delete</mat-icon></td>
           </tr>
           </tbody>
@@ -171,7 +171,7 @@
         </tbody>
       </table>
     </div>
-    <div *ngIf="opc===2">
+    <div *ngIf="opc===2 || opc===4">
       <div style="padding-bottom: 10px;" class="input-group">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" disabled type="button">
@@ -210,7 +210,7 @@
   </div>
   <div class="modal-footer">
     <button *ngIf="opc ===1" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Concluir</button>
-    <button *ngIf="opc ===2" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Inserir</button>
+    <button *ngIf="opc ===2 || opc === 4" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Inserir</button>
     <button *ngIf="opc ===3" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Enviar</button>
   </div>
 </ng-template>

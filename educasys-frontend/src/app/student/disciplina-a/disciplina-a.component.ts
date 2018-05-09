@@ -6,6 +6,7 @@ import {Subscription} from "rxjs/Subscription";
 import {Observable} from "rxjs/Observable";
 import {StudentService} from "../student.service";
 import {Disciplina} from "../home-a/models/materia.model";
+import {Arquivo, Atividade} from "../../teacher/teacher.module";
 
 @Component({
   selector: 'disciplina-a',
@@ -20,8 +21,8 @@ export class DisciplinaAComponent implements OnInit {
   closed: string;
   id: number;
   disciplina: Disciplina = new Disciplina(-1,"",-1,"","","",-1,-1);
-  selectedJob: string = "";
-  modalInfo: ModalModel = new ModalModel("",0,"");
+  atividades: Atividade[];
+  arquivos: Arquivo[];
 
   public pieChartLabels:string[] = ['Faltas', 'Restante'];
   public pieChartData:number[] = [300, 500];
@@ -41,20 +42,42 @@ export class DisciplinaAComponent implements OnInit {
       this.closed = 'content';
     }
 
+    console.log("ID: "+this.id);
+
     this.studentService.getDisciplinaById(this.id).subscribe(
       disciplina =>{
         this.disciplina = disciplina;
       }
-    )
+    );
 
-    console.log('Codigo da Disciplina: ');
-
+    this.getAtividades();
+    this.getArquivos();
     this.timer = Observable.timer(500);
     this.sub = this.timer.subscribe(t => this.changeOpt());
   }
 
   changeOpt(){
     this.open = !this.open;
+  }
+
+  openUrl(url:string){
+    window.open(url, "_blank");
+  }
+
+  getAtividades(){
+    this.studentService.getAtividadesByIdDisciplina(this.id).subscribe(
+      atividades=>{
+        this.atividades = atividades;
+      }
+    )
+  }
+
+  getArquivos(){
+    this.studentService.getArquivosByIdDisciplina(this.id).subscribe(
+      arquivos=>{
+        this.arquivos = arquivos;
+      }
+    )
   }
 
   openc(content) {

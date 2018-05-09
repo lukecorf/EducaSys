@@ -22,7 +22,7 @@
   </div>
   <div class="row disciplina-info">
     <div class=" col-md-3 info-disciplina">
-      <h2>Redes 1</h2>
+      <h2>{{disciplina.st_nome}}</h2>
       <hr>
       <h3>Professor: {{disciplina.st_nome_prof}}</h3>
       <h3>Carga Horaria: {{disciplina.nu_carga_horaria}} horas</h3>
@@ -40,47 +40,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <th scope="row">Avaliação 1</th>
-          <td class="glyphicon-center-3" >20.0</td>
-          <td class="glyphicon-center-3" >15.5</td>
-          <td class="glyphicon-center-3" >24/09</td>
-        </tr>
-        <tr>
-          <th scope="row">Avaliação 2</th>
-          <td class="glyphicon-center-3" >20.0</td>
-          <td class="glyphicon-center-3" >20.0</td>
-          <td class="glyphicon-center-3" >01/10</td>
-        </tr>
-        <tr>
-          <th scope="row">Avaliação 3</th>
-          <td class="glyphicon-center-3" >20.0</td>
-          <td class="glyphicon-center-3" >10.8</td>
-          <td class="glyphicon-center-3" >12/11</td>
-        </tr>
-        <tr>
-          <th scope="row">Lista 1</th>
-          <td class="glyphicon-center-3" >5.0</td>
-          <td class="glyphicon-center-3" >2.5</td>
-          <td class="glyphicon-center-3" >12/09</td>
-        </tr>
-        <tr>
-          <th scope="row">Lista 2</th>
-          <td class="glyphicon-center-3" >5.0</td>
-          <td class="glyphicon-center-3" >4.5</td>
-          <td class="glyphicon-center-3" >28/09</td>
-        </tr>
-        <tr>
-          <th scope="row">Trabalho 1</th>
-          <td class="glyphicon-center-3" >15.0</td>
-          <td class="glyphicon-center-3" >13.0</td>
-          <td class="glyphicon-center-3" >19/10</td>
-        </tr>
-        <tr>
-          <th scope="row">Trabalho 2</th>
-          <td class="glyphicon-center-3" >15.0</td>
-          <td class="glyphicon-center-3" >9.0</td>
-          <td class="glyphicon-center-3" >06/12</td>
+        <tr *ngFor="let atividade of atividades; let i = index">
+          <td scope="row">{{atividade.st_nome_atividade}}</td>
+          <td class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
+          <td class="glyphicon-center-3" >--</td>
+          <td class="glyphicon-center-3" >{{atividade.dt_data}}</td>
         </tr>
         </tbody>
       </table>
@@ -111,20 +75,10 @@
           </tr>
           </thead>
           <tbody class="body-table">
-          <tr>
-            <th scope="row">tabalho.pdf</th>
-            <td class="glyphicon-center-3">0.24 mb</td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_download</mat-icon></td>
-          </tr>
-          <tr>
-            <th scope="row">lista_1.pdf</th>
-            <td class="glyphicon-center-3">0.43 mb</td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_download</mat-icon></td>
-          </tr>
-          <tr>
-            <th scope="row">slide_web_das_coisas.pdf</th>
-            <td class="glyphicon-center-3">1.2 mb</td>
-            <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_download</mat-icon></td>
+          <tr *ngFor="let arquivo of arquivos; let j = index"  >
+            <td scope="row">{{arquivo.st_nome_arquivo}}</td>
+            <td class="glyphicon-center-3" >{{(arquivo.nu_tamanho_arquivo/1024)/1024}} mb</td>
+            <td class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="openUrl(arquivo.url_arquivo)">file_download</mat-icon></td>
           </tr>
           </tbody>
         </table>
@@ -165,30 +119,18 @@
       <table class="table tabela ">
         <thead>
         <tr>
-          <th scope="col" style="width: 60%">Atividade</th>
+          <th scope="col" style="width: 45%">Atividade</th>
           <th scope="col" style="width: 10%;" class="glyphicon-center-3 table-align">Valor</th>
-          <th scope="col" style="width: 10%;" class="glyphicon-center-3 table-align">Data</th>
+          <th scope="col" style="width: 25%;" class="glyphicon-center-3 table-align">Data</th>
           <th scope="col" style="width: 20%;" class="glyphicon-center-3 table-align">Entrega</th>
         </tr>
         </thead>
         <tbody class="body-table">
-        <tr>
-          <th scope="row">Trabalho 1</th>
-          <td class="glyphicon-center-3">15.0</td>
-          <td class="glyphicon-center-3">19/10</td>
-          <td class="glyphicon-center-3"><mat-icon class="mouse-houver" value = "cacete" id="a" (click)="openc(content)">file_upload</mat-icon></td>
-        </tr>
-        <tr>
-          <th scope="row">Lista 1</th>
-          <td class="glyphicon-center-3">5.0</td>
-          <td class="glyphicon-center-3">12/09</td>
-          <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_upload</mat-icon></td>
-        </tr>
-        <tr>
-          <th scope="row">Lista 2</th>
-          <td class="glyphicon-center-3">5.0</td>
-          <td class="glyphicon-center-3">28/09</td>
-          <td class="glyphicon-center-3"><mat-icon class="mouse-houver">file_upload</mat-icon></td>
+        <tr *ngFor="let atividade of atividades; let k = index"  >
+          <th *ngIf="atividade.bo_tipo_atividade" scope="row">{{atividade.st_nome_atividade}}</th>
+          <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
+          <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.dt_data}}</td>
+          <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" value = "cacete" id="a" (click)="openc(content)">file_upload</mat-icon></td>
         </tr>
         </tbody>
       </table>

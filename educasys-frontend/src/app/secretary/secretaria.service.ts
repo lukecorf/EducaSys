@@ -14,18 +14,21 @@ export class SecretariaService{
   private urlDById = 'http://localhost:8099/getDisciplinaById';
   private urlDSet = 'http://localhost:8099/saveDisciplina';
   private urlDDelete = 'http://localhost:8099/deleteDisciplina';
+  private urlDSearch = 'http://localhost:8099/searchDisciplinas';
 
   private urlA = 'http://localhost:8099/getAlunos';
   private urlAById = 'http://localhost:8099/getAlunoById';
   private urlASet = 'http://localhost:8099/saveAluno';
   private urlAUpdate = 'http://localhost:8099/updateAluno';
   private urlADelete = 'http://localhost:8099/deleteAluno';
+  private urlASearch = 'http://localhost:8099/searchAlunos';
 
   private urlP = 'http://localhost:8099/getProfessores';
   private urlPById = 'http://localhost:8099/getProfessorById';
   private urlPSet = 'http://localhost:8099/saveProfessor';
   private urlPUpdate = 'http://localhost:8099/updateProfessor';
   private urlPDelete = 'http://localhost:8099/deleteProfessor';
+  private urlPSearch = 'http://localhost:8099/searchProfessores';
 
   private urlMenu= 'http://localhost:8099/getSecretariaByCode';
 
@@ -34,6 +37,10 @@ export class SecretariaService{
 
   getDisciplinas():Observable<DisciplinaList[]>{
     return this.http.get<DisciplinaList[]>(this.urlD);
+  }
+
+  searchDisciplinas(name: string):Observable<DisciplinaList[]>{
+    return this.http.get<DisciplinaList[]>(this.urlDSearch+'/'+name);
   }
 
   getDisciplinaById(id: number):Observable<Disciplina>{
@@ -46,6 +53,10 @@ export class SecretariaService{
 
   getAlunos():Observable<AlunoList[]>{
     return this.http.get<AlunoList[]>(this.urlA);
+  }
+
+  searchAlunos(name: string):Observable<AlunoList[]>{
+    return this.http.get<AlunoList[]>(this.urlASearch+'/'+name);
   }
 
   getAlunoById(id: number):Observable<Aluno>{
@@ -70,6 +81,10 @@ export class SecretariaService{
 
   getProfessores():Observable<ProfessorList[]>{
     return this.http.get<ProfessorList[]>(this.urlP);
+  }
+
+  searchProfessores(name: string):Observable<ProfessorList[]>{
+    return this.http.get<ProfessorList[]>(this.urlPSearch+'/'+name);
   }
 
   getProfessorById(id: number):Observable<Professor>{

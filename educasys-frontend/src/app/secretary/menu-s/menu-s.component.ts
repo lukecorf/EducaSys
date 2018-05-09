@@ -27,7 +27,6 @@ export class MenuSComponent implements OnInit {
 
     this.secretariaService.getSecretariaByCode(this.code).subscribe(
       secretaria =>{
-        console.log(secretaria);
         this.secretaria = secretaria;
       }
     );
