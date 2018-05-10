@@ -19,7 +19,8 @@ export class TeacherService{
   private urlDArquivo= 'http://localhost:8090/deleteArquivo';
   private urlDAtividade= 'http://localhost:8090/deleteAtividade';
   private urlGAlunos= 'http://localhost:8090/getAlunosByDisciplina';
-  private urlUAtividade= 'http://localhost:8090//updateAtividade';
+  private urlUAtividade= 'http://localhost:8090/updateAtividade';
+  private urlSFaltas= 'http://localhost:8090/setFaltas';
 
   constructor(private  http: HttpClient){}
 
@@ -37,6 +38,10 @@ export class TeacherService{
 
   setAtividade(a:Atividade):Observable<Atividade>{
     return this.http.post<Atividade>(this.urlSAtividade,a);
+  }
+
+  setFaltas(array: Array<number>):Observable<Boolean>{
+    return this.http.post<Boolean>(this.urlSFaltas,array);
   }
 
   setArquivo(a:Arquivo):Observable<Arquivo>{

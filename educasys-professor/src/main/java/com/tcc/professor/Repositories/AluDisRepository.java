@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -24,4 +25,9 @@ public interface AluDisRepository extends JpaRepository<AluDis,Long> {
 
     @Query("SELECT a FROM AluDis a WHERE a.disciplinafk.codigo = :codigo")
     List<AluDis> getAluDisByIdDisciplina(@Param("codigo") Long codigo);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE AluDis a SET a.faltas = a.faltas+1 WHERE a.alunofk.id IN :list")
+    void setFaltas(@Param("list")List<Long> list);
 }

@@ -26,7 +26,8 @@ export class DisciplinaPComponent implements OnInit {
   atividade: Atividade = new Atividade();
   atividades: Atividade[];
   arquivos: Arquivo[];
-  alunos: AlunoList[]
+  alunos: AlunoList[];
+  faltas: Boolean[];
   closeResult: string;
   selectedFiles: FileList;
   currentUpload: Upload;
@@ -107,6 +108,10 @@ export class DisciplinaPComponent implements OnInit {
     )
   }
 
+  changeFalta(id: number){
+    this.faltas[id] = !this.faltas[id];
+  }
+
   openM(content) {
 
     if(this.opc === 1){
@@ -114,6 +119,10 @@ export class DisciplinaPComponent implements OnInit {
       this.teacherService.getAlunosByIdDisciplina(this.disciplina.id_disciplina).subscribe(
         alunos=>{
           this.alunos = alunos;
+          this.faltas = new Array(this.alunos.length);
+          for(var x = 0; x < this.alunos.length; x++){
+            this.faltas[x] = false;
+          }
         }
       );
     }
@@ -121,6 +130,28 @@ export class DisciplinaPComponent implements OnInit {
     this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       if(result ==='Close click'){
+
+        if(this.opc === 1){
+          let idFaltas : Array<number> = new Array<number>();
+          for(var x = 0; x <  this.faltas.length; x++){
+            if (this.faltas[x]){
+              idFaltas.push(this.alunos[x].id_aluno);
+            }
+          }
+
+          if(idFaltas.length > 0) {
+            this.teacherService.setFaltas(idFaltas).subscribe(
+              ok => {
+                if (ok) {
+                  console.log("Deu");
+                } else {
+                  console.log("Não Deu");
+                }
+              }
+            )
+          }
+
+        }
         if(this.opc === 2){
           this.atividade.id_diciplina= this.disciplina.id_disciplina;
           this.atividade.id_atividade = -1;

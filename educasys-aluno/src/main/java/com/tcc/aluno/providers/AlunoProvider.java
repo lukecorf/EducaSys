@@ -73,4 +73,10 @@ public class AlunoProvider {
     public @ResponseBody String getArquivosByIdDisciplina(@PathVariable Long id) {
         return gson.toJson(ArquivoMapper.ListEntitytoListDTO(arquivoRepository.getArquivosByIdDisciplina(id)));
     }
+
+    @GetMapping("/getFaltas/{id}/{ida}")
+    public @ResponseBody String getFaltas(@PathVariable Long id, @PathVariable Long ida){
+        System.out.println("ID DIS: "+id+" ID ALU: "+ida);
+        return gson.toJson(aluDisRepository.getFaltas(id,ida));
+    }
 }

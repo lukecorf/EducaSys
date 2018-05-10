@@ -20,17 +20,20 @@ export class DisciplinaAComponent implements OnInit {
   opened: string;
   closed: string;
   id: number;
+  ida:number;
   disciplina: Disciplina = new Disciplina(-1,"",-1,"","","",-1,-1);
   atividades: Atividade[];
   arquivos: Arquivo[];
+  faltas: number;
 
   public pieChartLabels:string[] = ['Faltas', 'Restante'];
-  public pieChartData:number[] = [300, 500];
+  public pieChartData:number[] = [300,500];
   public pieChartType:string = 'pie';
   public pieChartOptions: any = {responsive: true, maintainAspectRatio: false}
 
   constructor(private modalService: NgbModal, private route: ActivatedRoute, private studentService: StudentService) {
     this.id = this.route.snapshot.params['id'];
+    this.ida = this.route.snapshot.params['ida'];
   }
 
   ngOnInit() {
@@ -47,6 +50,16 @@ export class DisciplinaAComponent implements OnInit {
     this.studentService.getDisciplinaById(this.id).subscribe(
       disciplina =>{
         this.disciplina = disciplina;
+        this.pieChartData = [this.faltas,(this.disciplina.nu_carga_horaria-this.faltas)];
+      }
+
+    );
+
+    this.studentService.getFaltasByDisciplina(this.ida,this.id).subscribe(
+      faltas =>{
+        this.faltas = faltas;
+        console.log('Faltas: '+this.faltas);
+        this.pieChartData = [this.faltas,(this.disciplina.nu_carga_horaria-this.faltas)];
       }
     );
 

@@ -30,7 +30,7 @@ const appRoutes: Routes = [
   { path: 'home-aluno/:id',canActivate: [AuthGuard] , component: HomeAComponent },
   { path: 'home-professor/:id',canActivate: [AuthGuard] , component: HomePComponent },
   { path: 'home-secretaria/:id',canActivate: [AuthGuard] , component: HomeSComponent },
-  { path: 'disciplina-a/:id',canActivate: [AuthGuard] , component: DisciplinaAComponent},
+  { path: 'disciplina-a/:id/:ida',canActivate: [AuthGuard] , component: DisciplinaAComponent},
   { path: 'disciplina-p/:id',canActivate: [AuthGuard] , component: DisciplinaPComponent},
   { path: 'disciplina-s', canActivate: [AuthGuard] , component: DisciplinaSComponent},
   { path: 'aluno-s', canActivate: [AuthGuard] , component: AlunoSComponent},

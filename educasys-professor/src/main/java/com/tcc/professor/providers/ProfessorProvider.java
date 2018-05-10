@@ -88,6 +88,14 @@ public class ProfessorProvider {
 
     }
 
+    @PostMapping(path="/setFaltas",  consumes = "application/json", produces = "application/json")
+    public String setFaltas(@RequestBody ArrayList<Long> ids){
+
+        aluDisRepository.setFaltas(ids);
+
+        return gson.toJson(true);
+    }
+
     @PostMapping(path="/saveArquivo",  consumes = "application/json", produces = "application/json")
     public String createArquivo(@RequestBody ArquivoDTO arquivoDTO){
         return gson.toJson(arquivoRepository.save(ArquivoMapper.DTOtoEntity(arquivoDTO)));
@@ -112,8 +120,6 @@ public class ProfessorProvider {
         }
 
         List<Aluno> la = alunoRepository.getAlunoByListId(ll);
-        System.out.println("Tamanho da lista de ids: "+ll.size());
-        System.out.println("Tamanho da lista de alunos: "+la.size());
         return gson.toJson(AlunoMapper.ListEntitytoListDTO(la));
 
     }

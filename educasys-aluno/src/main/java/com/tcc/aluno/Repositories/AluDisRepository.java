@@ -16,4 +16,7 @@ public interface AluDisRepository  extends JpaRepository<AluDis,Long> {
     @Modifying
     @Query("SELECT a FROM AluDis a WHERE a.alunofk.id = :idAlu")
     List<AluDis> getByIdAluno(@Param("idAlu") long idAlu);
+
+    @Query("SELECT a.faltas FROM AluDis a WHERE a.alunofk.id = :idAlu AND a.disciplinafk.codigo = :idDis")
+    Float getFaltas(@Param("idAlu") Long idAlu, @Param("idDis") Long idDis);
 }

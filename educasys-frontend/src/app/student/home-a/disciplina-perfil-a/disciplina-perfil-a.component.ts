@@ -16,7 +16,7 @@ export class DisciplinaPerfilAComponent implements OnInit {
   @Input() img: string;
   @Input() falta: number;
   @Input() nota: number;
-
+  @Input() idAluno: number;
 
   constructor(private router: Router) { }
 
@@ -24,7 +24,7 @@ export class DisciplinaPerfilAComponent implements OnInit {
   }
 
   goDisciplina(){
-    this.router.navigate(['disciplina-a/'+this.codigo]);
+    this.router.navigate(['disciplina-a/'+this.codigo,this.idAluno]);
   }
 
 }

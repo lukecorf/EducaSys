@@ -166,7 +166,7 @@
         <tbody>
           <tr *ngFor="let a of alunos; let j = index" >
             <td class="glyphicon-center-3">{{a.st_nome_aluno}}</td>
-            <td class="glyphicon-center-3"><input type="checkbox"/></td>
+            <td class="glyphicon-center-3" (click)="changeFalta(j)"><input type="checkbox"/></td>
           </tr>
         </tbody>
       </table>
