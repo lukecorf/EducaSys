@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Professor} from "../secretary/professor-s/professor-s.model";
 import {Disciplina} from "../student/home-a/models/materia.model";
-import {Arquivo, Atividade} from "./teacher.module";
+import {AluAtividade, Arquivo, Atividade} from "./teacher.module";
 import {AlunoList} from "../secretary/aluno-s/aluno-s.model";
 
 @Injectable()
@@ -21,6 +21,7 @@ export class TeacherService{
   private urlGAlunos= 'http://localhost:8090/getAlunosByDisciplina';
   private urlUAtividade= 'http://localhost:8090/updateAtividade';
   private urlSFaltas= 'http://localhost:8090/setFaltas';
+  private urlGEntregas= 'http://localhost:8090/getAtividadeEntregues';
 
   constructor(private  http: HttpClient){}
 
@@ -30,6 +31,10 @@ export class TeacherService{
 
   getDisciplinaById(id: number):Observable<Disciplina>{
     return this.http.get<Disciplina>(this.urlD+"/"+id);
+  }
+
+  getEntergas(ida: number, idd: number):Observable<AluAtividade[]>{
+    return this.http.get<AluAtividade[]>(this.urlGEntregas+"/"+ida+"/"+idd);
   }
 
   getDisciplinas(id: number):Observable<Disciplina[]>{

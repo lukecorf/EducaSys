@@ -2,6 +2,7 @@ package com.tcc.aluno.providers;
 
 import com.google.gson.Gson;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import com.tcc.aluno.DTO.EntregaDTO;
 import com.tcc.aluno.Repositories.*;
 import com.tcc.aluno.database.AluDis;
 import com.tcc.aluno.database.Atividade;
@@ -22,6 +23,9 @@ public class AlunoProvider {
     Gson gson = new Gson();
 
     @Autowired
+    AluAtividadeRepository aluAtividadeRepository;
+
+    @Autowired
     AluDisRepository aluDisRepository;
 
     @Autowired
@@ -35,6 +39,8 @@ public class AlunoProvider {
 
     @Autowired
     ArquivoRepository arquivoRepository;
+
+
 
     @GetMapping(value = "/getDisciplinas/{id}")
     public @ResponseBody
@@ -67,6 +73,17 @@ public class AlunoProvider {
         List<Atividade> a = atividadeRepository.getAtividadeByIdDisciplina(id);
         System.out.println("Tamanho da Lista: "+a.size());
         return gson.toJson(AtividadeMapper.ListEntitytoListDTO(a));
+    }
+
+
+    @PostMapping(path="/setAtividade",  consumes = "application/json", produces = "application/json")
+    public String entregaAtividade(@RequestBody EntregaDTO entregaDTO){
+        System.out.println("Teste");
+        System.out.println("Aluno: "+entregaDTO.getId_aluno()+" Atividade: "+entregaDTO.getId_atividade());
+        aluAtividadeRepository.atualizaAtividade(entregaDTO.getUrl(),entregaDTO.getId_aluno(),entregaDTO.getId_atividade());
+
+        return gson.toJson(entregaDTO);
+
     }
 
     @GetMapping("/getArquivos/{id}")

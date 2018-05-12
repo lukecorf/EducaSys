@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import { Aluno} from "./student.model";
+import {Aluno, AtividadeEntrega} from "./student.model";
 import {Observable} from "rxjs/Observable";
 import {Disciplina} from "./home-a/models/materia.model";
 import {Arquivo, Atividade} from "../teacher/teacher.module";
@@ -14,6 +14,7 @@ export class StudentService{
   private urlGAtividades = 'http://localhost:8888/getAtividades';
   private urlGArquivos= 'http://localhost:8888/getArquivos';
   private urlGFaltas= 'http://localhost:8888/getFaltas';
+  private urlSAtividade= 'http://localhost:8888/setAtividade';
   constructor(private  http: HttpClient){}
 
   getAlunoByCode(id: string):Observable<Aluno>{
@@ -26,6 +27,10 @@ export class StudentService{
 
   getDisciplinas(id: number):Observable<Disciplina[]>{
     return this.http.get<Disciplina[]>(this.urlMateria+'/'+id);
+  }
+
+  setFileAtividade(a: AtividadeEntrega):Observable<AtividadeEntrega>{
+    return this.http.post<AtividadeEntrega>(this.urlSAtividade, a);
   }
 
   getAtividadesByIdDisciplina(id: number):Observable<Atividade[]>{

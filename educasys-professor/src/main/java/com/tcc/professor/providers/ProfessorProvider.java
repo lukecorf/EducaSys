@@ -1,6 +1,8 @@
 package com.tcc.professor.providers;
 
 import com.google.gson.Gson;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import com.tcc.professor.DTO.AluAtividadeDTO;
 import com.tcc.professor.DTO.ArquivoDTO;
 import com.tcc.professor.DTO.AtividadeDTO;
 import com.tcc.professor.DTO.DisciplinaPDTO;
@@ -67,6 +69,31 @@ public class ProfessorProvider {
         return gson.toJson(DisciplinaMapper.EntitytoDTO(disciplinaRepository.getOne(id)));
     }
 
+    @GetMapping("/getAtividadeEntregues/{ida}/{idd}")
+    public @ResponseBody String getAtividadesEntregues(@PathVariable Long ida, @PathVariable Long idd){
+        List<AluAtividade> laa = aluAtividadeRepository.getAtividadesEntregues(idd,ida);
+
+        if(laa.size()>0) {
+            List<Long> id = new ArrayList<>();
+
+            for (AluAtividade a : laa) {
+                id.add(a.getAlunofk().getId());
+            }
+
+            List<String> nome = alunoRepository.getNomesAlunosByListId(id);
+
+            List<AluAtividadeDTO> aluAtividadeDTO = new ArrayList<>();
+
+            for (int i = 0; i < laa.size(); i++) {
+                aluAtividadeDTO.add(new AluAtividadeDTO(nome.get(i), laa.get(i).getUrl()));
+            }
+
+            return gson.toJson(aluAtividadeDTO);
+        }else{
+            return gson.toJson(new ArrayList<AluAtividadeDTO>());
+        }
+    }
+
     @PostMapping(path="/saveAtividade",  consumes = "application/json", produces = "application/json")
     public String createAtividade(@RequestBody AtividadeDTO atividadeDTO){
 
@@ -80,7 +107,7 @@ public class ProfessorProvider {
         for(AluDis a: l){
             Aluno aluno = new Aluno();
             aluno.setId(alunoRepository.getOne(a.getAlunofk().getId()).getId());
-            AluAtividade alua = new AluAtividade(disciplina,aluno,atividade,-1);
+            AluAtividade alua = new AluAtividade(disciplina,aluno,atividade,-1,false,"");
             aluAtividadeRepository.save(alua);
         }
 
@@ -132,7 +159,9 @@ public class ProfessorProvider {
 
     @DeleteMapping("/deleteAtividade/{id}")
     public String deleteAtividade(@PathVariable Long id) {
+        aluAtividadeRepository.deleteAtividadeByIdAtividade(id);
         atividadeRepository.deleteById(id);
+
         return gson.toJson(id);
     }
 

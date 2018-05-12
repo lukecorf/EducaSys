@@ -14,17 +14,17 @@ import {DisciplinaPComponent} from "../teacher/disciplina-p/disciplina-p.compone
 @Injectable()
 export class FirebaseService{
   private baseImagePath:string = '/images';
+  private baseFilePath: string = '/files';
 
   constructor(private db: AngularFireDatabase, private secretariaService: SecretariaService, private teacherService: TeacherService, private router : Router){}
 
   pushUpload(upload: Upload, disciplina: Disciplina){
     let storageRef = firebase.storage().ref();
-    let uploadTask = storageRef.child(`${this.baseImagePath}/${upload.file.name}`).put(upload.file);
+    let uploadTask = storageRef.child(`${this.baseFilePath}/${upload.file.name}`).put(upload.file);
 
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
       (snapshot) =>  {
-        console.log("Efetuando Upload...");
-        // upload in progress
+        //efetuando upload
         upload.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
       },
       (error) => {

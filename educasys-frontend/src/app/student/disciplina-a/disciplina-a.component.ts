@@ -7,6 +7,11 @@ import {Observable} from "rxjs/Observable";
 import {StudentService} from "../student.service";
 import {Disciplina} from "../home-a/models/materia.model";
 import {Arquivo, Atividade} from "../../teacher/teacher.module";
+import {Upload} from "../../secretary/secretaria.model";
+import {FirebaseService} from "../../secretary/firebase.service";
+import * as firebase from 'firebase/app';
+import 'firebase/storage';
+import {AtividadeEntrega} from "../student.model";
 
 @Component({
   selector: 'disciplina-a',
@@ -24,6 +29,8 @@ export class DisciplinaAComponent implements OnInit {
   disciplina: Disciplina = new Disciplina(-1,"",-1,"","","",-1,-1);
   atividades: Atividade[];
   arquivos: Arquivo[];
+  atividade: Atividade;
+  selectedFiles: FileList;
   faltas: number;
 
   public pieChartLabels:string[] = ['Faltas', 'Restante'];
@@ -31,7 +38,7 @@ export class DisciplinaAComponent implements OnInit {
   public pieChartType:string = 'pie';
   public pieChartOptions: any = {responsive: true, maintainAspectRatio: false}
 
-  constructor(private modalService: NgbModal, private route: ActivatedRoute, private studentService: StudentService) {
+  constructor(private modalService: NgbModal, private route: ActivatedRoute, private studentService: StudentService, private firebaseService: FirebaseService) {
     this.id = this.route.snapshot.params['id'];
     this.ida = this.route.snapshot.params['ida'];
   }
@@ -73,6 +80,11 @@ export class DisciplinaAComponent implements OnInit {
     this.open = !this.open;
   }
 
+  setAtividade(id: number){
+    this.atividade = this.atividades[id];
+    //console.log('ID: '+this.atividade.id_atividade)
+  }
+
   openUrl(url:string){
     window.open(url, "_blank");
   }
@@ -93,10 +105,50 @@ export class DisciplinaAComponent implements OnInit {
     )
   }
 
+  selectFile(event){
+    this.selectedFiles = event.target.files;
+  }
+
+  enviaArquivo(){
+    let file = this.selectedFiles.item(0)
+    let currentUpload = new Upload(file);
+    this.efetuarUpload(currentUpload);
+  }
+
+  efetuarUpload(upload: Upload){
+    let storageRef = firebase.storage().ref();
+    let uploadTask = storageRef.child(`${'/files'}/${upload.file.name}`).put(upload.file);
+
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) =>  {
+        // upload em progresso
+        upload.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      },
+      (error) => {
+        // upload não efetuado
+        console.log(error);
+      },
+      () => {
+        //upload efetuado
+        upload.url = uploadTask.snapshot.downloadURL
+        upload.name = upload.file.name
+
+        let a :AtividadeEntrega = new AtividadeEntrega(this.ida,this.atividade.id_atividade,upload.url);
+
+        this.studentService.setFileAtividade(a).subscribe(
+          arquivo=>{
+            console.log('Deu');
+          }
+        );
+      }
+    );
+  }
+
   openc(content) {
     this.modalService.open(content).result.then((result) => {
       if(result){
         console.log('Everything OK');
+        this.enviaArquivo();
       }else{
         console.log('Problems here man');
       }

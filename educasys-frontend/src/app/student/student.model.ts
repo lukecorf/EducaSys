@@ -14,3 +14,10 @@ export class Aluno{
               public pw_senha_aluno?: string
   ){}
 }
+
+export class AtividadeEntrega{
+  constructor(public id_aluno?:number,
+              public id_atividade?:number,
+              public url?:string
+  ){}
+}

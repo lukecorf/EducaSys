@@ -31,3 +31,10 @@ export class Arquivo{
 
   }
 }
+
+export class AluAtividade{
+  nome: string;
+  url: string;
+
+  constructor(nome?: string, url?:string){}
+}

@@ -94,19 +94,13 @@
           <h4 class="modal-title">Enviar - Trabalho 1</h4>
         </div>
         <div class="modal-body">
-          <span style="font-weight: bold;">Valor:</span> 15 Pontos
+          <span style="font-weight: bold;">Valor:</span>{{atividade.nu_valor_atividade}} Pontos
           <br>
-          <span style="font-weight: bold;">Data Final da Entrega:</span> 19/10
+          <span style="font-weight: bold;">Data Final da Entrega:</span> {{atividade.dt_data}}
           <br>
           <br>
-          <div class="input-group">
-            <input class="form-control" placeholder="Nome do arquivo..."
-                   name="dp" >
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary"  type="button">
-               ...
-              </button>
-            </div>
+          <div style="padding-bottom: 10px;" class="input-group">
+            <input type="file" id="imagem-input" (change)="selectFile($event)"/>
           </div>
         </div>
         <div class="modal-footer">
@@ -130,7 +124,7 @@
           <th *ngIf="atividade.bo_tipo_atividade" scope="row">{{atividade.st_nome_atividade}}</th>
           <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
           <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.dt_data}}</td>
-          <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" value = "cacete" id="a" (click)="openc(content)">file_upload</mat-icon></td>
+          <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" value = "cacete" id="a" (click)="openc(content);setAtividade(k)">file_upload</mat-icon></td>
         </tr>
         </tbody>
       </table>

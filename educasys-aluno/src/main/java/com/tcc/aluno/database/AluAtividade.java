@@ -1,4 +1,4 @@
-package com.tcc.index.database;
+package com.tcc.aluno.database;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

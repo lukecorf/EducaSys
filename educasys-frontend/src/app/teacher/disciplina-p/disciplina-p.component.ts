@@ -4,10 +4,12 @@ import {ActivatedRoute} from "@angular/router";
 import { Observable, Subscription } from 'rxjs/Rx';
 import {TeacherService} from "../teacher.service";
 import {Disciplina} from "../../student/home-a/models/materia.model";
-import {Arquivo, Atividade} from "../teacher.module";
+import {AluAtividade, Arquivo, Atividade} from "../teacher.module";
 import {Upload} from "../../secretary/secretaria.model";
 import {FirebaseService} from "../../secretary/firebase.service";
 import {AlunoList} from "../../secretary/aluno-s/aluno-s.model";
+import * as firebase from 'firebase/app';
+import 'firebase/storage';
 
 @Component({
   selector: 'disciplina-p-component',
@@ -28,9 +30,9 @@ export class DisciplinaPComponent implements OnInit {
   arquivos: Arquivo[];
   alunos: AlunoList[];
   faltas: Boolean[];
+  entregas: AluAtividade[];
   closeResult: string;
   selectedFiles: FileList;
-  currentUpload: Upload;
 
   constructor(private modalService: NgbModal, private route: ActivatedRoute, private teacherService: TeacherService, private firebaseService: FirebaseService) {
     this.id = this.route.snapshot.params['id'];
@@ -79,9 +81,9 @@ export class DisciplinaPComponent implements OnInit {
     this.open = !this.open;
   }
 
-  setAtividade(i: number){
+  setAtividade(i: number, id: number){
     this.atividade = this.atividades[i];
-    this.opc = 4;
+    this.opc = id;
   }
 
   openModal(idModal){
@@ -112,19 +114,105 @@ export class DisciplinaPComponent implements OnInit {
     this.faltas[id] = !this.faltas[id];
   }
 
+  setFaltas(){
+    this.teacherService.getAlunosByIdDisciplina(this.disciplina.id_disciplina).subscribe(
+      alunos=>{
+        this.alunos = alunos;
+        this.faltas = new Array(this.alunos.length);
+        for(var x = 0; x < this.alunos.length; x++){
+          this.faltas[x] = false;
+        }
+      }
+    );
+  }
+
+  efetuaChamada(){
+    let idFaltas : Array<number> = new Array<number>();
+    for(var x = 0; x <  this.faltas.length; x++){
+      if (this.faltas[x]){
+        idFaltas.push(this.alunos[x].id_aluno);
+      }
+    }
+
+    if(idFaltas.length > 0) {
+      this.teacherService.setFaltas(idFaltas).subscribe(
+        ok => {
+          if (ok) {
+            console.log("Deu");
+          } else {
+            console.log("Não Deu");
+          }
+        }
+      )
+    }
+  }
+
+  criaAtividade(){
+    this.atividade.id_diciplina= this.disciplina.id_disciplina;
+    this.atividade.id_atividade = -1;
+    this.teacherService.setAtividade(this.atividade).subscribe(
+      atividade=>{
+        if(atividade.st_nome_atividade !== null) {
+          this.getAtividades();
+        }
+        this.atividade = new Atividade();
+      }
+    )
+  }
+
+  enviaArquivo(){
+    let file = this.selectedFiles.item(0)
+    let currentUpload = new Upload(file);
+    let arquivo: Arquivo = new Arquivo();
+    arquivo.id_disciplina = this.disciplina.id_disciplina;
+    arquivo.id_arquivo = -1;
+    arquivo.nu_tamanho_arquivo = file.size;
+    arquivo.st_nome_arquivo = file.name;
+
+    this.efetuarUpload(currentUpload,arquivo);
+  }
+
+  efetuarUpload(upload: Upload, arquivo: Arquivo){
+    let storageRef = firebase.storage().ref();
+    let uploadTask = storageRef.child(`${'/files'}/${upload.file.name}`).put(upload.file);
+
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) =>  {
+        // upload em progresso
+        upload.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      },
+      (error) => {
+        // upload não efetuado
+        console.log(error);
+      },
+      () => {
+        //upload efetuado
+        upload.url = uploadTask.snapshot.downloadURL
+        upload.name = upload.file.name
+        arquivo.url_arquivo= upload.url;
+        this.teacherService.setArquivo(arquivo).subscribe(
+          arquivo=>{
+            this.getArquivos();
+          }
+        );
+      }
+    );
+  }
+
+  getEntregas(){
+    this.teacherService.getEntergas(this.atividade.id_atividade,this.atividade.id_diciplina).subscribe(
+      entregas=>{
+        this.entregas = entregas;
+      }
+    );
+  }
+
   openM(content) {
 
     if(this.opc === 1){
-      console.log("ENTREI AQUI");
-      this.teacherService.getAlunosByIdDisciplina(this.disciplina.id_disciplina).subscribe(
-        alunos=>{
-          this.alunos = alunos;
-          this.faltas = new Array(this.alunos.length);
-          for(var x = 0; x < this.alunos.length; x++){
-            this.faltas[x] = false;
-          }
-        }
-      );
+      this.setFaltas();
+    }else if(this.opc === 5){
+      this.getEntregas();
     }
 
     this.modalService.open(content).result.then((result) => {
@@ -132,47 +220,12 @@ export class DisciplinaPComponent implements OnInit {
       if(result ==='Close click'){
 
         if(this.opc === 1){
-          let idFaltas : Array<number> = new Array<number>();
-          for(var x = 0; x <  this.faltas.length; x++){
-            if (this.faltas[x]){
-              idFaltas.push(this.alunos[x].id_aluno);
-            }
-          }
-
-          if(idFaltas.length > 0) {
-            this.teacherService.setFaltas(idFaltas).subscribe(
-              ok => {
-                if (ok) {
-                  console.log("Deu");
-                } else {
-                  console.log("Não Deu");
-                }
-              }
-            )
-          }
-
+          this.efetuaChamada();
         }
         if(this.opc === 2){
-          this.atividade.id_diciplina= this.disciplina.id_disciplina;
-          this.atividade.id_atividade = -1;
-          this.teacherService.setAtividade(this.atividade).subscribe(
-            atividade=>{
-              if(atividade.st_nome_atividade !== null) {
-                this.getAtividades();
-              }
-              this.atividade = new Atividade();
-            }
-          )
-
+          this.criaAtividade();
         }else if(this.opc === 3){
-          let file = this.selectedFiles.item(0)
-          this.currentUpload = new Upload(file);
-          let arquivo: Arquivo = new Arquivo();
-          arquivo.id_disciplina = this.disciplina.id_disciplina;
-          arquivo.id_arquivo = -1;
-          arquivo.nu_tamanho_arquivo = file.size;
-          arquivo.st_nome_arquivo = file.name;
-          this.firebaseService.pushUploadFile(this.currentUpload,arquivo);
+          this.enviaArquivo();
         }else if(this.opc === 4){
           this.teacherService.updateAtividade(this.atividade).subscribe(
             atividade=>{

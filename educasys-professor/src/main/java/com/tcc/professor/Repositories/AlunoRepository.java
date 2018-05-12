@@ -13,4 +13,7 @@ import java.util.List;
 public interface AlunoRepository extends JpaRepository<Aluno,Long> {
     @Query("SELECT a FROM Aluno a WHERE a.id IN :list")
     List<Aluno> getAlunoByListId(@Param("list")List<Long> list);
+
+    @Query("SELECT a.nome FROM Aluno a WHERE a.id IN :list")
+    List<String> getNomesAlunosByListId(@Param("list")List<Long> list);
 }

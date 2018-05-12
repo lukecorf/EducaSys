@@ -30,16 +30,39 @@ public class AluAtividade {
     @Column(name = "NU_NOTA")
     private float nota;
 
-    public AluAtividade(@NotNull Disciplina disciplinafk, @NotNull Aluno alunofk, @NotNull Atividade atividadefk, float nota) {
+    @Column(name = "BO_ENTREGA")
+    private boolean entrega;
+
+    @Column(name = "URL_ENTREGA")
+    private String url;
+
+    public AluAtividade(@NotNull Disciplina disciplinafk, @NotNull Aluno alunofk, @NotNull Atividade atividadefk, float nota, boolean entrega, String url) {
         this.disciplinafk = disciplinafk;
         this.alunofk = alunofk;
         this.atividadefk = atividadefk;
         this.nota = nota;
+        this.entrega = entrega;
+        this.url = url;
     }
-
 
     public AluAtividade(){
 
+    }
+
+    public boolean isEntrega() {
+        return entrega;
+    }
+
+    public void setEntrega(boolean entrega) {
+        this.entrega = entrega;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public long getId() {

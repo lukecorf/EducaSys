@@ -46,7 +46,7 @@
             <td scope="row">{{atividade.st_nome_atividade}}</td>
             <td class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
             <td class="glyphicon-center-3" >{{atividade.dt_data}}</td>
-            <th scope="col" class="glyphicon-center-3" style="text-align: center;" (click)="setAtividade(i);openModal(2);openM(content)"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;" (click)="setAtividade(i,4);openModal(2);openM(content)"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon (click)="deleteAtividade(atividade.id_atividade)" style="cursor: pointer;">delete</mat-icon></th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
           </tr>
@@ -125,7 +125,7 @@
             <th scope="col" style="width: 40%">Atividade</th>
             <th scope="col" style="width: 10%;" class="glyphicon-center-3 table-align">Valor</th>
             <th scope="col" style="width: 10%;" class="glyphicon-center-3 table-align">Data</th>
-            <th scope="col" style="width: 20%;" class="glyphicon-center-3 table-align">Editar</th>
+            <th scope="col" style="width: 20%;" class="glyphicon-center-3 table-align">Entregas</th>
             <th scope="col" style="width: 20%;" class="glyphicon-center-3 table-align">Remover</th>
           </tr>
           </thead>
@@ -134,7 +134,7 @@
             <td *ngIf="atividade.bo_tipo_atividade" scope="row">{{atividade.st_nome_atividade}}</td>
             <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
             <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.dt_data}}</td>
-            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="setAtividade(k);openModal(2);openM(content)">mode_edit</mat-icon></td>
+            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="setAtividade(k,5);openModal(5);openM(content)">mode_edit</mat-icon></td>
             <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="deleteAtividade(atividade.id_atividade)" >delete</mat-icon></td>
           </tr>
           </tbody>
@@ -206,6 +206,23 @@
       <div style="padding-bottom: 10px;" class="input-group">
         <input type="file" id="imagem-input" (change)="selectFile($event)"/>
       </div>
+    </div>
+    <div *ngIf="opc===5">
+      Baixar arquivos
+      <table class="table tabela" style="margin-top: 10px;">
+        <thead>
+        <tr style="background-color: #374046; color:white;">
+          <th scope="col" style="width:75%;"class="glyphicon-center-3"  >Nome Aluno</th>
+          <th scope="col" style="width:25%;"class="glyphicon-center-3"  >Download</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let e of entregas; let j = index" >
+          <td class="glyphicon-center-3">{{e.nome}}</td>
+          <td class="glyphicon-center-3" (click)="openUrl(e.url)"><mat-icon>file_download</mat-icon></td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="modal-footer">
