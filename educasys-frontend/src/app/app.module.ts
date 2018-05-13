@@ -42,7 +42,6 @@ import { ProfessorSComponent } from './secretary/professor-s/professor-s.compone
 import { ProfessorCadastroComponent } from './secretary/professor-s/professor-cadastro.component';
 import {SecretariaService} from "./secretary/secretaria.service";
 import {AngularFireDatabase} from "angularfire2/database";
-import {FirebaseService} from "./secretary/firebase.service";
 import {StudentService} from "./student/student.service";
 import {TeacherService} from "./teacher/teacher.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -85,7 +84,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     NgxMaskModule.forRoot(),
     NgbModule.forRoot(),
  ],
-  providers: [LoginService, StudentService, TeacherService, SecretariaService, LoginInfoService, AuthService, AuthGuard, UserData, AngularFireDatabase, FirebaseService],
+  providers: [LoginService, StudentService, TeacherService, SecretariaService, LoginInfoService, AuthService, AuthGuard, UserData, AngularFireDatabase],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

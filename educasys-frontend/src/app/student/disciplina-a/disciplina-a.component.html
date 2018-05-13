@@ -44,7 +44,7 @@
           <td scope="row">{{atividade.st_nome_atividade}}</td>
           <td class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
           <td class="glyphicon-center-3" >--</td>
-          <td class="glyphicon-center-3" >{{atividade.dt_data}}</td>
+          <td class="glyphicon-center-3" >{{atividade.dt_data| date: 'dd/MM'}}</td>
         </tr>
         </tbody>
       </table>
@@ -123,7 +123,7 @@
         <tr *ngFor="let atividade of atividades; let k = index"  >
           <th *ngIf="atividade.bo_tipo_atividade" scope="row">{{atividade.st_nome_atividade}}</th>
           <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
-          <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.dt_data}}</td>
+          <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.dt_data | date:'dd/MM'}}</td>
           <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" value = "cacete" id="a" (click)="openc(content);setAtividade(k)">file_upload</mat-icon></td>
         </tr>
         </tbody>

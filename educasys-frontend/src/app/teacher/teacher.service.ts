@@ -9,6 +9,7 @@ import {AlunoList} from "../secretary/aluno-s/aluno-s.model";
 @Injectable()
 export class TeacherService{
 
+
   private url = 'http://localhost:8090/getProfessorByCode';
   private urlD = 'http://localhost:8090/getDisciplinaById';
   private urlMateria = 'http://localhost:8090/getDisciplinas';

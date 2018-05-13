@@ -45,7 +45,7 @@
           <tr *ngFor="let atividade of atividades; let i = index">
             <td scope="row">{{atividade.st_nome_atividade}}</td>
             <td class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
-            <td class="glyphicon-center-3" >{{atividade.dt_data}}</td>
+            <td class="glyphicon-center-3" >{{atividade.dt_data| date: 'dd/MM'}}</td>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;" (click)="setAtividade(i,4);openModal(2);openM(content)"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon (click)="deleteAtividade(atividade.id_atividade)" style="cursor: pointer;">delete</mat-icon></th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
@@ -54,7 +54,7 @@
       </table>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="openModal(1);openM(content)"><mat-icon class="buttons">assignment</mat-icon> Efetuar chamada</button><br>
+      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="openModal(1);openM(content)"><mat-icon class="buttons">assignment</mat-icon> Presença </button><br>
       <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="openModal(2);openM(content)"><mat-icon class="buttons">create</mat-icon> Criar avaliação</button><br>
       <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="openModal(3);openM(content)"><mat-icon class="buttons">cloud_upload</mat-icon> Enviar material</button><br>
       <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="goEdit()"><mat-icon class="buttons">email</mat-icon> Enviar Email</button><br>
@@ -79,7 +79,7 @@
           <tbody class="body-table">
           <tr *ngFor="let arquivo of arquivos; let j = index"  >
             <td scope="row">{{arquivo.st_nome_arquivo}}</td>
-            <td class="glyphicon-center-3" >{{(arquivo.nu_tamanho_arquivo/1024)/1024}} mb</td>
+            <td class="glyphicon-center-3" >{{(arquivo.nu_tamanho_arquivo/1024)/1024 | number: '1.2-2'}} mb</td>
             <td class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="deleteArquivo(arquivo.id_arquivo)">delete</mat-icon></td>
             <td class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="openUrl(arquivo.url_arquivo)">file_download</mat-icon></td>
           </tr>
@@ -92,31 +92,31 @@
         <h2>Entregas</h2>
       </div>
 
-      <ng-template #content let-c="close" let-d="dismiss">
-        <div class="modal-header">
-          <h4 class="modal-title">Enviar - Trabalho 1</h4>
-        </div>
-        <div class="modal-body">
-          <span style="font-weight: bold;">Valor:</span> 15 Pontos
-          <br>
-          <span style="font-weight: bold;">Data Final da Entrega:</span> 19/10
-          <br>
-          <br>
-          <div class="input-group">
-            <input class="form-control" placeholder="Nome do arquivo..."
-                   name="dp" >
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary"  type="button">
-                ...
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-dark" (click)="c(false)">Cancelar</button>
-          <button type="button" class="btn btn-outline-dark" (click)="c(true)">Enviar</button>
-        </div>
-      </ng-template>
+      <!--<ng-template #content let-c="close" let-d="dismiss">-->
+        <!--<div class="modal-header">-->
+          <!--<h4 class="modal-title">Enviar - Trabalho 1</h4>-->
+        <!--</div>-->
+        <!--<div class="modal-body">-->
+          <!--<span style="font-weight: bold;">Valor:</span> 15 Pontos-->
+          <!--<br>-->
+          <!--<span style="font-weight: bold;">Data Final da Entrega:</span> 19/10-->
+          <!--<br>-->
+          <!--<br>-->
+          <!--<div class="input-group">-->
+            <!--<input class="form-control" placeholder="Nome do arquivo..."-->
+                   <!--name="dp" >-->
+            <!--<div class="input-group-append">-->
+              <!--<button class="btn btn-outline-secondary"  type="button">-->
+                <!--...-->
+              <!--</button>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="modal-footer">-->
+          <!--<button type="button" class="btn btn-outline-dark" (click)="c(false)">Cancelar</button>-->
+          <!--<button type="button" class="btn btn-outline-dark" (click)="c(true)">Enviar</button>-->
+        <!--</div>-->
+      <!--</ng-template>-->
 
       <div class="table-area style-3">
         <table class="table tabela ">
@@ -133,8 +133,8 @@
           <tr *ngFor="let atividade of atividades; let k = index"  >
             <td *ngIf="atividade.bo_tipo_atividade" scope="row">{{atividade.st_nome_atividade}}</td>
             <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
-            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.dt_data}}</td>
-            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="setAtividade(k,5);openModal(5);openM(content)">mode_edit</mat-icon></td>
+            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.dt_data| date: 'dd/MM'}}</td>
+            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="setAtividade(k,5);openModal(5);openM(content)">done</mat-icon></td>
             <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="deleteAtividade(atividade.id_atividade)" >delete</mat-icon></td>
           </tr>
           </tbody>
@@ -202,7 +202,6 @@
       </div>
     </div>
     <div *ngIf="opc===3">
-
       <div style="padding-bottom: 10px;" class="input-group">
         <input type="file" id="imagem-input" (change)="selectFile($event)"/>
       </div>
@@ -224,11 +223,29 @@
         </tbody>
       </table>
     </div>
+    <div *ngIf="opc===6">
+      Baixar arquivos
+      <table class="table tabela" style="margin-top: 10px;">
+        <thead>
+        <tr style="background-color: #374046; color:white;">
+          <th scope="col" style="width:75%;"class="glyphicon-center-3"  >Nome Aluno</th>
+          <th scope="col" style="width:25%;"class="glyphicon-center-3"  >Notas</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let a of alunos; let j = index" >
+          <td class="glyphicon-center-3">{{a.st_nome_aluno}}</td>
+          <td class="glyphicon-center-3"><input class="form-control" type="number" placeholder="Nota" name="nota" ></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="modal-footer">
     <button *ngIf="opc ===1" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Concluir</button>
-    <button *ngIf="opc ===2 || opc === 4" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Inserir</button>
+    <button *ngIf="opc ===2 || opc === 4 || opc === 6" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Inserir</button>
     <button *ngIf="opc ===3" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Enviar</button>
+    <button *ngIf="opc ===5" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Fechar</button>
   </div>
 </ng-template>
 

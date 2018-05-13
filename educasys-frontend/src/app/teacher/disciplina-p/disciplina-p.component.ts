@@ -6,10 +6,10 @@ import {TeacherService} from "../teacher.service";
 import {Disciplina} from "../../student/home-a/models/materia.model";
 import {AluAtividade, Arquivo, Atividade} from "../teacher.module";
 import {Upload} from "../../secretary/secretaria.model";
-import {FirebaseService} from "../../secretary/firebase.service";
 import {AlunoList} from "../../secretary/aluno-s/aluno-s.model";
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
+import {FirebaseConfig} from "../../../environments/firebase.config";
 
 @Component({
   selector: 'disciplina-p-component',
@@ -34,7 +34,7 @@ export class DisciplinaPComponent implements OnInit {
   closeResult: string;
   selectedFiles: FileList;
 
-  constructor(private modalService: NgbModal, private route: ActivatedRoute, private teacherService: TeacherService, private firebaseService: FirebaseService) {
+  constructor(private modalService: NgbModal, private route: ActivatedRoute, private teacherService: TeacherService) {
     this.id = this.route.snapshot.params['id'];
   }
 
@@ -173,6 +173,7 @@ export class DisciplinaPComponent implements OnInit {
   }
 
   efetuarUpload(upload: Upload, arquivo: Arquivo){
+    firebase.initializeApp(FirebaseConfig);
     let storageRef = firebase.storage().ref();
     let uploadTask = storageRef.child(`${'/files'}/${upload.file.name}`).put(upload.file);
 

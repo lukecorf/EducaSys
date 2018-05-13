@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {ModalModel} from "./models/modal.model";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 import {Observable} from "rxjs/Observable";
@@ -8,10 +7,10 @@ import {StudentService} from "../student.service";
 import {Disciplina} from "../home-a/models/materia.model";
 import {Arquivo, Atividade} from "../../teacher/teacher.module";
 import {Upload} from "../../secretary/secretaria.model";
-import {FirebaseService} from "../../secretary/firebase.service";
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import {AtividadeEntrega} from "../student.model";
+import {FirebaseConfig} from "../../../environments/firebase.config";
 
 @Component({
   selector: 'disciplina-a',
@@ -38,7 +37,7 @@ export class DisciplinaAComponent implements OnInit {
   public pieChartType:string = 'pie';
   public pieChartOptions: any = {responsive: true, maintainAspectRatio: false}
 
-  constructor(private modalService: NgbModal, private route: ActivatedRoute, private studentService: StudentService, private firebaseService: FirebaseService) {
+  constructor(private modalService: NgbModal, private route: ActivatedRoute, private studentService: StudentService) {
     this.id = this.route.snapshot.params['id'];
     this.ida = this.route.snapshot.params['ida'];
   }
@@ -116,6 +115,7 @@ export class DisciplinaAComponent implements OnInit {
   }
 
   efetuarUpload(upload: Upload){
+    firebase.initializeApp(FirebaseConfig);
     let storageRef = firebase.storage().ref();
     let uploadTask = storageRef.child(`${'/files'}/${upload.file.name}`).put(upload.file);
 

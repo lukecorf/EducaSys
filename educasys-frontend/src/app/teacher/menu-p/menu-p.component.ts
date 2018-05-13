@@ -38,7 +38,7 @@ export class MenuPComponent implements OnInit {
   }
 
   goHome(){
-    this.router.navigate(['home-aluno/'+this.code]);
+    this.router.navigate(['home-professor/'+this.code]);
   }
 
   goPerfil(){

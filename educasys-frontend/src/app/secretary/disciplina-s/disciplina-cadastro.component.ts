@@ -8,7 +8,9 @@ import {SecretariaService} from "../secretaria.service";
 import {AlunoList} from "../aluno-s/aluno-s.model";
 import {Professor, ProfessorList} from "../professor-s/professor-s.model";
 import {Upload} from "../secretaria.model";
-import {FirebaseService} from "../firebase.service";
+import * as firebase from 'firebase/app';
+import 'firebase/storage';
+import {FirebaseConfig} from "../../../environments/firebase.config";
 
 @Component({
   selector: 'disciplina-cadastro-component',
@@ -31,7 +33,7 @@ export class DisciplinaCadastroComponent implements OnInit {
   closeResult: string;
   disabledEdit: boolean = false;
   id: number;
-  professorText: string = 'Selecione um professor...';
+  professorText: string = 'Professor';
   title: string = 'Cadastrar';
   disciplina: Disciplina;
   alunos: AlunoList[];
@@ -39,7 +41,7 @@ export class DisciplinaCadastroComponent implements OnInit {
   selectedFiles: FileList;
   currentUpload: Upload;
 
-  constructor( private modalService: NgbModal,private router: Router, private route:ActivatedRoute, private secretariaService: SecretariaService, private firebaseService: FirebaseService ) {
+  constructor( private modalService: NgbModal,private router: Router, private route:ActivatedRoute, private secretariaService: SecretariaService ) {
 
     this.disciplina = new Disciplina();
     this.disciplina.ls_alunos = [];
@@ -140,7 +142,38 @@ export class DisciplinaCadastroComponent implements OnInit {
     this.disciplina.id_professor = this.professores[this.selectedRow3].id_professor;
     this.disciplina.st_nome_prof = this.professores[this.selectedRow3].st_nome_professor;
     this.disciplina.id_disciplina = 0;
-    this.firebaseService.pushUpload(this.currentUpload,this.disciplina);
+    this.imagemUpload(this.currentUpload,this.disciplina);
+  }
+
+  imagemUpload(upload: Upload, disciplina: Disciplina){
+    firebase.initializeApp(FirebaseConfig);
+    let storageRef = firebase.storage().ref();
+    let uploadTask = storageRef.child(`${'/imagens'}/${upload.file.name}`).put(upload.file);
+
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) =>  {
+        //efetuando upload
+        upload.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      },
+      (error) => {
+        console.log("Erro ao efetuar upload!");
+        // upload failed
+        console.log(error);
+      },
+      () => {
+        console.log("Upload Efetuado!")
+        // upload success
+        upload.url = uploadTask.snapshot.downloadURL
+        upload.name = upload.file.name
+        disciplina.url_img = upload.url;
+        this.secretariaService.setDisciplina(disciplina).subscribe(disciplina => {
+          if(disciplina.st_nome !== null){
+            this.router.navigate(['disciplina-s']);
+          }
+        });
+
+      }
+    );
   }
 
   selectFile(event){
