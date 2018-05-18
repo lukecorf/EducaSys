@@ -6,6 +6,8 @@ export class Atividade{
   bo_tipo_atividade : boolean;
   nu_valor_atividade : number;
   id_diciplina : number;
+  entregue: boolean;
+  nota: number;
 
   constructor(id_atividade ?: number,
               dt_data ?: Date,
@@ -13,6 +15,8 @@ export class Atividade{
               bo_tipo_atividade ?: boolean,
               nu_valor_atividade ?: number,
               id_diciplina ?: number,
+              entrega?: boolean,
+              nota?: number
   ){}
 }
 
@@ -37,4 +41,12 @@ export class AluAtividade{
   url: string;
 
   constructor(nome?: string, url?:string){}
+}
+
+export class Notas{
+  idAtividade: number;
+  idAluno: number;
+  nota: number;
+
+  constructor(idAtividade?:number,idAluno?:number,nota?:number){}
 }

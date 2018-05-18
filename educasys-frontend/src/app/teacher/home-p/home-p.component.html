@@ -26,9 +26,9 @@
       <disciplina-perfil-p *ngFor="let item of materias"
                            [codigo]    ="item.id_disciplina"
                            [nome]      ="item.st_nome"
-                           [status]    = ""
+                           [status]    ="item.status"
                            [professor] ="item.st_nome_prof"
-                           [proxProva] =""
+                           [proxProva] ="item.proxProva"
                            [img]       ="item.url_img"
                            [falta]     ="item.nu_faltas"
                            [horas]    ="item.nu_carga_horaria">

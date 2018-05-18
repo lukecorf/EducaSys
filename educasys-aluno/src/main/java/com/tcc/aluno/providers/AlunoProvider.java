@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.tcc.aluno.DTO.EntregaDTO;
 import com.tcc.aluno.Repositories.*;
+import com.tcc.aluno.database.AluAtividade;
 import com.tcc.aluno.database.AluDis;
 import com.tcc.aluno.database.Atividade;
 import com.tcc.aluno.database.Disciplina;
@@ -58,7 +59,6 @@ public class AlunoProvider {
 
     @GetMapping(value ="/getAlunoByCode/{id}")
     public @ResponseBody String getAlunoByCode(@PathVariable String id){
-        System.out.println("ENTREI: "+ id);
         return gson.toJson(AlunoMapper.EntitytoDTO(alunoRepository.getAlunoByCode(id)));
     }
 
@@ -67,19 +67,16 @@ public class AlunoProvider {
         return gson.toJson(DisciplinaMapper.EntitytoDTO(disciplinaRepository.getOne(id)));
     }
 
-    @GetMapping("/getAtividades/{id}")
-    public @ResponseBody String getAtividadesByIdDisciplina(@PathVariable Long id) {
-        System.out.println("ID: "+id);
+    @GetMapping("/getAtividades/{id}/{ida}")
+    public @ResponseBody String getAtividadesByIdDisciplina(@PathVariable Long id,@PathVariable Long ida) {
         List<Atividade> a = atividadeRepository.getAtividadeByIdDisciplina(id);
-        System.out.println("Tamanho da Lista: "+a.size());
-        return gson.toJson(AtividadeMapper.ListEntitytoListDTO(a));
+        List<AluAtividade> aluAtividades = aluAtividadeRepository.getAtividadeByDisAlu(ida,id);
+        return gson.toJson(AtividadeMapper.ListEntitytoListDTO(a,aluAtividades));
     }
 
 
     @PostMapping(path="/setAtividade",  consumes = "application/json", produces = "application/json")
     public String entregaAtividade(@RequestBody EntregaDTO entregaDTO){
-        System.out.println("Teste");
-        System.out.println("Aluno: "+entregaDTO.getId_aluno()+" Atividade: "+entregaDTO.getId_atividade());
         aluAtividadeRepository.atualizaAtividade(entregaDTO.getUrl(),entregaDTO.getId_aluno(),entregaDTO.getId_atividade());
 
         return gson.toJson(entregaDTO);
@@ -93,7 +90,6 @@ public class AlunoProvider {
 
     @GetMapping("/getFaltas/{id}/{ida}")
     public @ResponseBody String getFaltas(@PathVariable Long id, @PathVariable Long ida){
-        System.out.println("ID DIS: "+id+" ID ALU: "+ida);
         return gson.toJson(aluDisRepository.getFaltas(id,ida));
     }
 }

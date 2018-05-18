@@ -43,7 +43,8 @@
         <tr *ngFor="let atividade of atividades; let i = index">
           <td scope="row">{{atividade.st_nome_atividade}}</td>
           <td class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
-          <td class="glyphicon-center-3" >--</td>
+          <td class="glyphicon-center-3" *ngIf="atividade.nota<0">--</td>
+          <td class="glyphicon-center-3" *ngIf="atividade.nota>=0">{{atividade.nota}}</td>
           <td class="glyphicon-center-3" >{{atividade.dt_data| date: 'dd/MM'}}</td>
         </tr>
         </tbody>
@@ -77,7 +78,7 @@
           <tbody class="body-table">
           <tr *ngFor="let arquivo of arquivos; let j = index"  >
             <td scope="row">{{arquivo.st_nome_arquivo}}</td>
-            <td class="glyphicon-center-3" >{{(arquivo.nu_tamanho_arquivo/1024)/1024}} mb</td>
+            <td class="glyphicon-center-3" >{{(arquivo.nu_tamanho_arquivo/1024)/1024 | number:'1.2'}} mb</td>
             <td class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="openUrl(arquivo.url_arquivo)">file_download</mat-icon></td>
           </tr>
           </tbody>
@@ -121,10 +122,10 @@
         </thead>
         <tbody class="body-table">
         <tr *ngFor="let atividade of atividades; let k = index"  >
-          <th *ngIf="atividade.bo_tipo_atividade" scope="row">{{atividade.st_nome_atividade}}</th>
-          <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
-          <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.dt_data | date:'dd/MM'}}</td>
-          <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" value = "cacete" id="a" (click)="openc(content);setAtividade(k)">file_upload</mat-icon></td>
+          <th *ngIf="atividade.bo_tipo_atividade && (atividade.entregue === false)" scope="row">{{atividade.st_nome_atividade}}</th>
+          <td *ngIf="atividade.bo_tipo_atividade && (atividade.entregue === false)" class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
+          <td *ngIf="atividade.bo_tipo_atividade && (atividade.entregue === false)" class="glyphicon-center-3" >{{atividade.dt_data | date:'dd/MM'}}</td>
+          <td *ngIf="atividade.bo_tipo_atividade && (atividade.entregue === false)" class="glyphicon-center-3"><mat-icon class="mouse-houver" value = "cacete" id="a" (click)="openc(content);setAtividade(k)">file_upload</mat-icon></td>
         </tr>
         </tbody>
       </table>

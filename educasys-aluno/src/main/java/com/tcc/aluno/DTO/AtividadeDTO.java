@@ -9,6 +9,8 @@ public class AtividadeDTO {
     private String st_nome_atividade;
     private Date dt_data;
     private boolean bo_tipo_atividade;
+    private boolean entrega;
+    private float nota;
 
     public AtividadeDTO(long id_atividade, float nu_valor_atividade, long id_diciplina, String st_nome_atividade, Date dt_data, boolean bo_tipo_atividade) {
         this.id_atividade = id_atividade;
@@ -21,6 +23,22 @@ public class AtividadeDTO {
 
     public AtividadeDTO(){
 
+    }
+
+    public boolean isEntrega() {
+        return entrega;
+    }
+
+    public void setEntrega(boolean entrega) {
+        this.entrega = entrega;
+    }
+
+    public float getNota() {
+        return nota;
+    }
+
+    public void setNota(float nota) {
+        this.nota = nota;
     }
 
     public long getId_diciplina() {
@@ -75,10 +93,13 @@ public class AtividadeDTO {
     public String toString() {
         return "AtividadeDTO{" +
                 "id_atividade=" + id_atividade +
+                ", id_diciplina=" + id_diciplina +
                 ", nu_valor_atividade=" + nu_valor_atividade +
                 ", st_nome_atividade='" + st_nome_atividade + '\'' +
                 ", dt_data=" + dt_data +
                 ", bo_tipo_atividade=" + bo_tipo_atividade +
+                ", entrega=" + entrega +
+                ", nota=" + nota +
                 '}';
     }
 }

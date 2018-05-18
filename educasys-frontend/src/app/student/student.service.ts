@@ -33,8 +33,8 @@ export class StudentService{
     return this.http.post<AtividadeEntrega>(this.urlSAtividade, a);
   }
 
-  getAtividadesByIdDisciplina(id: number):Observable<Atividade[]>{
-    return this.http.get<Atividade[]>(this.urlGAtividades+"/"+id);
+  getAtividadesByIdDisciplina(id: number, ida: number):Observable<Atividade[]>{
+    return this.http.get<Atividade[]>(this.urlGAtividades+"/"+id+"/"+ida);
   }
 
   getArquivosByIdDisciplina(id: number):Observable<Arquivo[]>{

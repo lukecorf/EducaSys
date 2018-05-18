@@ -48,16 +48,16 @@
             <td class="glyphicon-center-3" >{{atividade.dt_data| date: 'dd/MM'}}</td>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;" (click)="setAtividade(i,4);openModal(2);openM(content)"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon (click)="deleteAtividade(atividade.id_atividade)" style="cursor: pointer;">delete</mat-icon></th>
-            <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;" (click)="setAtividade(i,6);openModal(6);openM(content);setFaltas()"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="openModal(1);openM(content)"><mat-icon class="buttons">assignment</mat-icon> Presença </button><br>
-      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="openModal(2);openM(content)"><mat-icon class="buttons">create</mat-icon> Criar avaliação</button><br>
-      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="openModal(3);openM(content)"><mat-icon class="buttons">cloud_upload</mat-icon> Enviar material</button><br>
-      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 25%;" (click)="goEdit()"><mat-icon class="buttons">email</mat-icon> Enviar Email</button><br>
+      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 33%;" (click)="openModal(1);openM(content)"><mat-icon class="buttons">assignment</mat-icon> Presença </button><br>
+      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 33%;" (click)="openModal(2);openM(content)"><mat-icon class="buttons">create</mat-icon> Criar avaliação</button><br>
+      <button class="btn btn-lg btn-outline-dark col-md-12 " style="height: 33%;" (click)="openModal(3);openM(content)"><mat-icon class="buttons">cloud_upload</mat-icon> Enviar material</button><br>
+
     </div>
   </div>
 
@@ -149,6 +149,9 @@
     <h4 *ngIf="opc===1" class="modal-title">Realizar Chamada</h4>
     <h4 *ngIf="opc===2" class="modal-title">Cadastrar Atividade</h4>
     <h4 *ngIf="opc===3" class="modal-title">Enviar Material</h4>
+    <h4 *ngIf="opc===4" class="modal-title">Editar Atividade</h4>
+    <h4 *ngIf="opc===5" class="modal-title">Entregas Efetuadas</h4>
+    <h4 *ngIf="opc===6" class="modal-title">Postar Notas</h4>
     <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -224,7 +227,8 @@
       </table>
     </div>
     <div *ngIf="opc===6">
-      Baixar arquivos
+      Atividade: {{this.atividade.st_nome_atividade}}<br>
+      Valor: {{this.atividade.nu_valor_atividade}} pts
       <table class="table tabela" style="margin-top: 10px;">
         <thead>
         <tr style="background-color: #374046; color:white;">
@@ -235,7 +239,7 @@
         <tbody>
         <tr *ngFor="let a of alunos; let j = index" >
           <td class="glyphicon-center-3">{{a.st_nome_aluno}}</td>
-          <td class="glyphicon-center-3"><input class="form-control" type="number" placeholder="Nota" name="nota" ></td>
+          <td class="glyphicon-center-3"><input class="form-control" type="number"  #notas = "ngModel" [(ngModel)]="notas[j].nota" placeholder="Nota" name="nota" ></td>
         </tr>
         </tbody>
       </table>

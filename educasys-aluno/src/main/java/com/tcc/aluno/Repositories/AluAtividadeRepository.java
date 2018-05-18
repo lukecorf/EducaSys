@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Repository
 public interface AluAtividadeRepository extends JpaRepository<AluAtividade, Long>{
@@ -15,4 +17,7 @@ public interface AluAtividadeRepository extends JpaRepository<AluAtividade, Long
     @Modifying
     @Query("UPDATE AluAtividade a SET a.url =:url, a.entrega=true WHERE a.alunofk.id = :idalu AND a.atividadefk.id = :ida")
     void atualizaAtividade(@Param("url") String url, @Param("idalu")Long idalu, @Param("ida")Long ida);
+
+    @Query("SELECT a FROM AluAtividade a WHERE a.alunofk.id = :ida AND a.disciplinafk.codigo = :id")
+    List<AluAtividade> getAtividadeByDisAlu(@Param("ida") Long ida, @Param("id") Long id);
 }

@@ -51,8 +51,6 @@ export class DisciplinaAComponent implements OnInit {
       this.closed = 'content';
     }
 
-    console.log("ID: "+this.id);
-
     this.studentService.getDisciplinaById(this.id).subscribe(
       disciplina =>{
         this.disciplina = disciplina;
@@ -64,7 +62,6 @@ export class DisciplinaAComponent implements OnInit {
     this.studentService.getFaltasByDisciplina(this.ida,this.id).subscribe(
       faltas =>{
         this.faltas = faltas;
-        console.log('Faltas: '+this.faltas);
         this.pieChartData = [this.faltas,(this.disciplina.nu_carga_horaria-this.faltas)];
       }
     );
@@ -81,7 +78,6 @@ export class DisciplinaAComponent implements OnInit {
 
   setAtividade(id: number){
     this.atividade = this.atividades[id];
-    //console.log('ID: '+this.atividade.id_atividade)
   }
 
   openUrl(url:string){
@@ -89,7 +85,7 @@ export class DisciplinaAComponent implements OnInit {
   }
 
   getAtividades(){
-    this.studentService.getAtividadesByIdDisciplina(this.id).subscribe(
+    this.studentService.getAtividadesByIdDisciplina(this.id,this.ida).subscribe(
       atividades=>{
         this.atividades = atividades;
       }

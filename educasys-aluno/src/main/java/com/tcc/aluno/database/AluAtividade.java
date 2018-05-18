@@ -104,4 +104,17 @@ public class AluAtividade {
     public void setNota(float nota) {
         this.nota = nota;
     }
+
+    @Override
+    public String toString() {
+        return "AluAtividade{" +
+                "id=" + id +
+                ", disciplinafk=" + disciplinafk.getCodigo() +
+                ", alunofk=" + alunofk.getId() +
+                ", atividadefk=" + atividadefk.getId() +
+                ", nota=" + nota +
+                ", entrega=" + entrega +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

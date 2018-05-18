@@ -1,6 +1,7 @@
 package com.tcc.aluno.mapper;
 
 import com.tcc.aluno.DTO.AtividadeDTO;
+import com.tcc.aluno.database.AluAtividade;
 import com.tcc.aluno.database.Atividade;
 import com.tcc.aluno.database.Disciplina;
 
@@ -33,11 +34,29 @@ public class AtividadeMapper {
         return ati;
     }
 
-    public static List<AtividadeDTO>ListEntitytoListDTO(List<Atividade> la){
+    public static List<AtividadeDTO>ListEntitytoListDTO(List<Atividade> la, List<AluAtividade> laa){
         List<AtividadeDTO> ldto = new ArrayList<>();
 
+        for(AluAtividade aluaa: laa){
+            //System.out.println(aluaa);
+        }
+
         for(Atividade a: la){
-            ldto.add(EntitytoDTO(a));
+            AtividadeDTO ati = EntitytoDTO(a);
+            for(AluAtividade alu: laa){
+                if(alu.getAtividadefk().getId() == a.getId()){
+                    System.out.println("Entrei aqui");
+                    ati.setEntrega(alu.isEntrega());
+                    ati.setNota(alu.getNota());
+                    break;
+                }
+            }
+            System.out.println(ati.toString());
+            ldto.add(ati);
+        }
+
+        for(AtividadeDTO at : ldto){
+            //System.out.println(at.toString());
         }
         return ldto;
     }

@@ -10,3 +10,4 @@ public class EducasysApplication {
 		SpringApplication.run(EducasysApplication.class, args);
 	}
 }
+

@@ -4,7 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import { Observable, Subscription } from 'rxjs/Rx';
 import {TeacherService} from "../teacher.service";
 import {Disciplina} from "../../student/home-a/models/materia.model";
-import {AluAtividade, Arquivo, Atividade} from "../teacher.module";
+import {AluAtividade, Arquivo, Atividade, Notas} from "../teacher.module";
 import {Upload} from "../../secretary/secretaria.model";
 import {AlunoList} from "../../secretary/aluno-s/aluno-s.model";
 import * as firebase from 'firebase/app';
@@ -31,6 +31,7 @@ export class DisciplinaPComponent implements OnInit {
   alunos: AlunoList[];
   faltas: Boolean[];
   entregas: AluAtividade[];
+  notas:Notas[] = new Array();
   closeResult: string;
   selectedFiles: FileList;
 
@@ -119,8 +120,11 @@ export class DisciplinaPComponent implements OnInit {
       alunos=>{
         this.alunos = alunos;
         this.faltas = new Array(this.alunos.length);
+        this.notas  = new Array(this.alunos.length);
+
         for(var x = 0; x < this.alunos.length; x++){
           this.faltas[x] = false;
+          this.notas[x] = new Notas(this.atividade.id_atividade,this.alunos[x].id_aluno,0);
         }
       }
     );
@@ -233,6 +237,8 @@ export class DisciplinaPComponent implements OnInit {
               this.getAtividades();
             }
           )
+        }else if(this.opc === 6){
+          console.log(this.notas);
         }
       }else{
         this.atividade = new Atividade();
