@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import {Disciplina} from "./models/materia.model";
-import {Aluno} from "../student.model";
+import {Aluno, DisciplinaA} from "../student.model";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 import {Subscription} from "rxjs/Subscription";
@@ -21,7 +19,7 @@ export class HomeAComponent implements OnInit {
   closed: string;
   aluno: Aluno = new Aluno(-1,"","","","","","","","","","","");
   id: string;
-  materias: Disciplina[];
+  materias: DisciplinaA[];
 
   constructor(private studentService: StudentService, private route: ActivatedRoute) {
     this.id = route.snapshot.params['id'];
@@ -32,6 +30,7 @@ export class HomeAComponent implements OnInit {
           studentService.getDisciplinas(this.aluno.id_aluno).subscribe(
             disciplinas => {
               this.materias = disciplinas;
+              console.log(this.materias);
             }
           );
         }

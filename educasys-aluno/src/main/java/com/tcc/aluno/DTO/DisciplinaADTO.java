@@ -1,38 +1,43 @@
 package com.tcc.aluno.DTO;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DisciplinaADTO {
     private Long id_disciplina;
     private String st_nome;
-    private int nu_carga_horaria;
-    private String tx_descricao;
+    private Long id_professor;
     private String st_nome_prof;
     private String url_img;
-    private Long id_professor;
     private int nu_faltas;
+    private Date dt_next_prova;
+    private Double nu_nota;
+    private Long id_aluno;
+    private int nu_carga_horaria;
 
-    public DisciplinaADTO(Long id_disciplina, String st_nome, int nu_carga_horaria, String tx_descricao, String st_nome_prof, String url_img, Long id_professor, int nu_faltas) {
+    public DisciplinaADTO(Long id_disciplina, String st_nome, Long id_professor, String st_nome_prof, String url_img, int nu_faltas, Date dt_next_prova, Double nu_nota, Long id_aluno, int nu_carga_horaria) {
         this.id_disciplina = id_disciplina;
         this.st_nome = st_nome;
-        this.nu_carga_horaria = nu_carga_horaria;
-        this.tx_descricao = tx_descricao;
+        this.id_professor = id_professor;
         this.st_nome_prof = st_nome_prof;
         this.url_img = url_img;
-        this.id_professor = id_professor;
         this.nu_faltas = nu_faltas;
+        this.dt_next_prova = dt_next_prova;
+        this.nu_nota = nu_nota;
+        this.id_aluno = id_aluno;
+        this.nu_carga_horaria = nu_carga_horaria;
     }
 
     public DisciplinaADTO(){
 
     }
 
-    public int getNu_faltas() {
-        return nu_faltas;
+    public int getNu_carga_horaria() {
+        return nu_carga_horaria;
     }
 
-    public void setNu_faltas(int nu_faltas) {
-        this.nu_faltas = nu_faltas;
+    public void setNu_carga_horaria(int nu_carga_horaria) {
+        this.nu_carga_horaria = nu_carga_horaria;
     }
 
     public Long getId_disciplina() {
@@ -51,20 +56,12 @@ public class DisciplinaADTO {
         this.st_nome = st_nome;
     }
 
-    public int getNu_carga_horaria() {
-        return nu_carga_horaria;
+    public Long getId_professor() {
+        return id_professor;
     }
 
-    public void setNu_carga_horaria(int nu_carga_horaria) {
-        this.nu_carga_horaria = nu_carga_horaria;
-    }
-
-    public String getTx_descricao() {
-        return tx_descricao;
-    }
-
-    public void setTx_descricao(String tx_descricao) {
-        this.tx_descricao = tx_descricao;
+    public void setId_professor(Long id_professor) {
+        this.id_professor = id_professor;
     }
 
     public String getSt_nome_prof() {
@@ -83,12 +80,35 @@ public class DisciplinaADTO {
         this.url_img = url_img;
     }
 
-    public Long getId_professor() {
-        return id_professor;
+    public int getNu_faltas() {
+        return nu_faltas;
     }
 
-    public void setId_professor(Long id_professor) {
-        this.id_professor = id_professor;
+    public void setNu_faltas(int nu_faltas) {
+        this.nu_faltas = nu_faltas;
     }
 
+    public Date getDt_next_prova() {
+        return dt_next_prova;
+    }
+
+    public void setDt_next_prova(Date dt_next_prova) {
+        this.dt_next_prova = dt_next_prova;
+    }
+
+    public Double getNu_nota() {
+        return nu_nota;
+    }
+
+    public void setNu_nota(Double nu_nota) {
+        this.nu_nota = nu_nota;
+    }
+
+    public Long getId_aluno() {
+        return id_aluno;
+    }
+
+    public void setId_aluno(Long id_aluno) {
+        this.id_aluno = id_aluno;
+    }
 }

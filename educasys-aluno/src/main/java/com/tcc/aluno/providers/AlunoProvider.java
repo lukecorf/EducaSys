@@ -2,6 +2,7 @@ package com.tcc.aluno.providers;
 
 import com.google.gson.Gson;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import com.tcc.aluno.DTO.DisciplinaADTO;
 import com.tcc.aluno.DTO.EntregaDTO;
 import com.tcc.aluno.Repositories.*;
 import com.tcc.aluno.database.AluAtividade;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -52,9 +54,33 @@ public class AlunoProvider {
         for(AluDis alu: aluDis){
             listId.add(alu.getDisciplinafk().getCodigo());
         }
-        List<Disciplina> disciplinas = disciplinaRepository.getDisciplinasByIdAluDis(listId);
 
-        return gson.toJson(DisciplinaMapper.ListEntitytoListADTO(disciplinas,aluDis));
+        List<Disciplina> disciplinas = disciplinaRepository.getDisciplinasByIdAluDis(listId);
+        Date hoje = new Date( System.currentTimeMillis());
+        List<Date> datas = new ArrayList<>();
+        List<Double> notas = new ArrayList<>();
+        System.out.println("Tamanho Dis:" +disciplinas.size());
+        for(Disciplina dis: disciplinas){
+            List<Date> datasProvas = atividadeRepository.getDataNextProva(hoje,dis.getCodigo());
+            Double notaDis = aluAtividadeRepository.getSumNotasByAluDis(dis.getCodigo(),id);
+            if( notaDis == null ||notaDis < 0){
+                notas.add((double) 0);
+            }else{
+                notas.add(notaDis);
+            }
+            if(datasProvas.size() > 0){
+                datas.add(datasProvas.get(0));
+            }else{
+                datas.add(null);
+            }
+        }
+        System.out.println("Disciplina: "+disciplinas.size());
+        System.out.println("AluDis: "+aluDis.size());
+        System.out.println("Datas: "+datas.size());
+        System.out.println("Notas: "+notas.size());
+        List<DisciplinaADTO> disciplinaADTOS = DisciplinaMapper.ListEntitytoListADTO(disciplinas,aluDis,datas,notas,id);
+        System.out.println("Lista Final:"+disciplinaADTOS.size());
+        return gson.toJson(disciplinaADTOS);
     }
 
     @GetMapping(value ="/getAlunoByCode/{id}")

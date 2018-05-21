@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Aluno, AtividadeEntrega} from "./student.model";
+import {Aluno, AtividadeEntrega, DisciplinaA} from "./student.model";
 import {Observable} from "rxjs/Observable";
 import {Disciplina} from "./home-a/models/materia.model";
 import {Arquivo, Atividade} from "../teacher/teacher.module";
@@ -25,8 +25,8 @@ export class StudentService{
     return this.http.get<Disciplina>(this.urlD+"/"+id);
   }
 
-  getDisciplinas(id: number):Observable<Disciplina[]>{
-    return this.http.get<Disciplina[]>(this.urlMateria+'/'+id);
+  getDisciplinas(id: number):Observable<DisciplinaA[]>{
+    return this.http.get<DisciplinaA[]>(this.urlMateria+'/'+id);
   }
 
   setFileAtividade(a: AtividadeEntrega):Observable<AtividadeEntrega>{

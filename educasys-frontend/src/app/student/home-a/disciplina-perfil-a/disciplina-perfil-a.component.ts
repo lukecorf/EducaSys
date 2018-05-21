@@ -17,6 +17,8 @@ export class DisciplinaPerfilAComponent implements OnInit {
   @Input() falta: number;
   @Input() nota: number;
   @Input() idAluno: number;
+  @Input() cargaH: number;
+
 
   constructor(private router: Router) { }
 

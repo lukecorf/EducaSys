@@ -8,6 +8,7 @@ import com.tcc.aluno.database.Disciplina;
 import com.tcc.aluno.database.Professor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DisciplinaMapper {
@@ -51,12 +52,24 @@ public class DisciplinaMapper {
         return  l2;
     }
 
-    public static List<DisciplinaADTO> ListEntitytoListADTO(List<Disciplina> list,List<AluDis> alu){
+    public static List<DisciplinaADTO> ListEntitytoListADTO(List<Disciplina> list, List<AluDis> alu, List<Date> datas, List<Double>notas,Long id){
 
         List<DisciplinaADTO> l2 = new ArrayList<>();
-
+        System.out.println("LISTA: "+list.size());
         for(int i = 0; i < list.size(); i++){
-            l2.add(new DisciplinaADTO(list.get(i).getCodigo(),list.get(i).getNome(),list.get(i).getCargaH(),list.get(i).getDescricao(),list.get(i).getProfessor(),list.get(i).getImg(),list.get(i).getProfessorfk().getId(),(int)alu.get(i).getFaltas()));
+            DisciplinaADTO disciplinaADTO = new DisciplinaADTO();
+
+            disciplinaADTO.setDt_next_prova(datas.get(i));
+            disciplinaADTO.setId_aluno(id);
+            disciplinaADTO.setId_disciplina(list.get(i).getCodigo());
+            disciplinaADTO.setId_professor(list.get(i).getProfessorfk().getId());
+            disciplinaADTO.setNu_faltas((int) alu.get(i).getFaltas());
+            disciplinaADTO.setNu_nota(notas.get(i));
+            disciplinaADTO.setSt_nome(list.get(i).getNome());
+            disciplinaADTO.setSt_nome_prof(list.get(i).getProfessor());
+            disciplinaADTO.setUrl_img(list.get(i).getImg());
+            disciplinaADTO.setNu_carga_horaria(list.get(i).getCargaH());
+            l2.add(disciplinaADTO);
         }
 
         return  l2;

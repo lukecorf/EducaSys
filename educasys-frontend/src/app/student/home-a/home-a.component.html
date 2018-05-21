@@ -26,12 +26,14 @@
       <disciplina-perfil-a *ngFor="let item of materias"
                            [codigo]    ="item.id_disciplina"
                            [nome]      ="item.st_nome"
+                           [idProf]    ="item.id_professor"
                            [professor] ="item.st_nome_prof"
-                           [proxProva] =""
+                           [proxProva] ="item.dt_next_prova"
                            [img]       ="item.url_img"
                            [falta]     ="item.nu_faltas"
-                           [idProf]    ="item.id_professor"
-                           [idAluno]   ="aluno.id_aluno">
+                           [nota]      ="item.nu_nota"
+                           [idAluno]   ="item.id_aluno"
+                           [cargaH]    ="item.nu_carga_horaria">
       </disciplina-perfil-a>
     </div>
   </div>
