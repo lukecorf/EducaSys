@@ -71,8 +71,8 @@ export class SecretariaService{
     return this.http.delete(this.urlDDelete+'/'+id);
   }
 
-  updateAluno(p:Professor):Observable<Professor>{
-    return this.http.post(this.urlAUpdate,p);
+  updateAluno(a:Aluno):Observable<Aluno>{
+    return this.http.put(this.urlAUpdate,a);
   }
 
   deleteAlunoById(id: number): Observable<any>{

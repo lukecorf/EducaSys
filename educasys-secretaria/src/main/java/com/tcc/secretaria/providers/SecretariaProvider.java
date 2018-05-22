@@ -169,4 +169,16 @@ public class SecretariaProvider {
         return gson.toJson(SecretariaMapper.EntitytoDTO(secretariaRepository.getSecretariaByCode(id)));
     }
 
+    @PutMapping(path="/updateProfessor", consumes = "applicatioin/json", produces = "application/json")
+    public @ResponseBody String updateProfessor(@RequestBody ProfessorDTO professorDTO){
+        professorRepository.updateProfessor(professorDTO.getdc_cpf(),professorDTO.getDt_data_nasc(), professorDTO.getCo_email(),professorDTO.getSt_endereco(),professorDTO.getSt_nome_professor(),professorDTO.getdc_rg(),professorDTO.getPw_senha_prof(),professorDTO.getCo_telefone(),professorDTO.getId_professor());
+        return gson.toJson(true);
+    }
+
+    @PutMapping(path="/updateAluno", consumes = "applicatioin/json", produces = "application/json")
+    public @ResponseBody String updateAluno(@RequestBody AlunoDTO alunoDTO){
+        alunoRepository.updateAluno(alunoDTO.getCo_telefone(),alunoDTO.getPw_senha_aluno(),alunoDTO.getDc_rg(),alunoDTO.getSt_nome_aluno(),alunoDTO.getSt_endereco(),alunoDTO.getCo_email(),alunoDTO.getDt_data_nasc(),alunoDTO.getDc_cpf(),alunoDTO.getSt_nome_mae(),alunoDTO.getSt_nome_pai(),alunoDTO.getId_aluno());
+        return gson.toJson(true);
+    }
+
 }

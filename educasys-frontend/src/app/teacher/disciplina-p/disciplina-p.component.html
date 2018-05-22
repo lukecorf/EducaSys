@@ -45,7 +45,7 @@
           <tr *ngFor="let atividade of atividades; let i = index">
             <td scope="row">{{atividade.st_nome_atividade}}</td>
             <td class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
-            <td class="glyphicon-center-3" >{{atividade.dt_data}}</td>
+            <td class="glyphicon-center-3" >{{atividade.dt_data | date: 'dd/MM'}}</td>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;" (click)="setAtividade(i,4);openModal(4);openM(content)"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon (click)="deleteAtividade(atividade.id_atividade)" style="cursor: pointer;">delete</mat-icon></th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;" (click)="setAtividade(i,6);openModal(6);openM(content); setNotas();"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
