@@ -6,6 +6,7 @@ import { MatIconModule} from "@angular/material";
 import { ChartsModule } from 'ng2-charts';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BlockUIModule } from 'ng-block-ui';
 import { FirebaseConfig } from './../environments/firebase.config';
 import { AngularFireModule } from 'angularfire2/index';
 import {} from '@ng-bootstrap/ng-bootstrap';
@@ -45,6 +46,7 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {StudentService} from "./student/student.service";
 import {TeacherService} from "./teacher/teacher.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -83,6 +85,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     AngularFireModule.initializeApp(FirebaseConfig),
     NgxMaskModule.forRoot(),
     NgbModule.forRoot(),
+    BlockUIModule.forRoot(),
+    ToastrModule.forRoot()
  ],
   providers: [LoginService, StudentService, TeacherService, SecretariaService, LoginInfoService, AuthService, AuthGuard, UserData, AngularFireDatabase],
   bootstrap: [AppComponent]

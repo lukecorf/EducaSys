@@ -1,7 +1,5 @@
 package com.tcc.professor.DTO;
 
-import com.tcc.professor.database.Disciplina;
-
 import java.sql.Date;
 
 public class AtividadeDTO {
@@ -12,10 +10,10 @@ public class AtividadeDTO {
     private Date dt_data;
     private boolean bo_tipo_atividade;
 
-    public AtividadeDTO(long id_atividade, float nu_valor_atividade, long id_diciplina, String st_nome_atividade, Date dt_data, boolean bo_tipo_atividade) {
+    public AtividadeDTO(long id_atividade, long id_diciplina, float nu_valor_atividade, String st_nome_atividade, Date dt_data, boolean bo_tipo_atividade) {
         this.id_atividade = id_atividade;
-        this.nu_valor_atividade = nu_valor_atividade;
         this.id_diciplina = id_diciplina;
+        this.nu_valor_atividade = nu_valor_atividade;
         this.st_nome_atividade = st_nome_atividade;
         this.dt_data = dt_data;
         this.bo_tipo_atividade = bo_tipo_atividade;

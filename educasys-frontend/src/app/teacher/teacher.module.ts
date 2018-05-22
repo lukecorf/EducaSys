@@ -44,9 +44,10 @@ export class AluAtividade{
 }
 
 export class Notas{
+  nomeAluno: string;
   idAtividade: number;
   idAluno: number;
   nota: number;
 
-  constructor(idAtividade?:number,idAluno?:number,nota?:number){}
+  constructor(nomeAluno?:string,idAtividade?:number,idAluno?:number,nota?:number){}
 }

@@ -45,10 +45,10 @@
           <tr *ngFor="let atividade of atividades; let i = index">
             <td scope="row">{{atividade.st_nome_atividade}}</td>
             <td class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
-            <td class="glyphicon-center-3" >{{atividade.dt_data| date: 'dd/MM'}}</td>
-            <th scope="col" class="glyphicon-center-3" style="text-align: center;" (click)="setAtividade(i,4);openModal(2);openM(content)"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
+            <td class="glyphicon-center-3" >{{atividade.dt_data}}</td>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;" (click)="setAtividade(i,4);openModal(4);openM(content)"><mat-icon style="cursor: pointer;">mode_edit</mat-icon></th>
             <th scope="col" class="glyphicon-center-3" style="text-align: center;"><mat-icon (click)="deleteAtividade(atividade.id_atividade)" style="cursor: pointer;">delete</mat-icon></th>
-            <th scope="col" class="glyphicon-center-3" style="text-align: center;" (click)="setAtividade(i,6);openModal(6);openM(content);setFaltas()"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
+            <th scope="col" class="glyphicon-center-3" style="text-align: center;" (click)="setAtividade(i,6);openModal(6);openM(content); setNotas();"><mat-icon style="cursor: pointer;">border_color</mat-icon></th>
           </tr>
         </tbody>
       </table>
@@ -77,7 +77,7 @@
           </tr>
           </thead>
           <tbody class="body-table">
-          <tr *ngFor="let arquivo of arquivos; let j = index"  >
+          <tr *ngFor="let arquivo of arquivos;"  >
             <td scope="row">{{arquivo.st_nome_arquivo}}</td>
             <td class="glyphicon-center-3" >{{(arquivo.nu_tamanho_arquivo/1024)/1024 | number: '1.2-2'}} mb</td>
             <td class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="deleteArquivo(arquivo.id_arquivo)">delete</mat-icon></td>
@@ -91,33 +91,6 @@
       <div class="row title">
         <h2>Entregas</h2>
       </div>
-
-      <!--<ng-template #content let-c="close" let-d="dismiss">-->
-        <!--<div class="modal-header">-->
-          <!--<h4 class="modal-title">Enviar - Trabalho 1</h4>-->
-        <!--</div>-->
-        <!--<div class="modal-body">-->
-          <!--<span style="font-weight: bold;">Valor:</span> 15 Pontos-->
-          <!--<br>-->
-          <!--<span style="font-weight: bold;">Data Final da Entrega:</span> 19/10-->
-          <!--<br>-->
-          <!--<br>-->
-          <!--<div class="input-group">-->
-            <!--<input class="form-control" placeholder="Nome do arquivo..."-->
-                   <!--name="dp" >-->
-            <!--<div class="input-group-append">-->
-              <!--<button class="btn btn-outline-secondary"  type="button">-->
-                <!--...-->
-              <!--</button>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="modal-footer">-->
-          <!--<button type="button" class="btn btn-outline-dark" (click)="c(false)">Cancelar</button>-->
-          <!--<button type="button" class="btn btn-outline-dark" (click)="c(true)">Enviar</button>-->
-        <!--</div>-->
-      <!--</ng-template>-->
-
       <div class="table-area style-3">
         <table class="table tabela ">
           <thead>
@@ -133,7 +106,7 @@
           <tr *ngFor="let atividade of atividades; let k = index"  >
             <td *ngIf="atividade.bo_tipo_atividade" scope="row">{{atividade.st_nome_atividade}}</td>
             <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
-            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.dt_data| date: 'dd/MM'}}</td>
+            <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3" >{{atividade.dt_data}}</td>
             <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="setAtividade(k,5);openModal(5);openM(content)">done</mat-icon></td>
             <td *ngIf="atividade.bo_tipo_atividade" class="glyphicon-center-3"><mat-icon class="mouse-houver" (click)="deleteAtividade(atividade.id_atividade)" >delete</mat-icon></td>
           </tr>
@@ -162,8 +135,8 @@
       <table class="table tabela" style="margin-top: 10px;">
         <thead>
           <tr style="background-color: #374046; color:white;">
-            <th scope="col" style="width:75%;"class="glyphicon-center-3"  >Nome Aluno</th>
-            <th scope="col" style="width:25%;"class="glyphicon-center-3"  >Faltas</th>
+            <th scope="col" style="width:75%;" class="glyphicon-center-3"  >Nome Aluno</th>
+            <th scope="col" style="width:25%;" class="glyphicon-center-3"  >Faltas</th>
           </tr>
         </thead>
         <tbody>
@@ -181,7 +154,7 @@
             <mat-icon style="vertical-align: middle;">account_circle</mat-icon>
           </button>
         </div>
-        <input class="form-control" name="st_nome_atividade" #st_nome_atividade = "ngModel" [(ngModel)]="atividade.st_nome_atividade"  placeholder="Digite o nome..." name="nome" >
+        <input class="form-control" name="st_nome_atividade" #st_nome_atividade = "ngModel" [(ngModel)]="atividade.st_nome_atividade"  [disabled]="opc===4" placeholder="Digite o nome..." >
       </div>
       <div style="padding-bottom: 10px;" class="input-group">
         <div class="input-group-append">
@@ -189,10 +162,10 @@
             <mat-icon style="vertical-align: middle;">create</mat-icon>
           </button>
         </div>
-        <input class="form-control" [disabled]="disabledEdit" name="nu_valor_atividade" #nu_valor_atividade = "ngModel" [(ngModel)]="atividade.nu_valor_atividade" type="number" placeholder="Valor..." name="nome" >
+        <input class="form-control" [disabled]="disabledEdit" name="nu_valor_atividade" #nu_valor_atividade = "ngModel" [(ngModel)]="atividade.nu_valor_atividade" type="number" placeholder="Valor..."  >
       </div>
       <div style="padding-bottom: 10px;" class="form-check">
-        <input type="checkbox"  name="bo_tipo_atividade" #bo_tipo_atividade = "ngModel" [(ngModel)]="atividade.bo_tipo_atividade" class="form-check-input" id="exampleCheck1">
+        <input type="checkbox"  name="bo_tipo_atividade" #bo_tipo_atividade = "ngModel" [(ngModel)]="atividade.bo_tipo_atividade" [disabled]="opc===4" class="form-check-input" id="exampleCheck1">
         <label class="form-check-label" for="exampleCheck1">Entrega</label>
       </div>
       <div style="padding-bottom: 10px;" class="input-group">
@@ -201,7 +174,7 @@
             <mat-icon style="vertical-align: middle;">date_range</mat-icon>
           </button>
         </div>
-        <input class="form-control" name="dt_data" #dt_data = "ngModel" [(ngModel)]="atividade.dt_data"  type="date" placeholder="dd/mm/aaaa" name="dp" >
+        <input class="form-control" name="dt_data" #dt_data = "ngModel" [(ngModel)]="atividade.dt_data"  type="date" placeholder="dd/mm/aaaa" >
       </div>
     </div>
     <div *ngIf="opc===3">
@@ -214,12 +187,12 @@
       <table class="table tabela" style="margin-top: 10px;">
         <thead>
         <tr style="background-color: #374046; color:white;">
-          <th scope="col" style="width:75%;"class="glyphicon-center-3"  >Nome Aluno</th>
-          <th scope="col" style="width:25%;"class="glyphicon-center-3"  >Download</th>
+          <th scope="col" style="width:75%;" class="glyphicon-center-3"  >Nome Aluno</th>
+          <th scope="col" style="width:25%;" class="glyphicon-center-3"  >Download</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let e of entregas; let j = index" >
+        <tr *ngFor="let e of entregas; " >
           <td class="glyphicon-center-3">{{e.nome}}</td>
           <td class="glyphicon-center-3" (click)="openUrl(e.url)"><mat-icon>file_download</mat-icon></td>
         </tr>
@@ -232,14 +205,14 @@
       <table class="table tabela" style="margin-top: 10px;">
         <thead>
         <tr style="background-color: #374046; color:white;">
-          <th scope="col" style="width:75%;"class="glyphicon-center-3"  >Nome Aluno</th>
-          <th scope="col" style="width:25%;"class="glyphicon-center-3"  >Notas</th>
+          <th scope="col" style="width:75%;" class="glyphicon-center-3"  >Nome Aluno</th>
+          <th scope="col" style="width:25%;" class="glyphicon-center-3"  >Notas</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let a of alunos; let j = index" >
-          <td class="glyphicon-center-3">{{a.st_nome_aluno}}</td>
-          <td class="glyphicon-center-3"><input class="form-control" type="number"  #notas = "ngModel" [(ngModel)]="notas[j].nota" placeholder="Nota" name="nota" ></td>
+        <tr *ngFor="let nota of notas; " >
+          <td class="glyphicon-center-3">{{nota.nomeAluno}}</td>
+          <td class="glyphicon-center-3"><input class="form-control" type="number"  #notas = "ngModel" [(ngModel)]="nota.nota" placeholder="Nota" name="nota" ></td>
         </tr>
         </tbody>
       </table>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import { LoginService } from './data-login.service';
@@ -6,7 +6,7 @@ import {Login, LoginObject} from './models/login.model';
 import {NgForm} from "@angular/forms";
 import {AuthService} from "../../auth.service";
 import {UserData} from "../../services/userdata.service";
-import {Usuario} from "../../models/usuario.model";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'data-login-component',
@@ -17,7 +17,9 @@ export class DataLoginComponent implements OnInit {
   cssClass: string;
   login: Boolean = false;
 
-  constructor(private loginService: LoginService, private router: Router, private authService: AuthService) { }
+  constructor(private toastr: ToastrService,private loginService: LoginService, private router: Router, private authService: AuthService) {
+
+  }
 
   ngOnInit() {
     if(window.screen.width < 992 && window.screen.width >= 768){
@@ -42,6 +44,7 @@ export class DataLoginComponent implements OnInit {
   verifyLogin(login: Login){
 
     if(login.id_login !== -1){
+      this.toastr.success("Login efetuado","Sucesso!");
       this.authService.login();
       UserData.setUser(login);
       if(login.nu_type === 1) {
@@ -54,7 +57,7 @@ export class DataLoginComponent implements OnInit {
 
       }
     }else{
-      console.log('ERROR');
+      this.toastr.error("Login ou senha inválidos","Erro!")
     }
 
   }

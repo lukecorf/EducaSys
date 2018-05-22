@@ -2,10 +2,7 @@ package com.tcc.professor.providers;
 
 import com.google.gson.Gson;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-import com.tcc.professor.DTO.AluAtividadeDTO;
-import com.tcc.professor.DTO.ArquivoDTO;
-import com.tcc.professor.DTO.AtividadeDTO;
-import com.tcc.professor.DTO.DisciplinaPDTO;
+import com.tcc.professor.DTO.*;
 import com.tcc.professor.Repositories.*;
 import com.tcc.professor.database.*;
 import com.tcc.professor.mapper.*;
@@ -18,37 +15,29 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class ProfessorProvider {
-    Gson gson = new Gson();
+    private Gson gson = new Gson();
 
     @Autowired
-    ProfessorRepository professorRepository;
+    private ProfessorRepository professorRepository;
 
     @Autowired
-    DisciplinaRepository disciplinaRepository;
+    private DisciplinaRepository disciplinaRepository;
 
     @Autowired
-    AtividadeRepository atividadeRepository;
+    private AtividadeRepository atividadeRepository;
 
     @Autowired
-    ArquivoRepository arquivoRepository;
+    private ArquivoRepository arquivoRepository;
 
     @Autowired
-    AluDisRepository aluDisRepository;
+    private AluDisRepository aluDisRepository;
 
     @Autowired
-    AlunoRepository alunoRepository;
+    private AlunoRepository alunoRepository;
 
     @Autowired
-    AluAtividadeRepository aluAtividadeRepository;
+    private AluAtividadeRepository aluAtividadeRepository;
 
-//    @GetMapping(value = "/getAluno")
-//    public @ResponseBody
-//    String getAluno() {
-//        System.out.println("PEGANDO ALUNO");
-//        //Aluno aluno = new Aluno("0001","Lucas Alves de Faria","2018/1","10/12/1995",true,"luke@email.com","(37) 999597899","127.831.956-58","MG-19.319.265");
-//
-//        return gson.toJson(aluno);
-//    }
 
     @GetMapping(value = "/getDisciplinas/{id}")
     public @ResponseBody
@@ -151,6 +140,39 @@ public class ProfessorProvider {
 
     }
 
+    @GetMapping("getNotasAtividade/{ida}")
+    public @ResponseBody String getNotasAtividade(@PathVariable Long ida){
+        List<AluAtividade> aluAtividades = aluAtividadeRepository.getAluAtividadeByIdAtividade(ida);
+        List<NotasDTO> notasDTO = new ArrayList<>();
+
+        for(AluAtividade aluAtividade: aluAtividades){
+            NotasDTO notasDTO1 = new NotasDTO();
+            notasDTO1.setIdAluno(aluAtividade.getAlunofk().getId());
+            notasDTO1.setNomeAluno(aluAtividade.getAlunofk().getNome());
+            notasDTO1.setIdAtividade(ida);
+            if(aluAtividade.getNota() < 0){
+                notasDTO1.setNota((float) 0);
+            }else{
+                notasDTO1.setNota(aluAtividade.getNota());
+            }
+
+            notasDTO.add(notasDTO1);
+        }
+
+        return gson.toJson(notasDTO);
+    }
+
+    @PostMapping(path="/setNotasAtividade",  consumes = "application/json", produces = "application/json")
+    public @ResponseBody String setNotasAtividade(@RequestBody NotasDTO[] notas){
+
+        for(NotasDTO nota: notas){
+
+            aluAtividadeRepository.setNotaByIdAluno(nota.getIdAluno(),nota.getIdAtividade(),nota.getNota());
+        }
+
+        return gson.toJson(true);
+    }
+
     @DeleteMapping("/deleteArquivo/{id}")
     public String deleteArquivo(@PathVariable Long id) {
         arquivoRepository.deleteById(id);
@@ -165,9 +187,9 @@ public class ProfessorProvider {
         return gson.toJson(id);
     }
 
-    @PostMapping(path="/updateAtividade",  consumes = "application/json", produces = "application/json")
+    @PutMapping(path="/updateAtividade",  consumes = "application/json", produces = "application/json")
     public String updateAtividade(@RequestBody AtividadeDTO a){
-        atividadeRepository.updateAtividade(AtividadeMapper.DTOtoEntity(a),a.getId_atividade());
+        atividadeRepository.updateAtividade(a.getDt_data(),a.getNu_valor_atividade(),a.getId_atividade());
         return gson.toJson(a.getId_atividade());
     }
 }

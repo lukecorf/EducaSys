@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ActivatedRoute} from "@angular/router";
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { Observable, Subscription } from 'rxjs/Rx';
 import {TeacherService} from "../teacher.service";
 import {Disciplina} from "../../student/home-a/models/materia.model";
@@ -10,6 +11,7 @@ import {AlunoList} from "../../secretary/aluno-s/aluno-s.model";
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import {FirebaseConfig} from "../../../environments/firebase.config";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'disciplina-p-component',
@@ -17,6 +19,7 @@ import {FirebaseConfig} from "../../../environments/firebase.config";
   styleUrls: ['./disciplina-p.component.css']
 })
 export class DisciplinaPComponent implements OnInit {
+  @BlockUI() blockUI: NgBlockUI;
   private timer;
   private sub: Subscription;
   open: boolean = true;
@@ -35,7 +38,7 @@ export class DisciplinaPComponent implements OnInit {
   closeResult: string;
   selectedFiles: FileList;
 
-  constructor(private modalService: NgbModal, private route: ActivatedRoute, private teacherService: TeacherService) {
+  constructor(private toastr: ToastrService, private modalService: NgbModal, private route: ActivatedRoute, private teacherService: TeacherService) {
     this.id = this.route.snapshot.params['id'];
   }
 
@@ -58,7 +61,6 @@ export class DisciplinaPComponent implements OnInit {
     );
 
     this.getAtividades();
-
     this.getArquivos();
   }
 
@@ -85,6 +87,9 @@ export class DisciplinaPComponent implements OnInit {
   setAtividade(i: number, id: number){
     this.atividade = this.atividades[i];
     this.opc = id;
+    if(id === 6){
+      this.setFaltas();
+    }
   }
 
   openModal(idModal){
@@ -99,6 +104,7 @@ export class DisciplinaPComponent implements OnInit {
     this.teacherService.deleteFileById(id).subscribe(
       id=>{
         this.getArquivos();
+        this.toastr.success("Arquivo deletado","Sucesso!");
       }
     );
   }
@@ -107,6 +113,7 @@ export class DisciplinaPComponent implements OnInit {
     this.teacherService.deleteAtividadeById(id).subscribe(
       atividade =>{
         this.getAtividades();
+        this.toastr.success("Atividade deletada","Sucesso!");
       }
     )
   }
@@ -115,16 +122,23 @@ export class DisciplinaPComponent implements OnInit {
     this.faltas[id] = !this.faltas[id];
   }
 
+  setNotas(){
+    this.teacherService.getNotasAtividade(this.atividade.id_atividade).subscribe(
+      notas => {
+        this.notas = notas;
+      }
+    );
+
+  }
+
   setFaltas(){
     this.teacherService.getAlunosByIdDisciplina(this.disciplina.id_disciplina).subscribe(
       alunos=>{
         this.alunos = alunos;
         this.faltas = new Array(this.alunos.length);
-        this.notas  = new Array(this.alunos.length);
 
-        for(var x = 0; x < this.alunos.length; x++){
+        for(let x = 0; x < this.alunos.length; x++){
           this.faltas[x] = false;
-          this.notas[x] = new Notas(this.atividade.id_atividade,this.alunos[x].id_aluno,0);
         }
       }
     );
@@ -132,7 +146,7 @@ export class DisciplinaPComponent implements OnInit {
 
   efetuaChamada(){
     let idFaltas : Array<number> = new Array<number>();
-    for(var x = 0; x <  this.faltas.length; x++){
+    for(let x = 0; x <  this.faltas.length; x++){
       if (this.faltas[x]){
         idFaltas.push(this.alunos[x].id_aluno);
       }
@@ -142,9 +156,9 @@ export class DisciplinaPComponent implements OnInit {
       this.teacherService.setFaltas(idFaltas).subscribe(
         ok => {
           if (ok) {
-            console.log("Deu");
+            this.toastr.success("Chamada realizada","Sucesso!");
           } else {
-            console.log("Não Deu");
+            this.toastr.error("Problemas ao efetuar chamada","Erro!");
           }
         }
       )
@@ -158,6 +172,7 @@ export class DisciplinaPComponent implements OnInit {
       atividade=>{
         if(atividade.st_nome_atividade !== null) {
           this.getAtividades();
+          this.toastr.success("Atividade criada","Sucesso!")
         }
         this.atividade = new Atividade();
       }
@@ -165,7 +180,7 @@ export class DisciplinaPComponent implements OnInit {
   }
 
   enviaArquivo(){
-    let file = this.selectedFiles.item(0)
+    let file = this.selectedFiles.item(0);
     let currentUpload = new Upload(file);
     let arquivo: Arquivo = new Arquivo();
     arquivo.id_disciplina = this.disciplina.id_disciplina;
@@ -177,6 +192,7 @@ export class DisciplinaPComponent implements OnInit {
   }
 
   efetuarUpload(upload: Upload, arquivo: Arquivo){
+    this.blockUI.start("Efetuando Upload...");
     firebase.initializeApp(FirebaseConfig);
     let storageRef = firebase.storage().ref();
     let uploadTask = storageRef.child(`${'/files'}/${upload.file.name}`).put(upload.file);
@@ -192,12 +208,14 @@ export class DisciplinaPComponent implements OnInit {
       },
       () => {
         //upload efetuado
-        upload.url = uploadTask.snapshot.downloadURL
-        upload.name = upload.file.name
+        upload.url = uploadTask.snapshot.downloadURL;
+        upload.name = upload.file.name;
         arquivo.url_arquivo= upload.url;
         this.teacherService.setArquivo(arquivo).subscribe(
           arquivo=>{
             this.getArquivos();
+            this.blockUI.stop();
+            this.toastr.success("Arquivo enviado","Sucesso!");
           }
         );
       }
@@ -235,17 +253,20 @@ export class DisciplinaPComponent implements OnInit {
           this.teacherService.updateAtividade(this.atividade).subscribe(
             atividade=>{
               this.getAtividades();
+              this.toastr.success("Atividade atualizada","Sucesso!");
             }
           )
         }else if(this.opc === 6){
-          console.log(this.notas);
+          this.teacherService.setNotasAtividade(this.notas).subscribe(notas=>{
+            this.toastr.success("Notas atualizadas","Sucesso");
+          })
         }
       }else{
         this.atividade = new Atividade();
       }
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      console.log(this.closeResult);
+
     });
   }
 

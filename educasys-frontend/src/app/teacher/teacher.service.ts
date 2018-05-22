@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Professor} from "../secretary/professor-s/professor-s.model";
 import {Disciplina} from "../student/home-a/models/materia.model";
-import {AluAtividade, Arquivo, Atividade} from "./teacher.module";
+import {AluAtividade, Arquivo, Atividade, Notas} from "./teacher.module";
 import {AlunoList} from "../secretary/aluno-s/aluno-s.model";
 
 @Injectable()
@@ -22,7 +22,9 @@ export class TeacherService{
   private urlGAlunos= 'http://localhost:8090/getAlunosByDisciplina';
   private urlUAtividade= 'http://localhost:8090/updateAtividade';
   private urlSFaltas= 'http://localhost:8090/setFaltas';
+  private urlSNotas= 'http://localhost:8090/setNotasAtividade';
   private urlGEntregas= 'http://localhost:8090/getAtividadeEntregues';
+  private urlGNotas= 'http://localhost:8090/getNotasAtividade';
 
   constructor(private  http: HttpClient){}
 
@@ -40,6 +42,14 @@ export class TeacherService{
 
   getDisciplinas(id: number):Observable<Disciplina[]>{
     return this.http.get<Disciplina[]>(this.urlMateria+'/'+id);
+  }
+
+  getNotasAtividade(id: number): Observable<Notas[]>{
+    return this.http.get<Notas[]>(this.urlGNotas+'/'+id);
+  }
+
+  setNotasAtividade(notas: Notas[]): Observable<Boolean>{
+    return this.http.post<Boolean>(this.urlSNotas,notas);
   }
 
   setAtividade(a:Atividade):Observable<Atividade>{
@@ -75,7 +85,7 @@ export class TeacherService{
   }
 
   updateAtividade(atividade: Atividade): Observable<number>{
-    return this.http.post<number>(this.urlUAtividade,atividade);
+    return this.http.put<number>(this.urlUAtividade,atividade);
   }
 
 
