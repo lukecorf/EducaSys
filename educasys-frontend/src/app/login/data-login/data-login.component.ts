@@ -54,7 +54,7 @@ export class DataLoginComponent implements OnInit {
       }else if(login.nu_type === 3){
         this.router.navigate(['home-secretaria/' + login.nu_code]);
       }else{
-
+        console.log("Teste");
       }
     }else{
       this.toastr.error("Login ou senha inválidos","Erro!")
