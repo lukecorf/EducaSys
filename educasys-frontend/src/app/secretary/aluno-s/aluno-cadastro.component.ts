@@ -63,24 +63,23 @@ export class AlunoCadastroComponent implements OnInit {
     this.router.navigate(['aluno-s']);
   }
 
-  goSave(senha: string,type: number) {
-    if (this.aluno.pw_senha_aluno = senha) {
-      this.aluno.dt_data_nasc = null;
-      this.aluno.url_img_aluno = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
-      if(type === 1) {
-        this.secretariaService.setAluno(this.aluno).subscribe(aluno => {
-          if (aluno.st_nome_aluno !== null) {
-            this.router.navigate(['aluno-s']);
-          }
-        });
+  goSave(senha: string) {
+
+      if(this.type === 1) {
+        if(this.aluno.pw_senha_aluno === senha) {
+          this.aluno.dt_data_nasc = null;
+          this.aluno.url_img_aluno = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
+          this.secretariaService.setAluno(this.aluno).subscribe(aluno => {
+            if (aluno.st_nome_aluno !== null) {
+              this.router.navigate(['aluno-s']);
+            }
+          });
+        }
       }else{
         this.secretariaService.updateAluno(this.aluno).subscribe(ok =>{
           this.router.navigate(['aluno-s']);
         })
       }
-    }else{
-
-    }
   }
 
 }

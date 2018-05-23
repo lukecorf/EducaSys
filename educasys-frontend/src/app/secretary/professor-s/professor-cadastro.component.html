@@ -50,7 +50,7 @@
                 <input type="text" class="form-control" [disabled]="disabledEdit" name="dc_rg" #dc_rg = "ngModel" [(ngModel)]="professor.dc_rg"  mask="SS-99.999.999" placeholder="RG..." name="rg" >
               </div>
             </div>
-            <div class="col-md-6" style="padding-bottom: 10px;">
+            <div *ngIf="type !== 3" class="col-md-6" style="padding-bottom: 10px;">
               <div class="input-group">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" disabled type="button">
@@ -60,7 +60,7 @@
                 <input type="password" class="form-control" [disabled]="disabledEdit" name="pw_senha_prof" #pw_senha_prof= "ngModel" [(ngModel)]="professor.pw_senha_prof"  placeholder="Senha..." name="password" >
               </div>
             </div>
-            <div class="col-md-6" style="padding-bottom: 10px;">
+            <div *ngIf="type !== 3" class="col-md-6" style="padding-bottom: 10px;">
               <div class="input-group">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" disabled type="button">
@@ -101,7 +101,8 @@
             <div class="col-md-12" style="margin-top: 15px;">
               <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-danger"  (click)="goBack()">Cancelar</button>
               <button *ngIf="disabledEdit" type="button" class="btn btn-outline-danger"  (click)="goBack()">Voltar</button>
-              <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-success align-bottom float-right" (click)="goSave(password.value)">Salvar</button>
+              <button *ngIf="!disabledEdit && type === 1" type="button" class="btn btn-outline-success align-bottom float-right" (click)="goSave(password.value)">Salvar</button>
+              <button *ngIf="!disabledEdit && type === 3" type="button" class="btn btn-outline-success align-bottom float-right" (click)="goSave('')">Atualizar</button>
             </div>
           </div>
         </div>

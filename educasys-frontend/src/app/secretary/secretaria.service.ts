@@ -71,8 +71,8 @@ export class SecretariaService{
     return this.http.delete(this.urlDDelete+'/'+id);
   }
 
-  updateAluno(a:Aluno):Observable<Aluno>{
-    return this.http.put(this.urlAUpdate,a);
+  updateAluno(a:Aluno):Observable<Boolean>{
+    return this.http.put<Boolean>(this.urlAUpdate,a);
   }
 
   deleteAlunoById(id: number): Observable<any>{
@@ -95,8 +95,8 @@ export class SecretariaService{
     return this.http.post(this.urlPSet,p);
   }
 
-  updateProfessor(p:Professor):Observable<Professor>{
-    return this.http.post(this.urlPUpdate,p);
+  updateProfessor(p:Professor):Observable<Boolean>{
+    return this.http.put<Boolean>(this.urlPUpdate,p);
   }
 
   deleteProfessorById(id: number): Observable<any>{

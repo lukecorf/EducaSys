@@ -21,19 +21,23 @@ export class ProfessorCadastroComponent implements OnInit {
   disabledEdit: boolean = false;
   id: number;
   professor: Professor;
+  type: number;
 
   constructor(private router: Router, private route: ActivatedRoute, private secretariaService: SecretariaService) {
     this.professor = new Professor();
 
     if(route.snapshot.params['type'] == 1){
-      this.title = "Cadastrar"
+      this.title = "Cadastrar";
+      this.type = 1;
     }else if(route.snapshot.params['type'] == 2){
       this.disabledEdit = true;
       this.title= 'Visualizar';
+      this.type = 2;
       this.id = route.snapshot.params['id'];
       this.getProfessor();
     }else if(route.snapshot.params['type'] == 3){
       this.title= 'Editar';
+      this.type = 3;
       this.id = route.snapshot.params['id'];
       this.getProfessor();
     }
@@ -61,17 +65,24 @@ export class ProfessorCadastroComponent implements OnInit {
   }
 
   goSave(password: string){
+    if(this.type === 1) {
+      if(password === this.professor.pw_senha_prof) {
+        this.professor.dt_data_nasc = null;
+        this.professor.url_img_professor = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
+        this.secretariaService.setProfessor(this.professor).subscribe(professor => {
+          if (professor.st_nome_professor !== null) {
+            this.router.navigate(['professor-s']);
+          }
+        });
+      }else{
 
-    if(password === this.professor.pw_senha_prof) {
-      this.professor.dt_data_nasc = null;
-      this.professor.url_img_professor = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
-
-      this.secretariaService.setProfessor(this.professor).subscribe(professor => {
-        if (professor.st_nome_professor !== null) {
+      }
+    }else{
+      this.secretariaService.updateProfessor(this.professor).subscribe(
+        ok =>{
           this.router.navigate(['professor-s']);
         }
-      });
-    }else{
+      );
     }
   }
 

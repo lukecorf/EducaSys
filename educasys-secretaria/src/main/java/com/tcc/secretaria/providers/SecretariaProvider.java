@@ -57,9 +57,6 @@ public class SecretariaProvider {
 
     @PostMapping(path="/saveDisciplina",  consumes = "application/json", produces = "application/json")
     public String createDisciplna (@RequestBody DisciplinaDTO disciplinaDTO){
-        System.out.println("Entrou no save Disciplina");
-        System.out.println(disciplinaDTO.toString());
-
         Disciplina d = DisciplinaMapper.DTOtoEntity(disciplinaDTO);
         Disciplina d2 = disciplinaRepository.save(d);
 
@@ -82,11 +79,9 @@ public class SecretariaProvider {
 
     @GetMapping(value = "/getAlunos")
     public @ResponseBody String getAlunos(){
-        System.out.println("Entrou no get professor");
         List<Aluno> list;
         list = alunoRepository.findAll();
         return gson.toJson(AlunoMapper.ListEntitytoListDTO(list));
-
     }
 
     @GetMapping(value = "/searchAlunos/{name}")
@@ -117,8 +112,6 @@ public class SecretariaProvider {
 
     @PostMapping(path="/saveAluno",  consumes = "application/json", produces = "application/json")
     public String createAluno(@RequestBody AlunoDTO alunoDTO){
-        System.out.println("Entrou no save Aluno");
-        System.out.println(alunoDTO.toString());
         Aluno a = AlunoMapper.DTOtoEntity(alunoDTO);
         loginRepository.save(new Login(alunoDTO.getDc_cpf(),alunoDTO.getPw_senha_aluno(),1));
         return gson.toJson(alunoRepository.save(a));
@@ -126,7 +119,6 @@ public class SecretariaProvider {
 
     @DeleteMapping("/deleteAluno/{id}")
     public String deleteAluno(@PathVariable Long id) {
-        System.out.println("Delete");
         alunoRepository.deleteById(id);
         aluDisRepository.deleteByIdAluno(id);
         return gson.toJson(id);
@@ -134,7 +126,6 @@ public class SecretariaProvider {
 
     @GetMapping(value = "/getProfessores")
     public @ResponseBody String getProfessores(){
-        System.out.println("Entrou no get professor");
         List<Professor> list;
         list = professorRepository.findAll();
         return gson.toJson(ProfessorMapper.ListEntitytoListDTO(list));
@@ -169,13 +160,13 @@ public class SecretariaProvider {
         return gson.toJson(SecretariaMapper.EntitytoDTO(secretariaRepository.getSecretariaByCode(id)));
     }
 
-    @PutMapping(path="/updateProfessor", consumes = "applicatioin/json", produces = "application/json")
+    @PutMapping(path="/updateProfessor",  consumes = "application/json", produces = "application/json")
     public @ResponseBody String updateProfessor(@RequestBody ProfessorDTO professorDTO){
         professorRepository.updateProfessor(professorDTO.getdc_cpf(),professorDTO.getDt_data_nasc(), professorDTO.getCo_email(),professorDTO.getSt_endereco(),professorDTO.getSt_nome_professor(),professorDTO.getdc_rg(),professorDTO.getPw_senha_prof(),professorDTO.getCo_telefone(),professorDTO.getId_professor());
         return gson.toJson(true);
     }
 
-    @PutMapping(path="/updateAluno", consumes = "applicatioin/json", produces = "application/json")
+    @PutMapping(path="/updateAluno",  consumes = "application/json", produces = "application/json")
     public @ResponseBody String updateAluno(@RequestBody AlunoDTO alunoDTO){
         alunoRepository.updateAluno(alunoDTO.getCo_telefone(),alunoDTO.getPw_senha_aluno(),alunoDTO.getDc_rg(),alunoDTO.getSt_nome_aluno(),alunoDTO.getSt_endereco(),alunoDTO.getCo_email(),alunoDTO.getDt_data_nasc(),alunoDTO.getDc_cpf(),alunoDTO.getSt_nome_mae(),alunoDTO.getSt_nome_pai(),alunoDTO.getId_aluno());
         return gson.toJson(true);
