@@ -40,22 +40,29 @@ export class DisciplinaCadastroComponent implements OnInit {
   professores: ProfessorList[];
   selectedFiles: FileList;
   currentUpload: Upload;
+  type: number = 0;
+  selectedFile: boolean = false;
 
   constructor( private modalService: NgbModal,private router: Router, private route:ActivatedRoute, private secretariaService: SecretariaService ) {
-
+    if (firebase.apps.length === 0) {
+      firebase.initializeApp(FirebaseConfig);
+    }
     this.disciplina = new Disciplina();
     this.disciplina.ls_alunos = [];
     if(route.snapshot.params['type'] == 1){
-      this.title = "Cadastrar"
+      this.title = "Cadastrar";
+      this.type = 1;
       this.getProfessores();
     }else if(route.snapshot.params['type'] == 2){
       this.disabledEdit = true;
       this.title= 'Visualizar';
+      this.type = 2;
       this.id = route.snapshot.params['id'];
       this.getDisciplina();
       this.getProfessores()
     }else if(route.snapshot.params['type'] == 3){
       this.title= 'Editar';
+      this.type = 3;
       this.id = route.snapshot.params['id'];
       this.getDisciplina();
       this.getProfessores();
@@ -89,10 +96,6 @@ export class DisciplinaCadastroComponent implements OnInit {
         this.professores = professores;
       }
     );
-
-    // if(this.route.snapshot.params['type'] == 2 || this.route.snapshot.params['type'] == 3){
-    //   this.professorText = this.professores.find(i => i.id_professor === this.disciplina.id_professor).st_nome_professor;
-    // }
   }
 
   ngOnInit() {
@@ -136,17 +139,35 @@ export class DisciplinaCadastroComponent implements OnInit {
     this.router.navigate(['disciplina-s']);
   }
 
-  goSave(){
-    let file = this.selectedFiles.item(0)
-    this.currentUpload = new Upload(file);
-    this.disciplina.id_professor = this.professores[this.selectedRow3].id_professor;
-    this.disciplina.st_nome_prof = this.professores[this.selectedRow3].st_nome_professor;
-    this.disciplina.id_disciplina = 0;
-    this.imagemUpload(this.currentUpload,this.disciplina);
+  goSave() {
+
+    if (this.type === 1) {
+      let file = this.selectedFiles.item(0)
+      this.currentUpload = new Upload(file);
+      this.disciplina.id_professor = this.professores[this.selectedRow3].id_professor;
+      this.disciplina.st_nome_prof = this.professores[this.selectedRow3].st_nome_professor;
+      this.disciplina.id_disciplina = 0;
+      this.imagemUpload(this.currentUpload, this.disciplina);
+    }else if (this.type === 3){
+      if(this.selectedFile){
+        let file = this.selectedFiles.item(0)
+        this.currentUpload = new Upload(file);
+        this.disciplina.id_professor = this.professores[this.selectedRow3].id_professor;
+        this.disciplina.st_nome_prof = this.professores[this.selectedRow3].st_nome_professor;
+        this.imagemUpload(this.currentUpload, this.disciplina);
+      }else{
+        this.disciplina.id_professor = this.professores[this.selectedRow3].id_professor;
+        this.disciplina.st_nome_prof = this.professores[this.selectedRow3].st_nome_professor;
+        this.secretariaService.updateDisciplina(this.disciplina).subscribe(ok =>{
+          if(ok){
+            this.router.navigate(['disciplina-s']);
+          }
+        });
+      }
+    }
   }
 
   imagemUpload(upload: Upload, disciplina: Disciplina){
-    firebase.initializeApp(FirebaseConfig);
     let storageRef = firebase.storage().ref();
     let uploadTask = storageRef.child(`${'/imagens'}/${upload.file.name}`).put(upload.file);
 
@@ -166,17 +187,27 @@ export class DisciplinaCadastroComponent implements OnInit {
         upload.url = uploadTask.snapshot.downloadURL
         upload.name = upload.file.name
         disciplina.url_img = upload.url;
-        this.secretariaService.setDisciplina(disciplina).subscribe(disciplina => {
-          if(disciplina.st_nome !== null){
-            this.router.navigate(['disciplina-s']);
-          }
-        });
-
+        if(this.type === 1) {
+          this.secretariaService.setDisciplina(disciplina).subscribe(disciplina => {
+            if (disciplina.st_nome !== null) {
+              this.router.navigate(['disciplina-s']);
+            }
+          });
+        }else if (this.type === 3){
+          this.secretariaService.updateDisciplina(disciplina).subscribe(ok =>{
+            if(ok){
+              this.router.navigate(['disciplina-s']);
+            }
+          });
+        }
       }
     );
   }
 
   selectFile(event){
+    if(!this.selectedFile){
+      this.selectedFile = true;
+    }
     this.selectedFiles = event.target.files;
   }
 }

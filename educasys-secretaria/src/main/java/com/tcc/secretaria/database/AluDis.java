@@ -33,6 +33,10 @@ public class AluDis {
         this.faltas = faltas;
     }
 
+    public AluDis(){
+
+    }
+
     public float getFaltas() {
         return faltas;
     }

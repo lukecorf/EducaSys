@@ -40,12 +40,12 @@ public class AlunoListDTO {
         this.st_nome_aluno = st_nome_aluno;
     }
 
-    public String getco_email() {
+    public String getCo_email() {
         return co_email;
     }
 
-    public void setDt_data_nasc(String co_email) {
-        this.co_email= co_email;
+    public void setCo_email(String co_email) {
+        this.co_email = co_email;
     }
 
     public String getCo_telefone() {
@@ -56,14 +56,6 @@ public class AlunoListDTO {
         this.co_telefone = co_telefone;
     }
 
-    public String getCo_email() {
-        return co_email;
-    }
-
-    public void setCo_email(String co_email) {
-        this.co_email = co_email;
-    }
-
     public String getDc_cpf() {
         return dc_cpf;
     }
@@ -71,5 +63,4 @@ public class AlunoListDTO {
     public void setDc_cpf(String dc_cpf) {
         this.dc_cpf = dc_cpf;
     }
-
 }

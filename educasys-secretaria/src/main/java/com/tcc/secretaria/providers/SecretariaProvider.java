@@ -45,6 +45,12 @@ public class SecretariaProvider {
     @Autowired
     SecretariaRepository secretariaRepository;
 
+    @Autowired
+    AluAtividadeRepository aluAtividadeRepository;
+
+    @Autowired
+    AtividadeRepository atividadeRepository;
+
     @GetMapping(value = "/getDisciplinas")
     public @ResponseBody String getDisciplinas(){
         List<Disciplina> list;
@@ -54,7 +60,54 @@ public class SecretariaProvider {
 
     @GetMapping("/getDisciplinaById/{id}")
     public @ResponseBody String getDisciplinaById(@PathVariable Long id) {
-        return gson.toJson(DisciplinaMapper.EntitytoDTO(disciplinaRepository.getOne(id)));
+        DisciplinaDTO disciplinaDTO = DisciplinaMapper.EntitytoDTO(disciplinaRepository.getOne(id));
+        List<Aluno> alunos = new ArrayList<>();
+        List<AluDis> aludisList= aluDisRepository.getAluDisByIdDisciplina(id);
+
+        for(AluDis aluDis: aludisList){
+            alunos.add(aluDis.getAlunofk());
+        }
+
+        disciplinaDTO.setLs_alunos((ArrayList<AlunoListDTO>) AlunoMapper.ListEntitytoListDTO(alunos));
+
+
+        return gson.toJson(disciplinaDTO);
+    }
+
+        @PutMapping(path="/updateDisciplina",  consumes = "application/json", produces = "application/json")
+    public @ResponseBody String updateDisciplina(@RequestBody DisciplinaDTO disciplinaDTO) throws ParseException {
+        List<AluDis> aluDisAntigos = aluDisRepository.getAluDisByIdDisciplina(disciplinaDTO.getId_disciplina());
+        DisciplinaMapper.DTOtoEntity(disciplinaDTO);
+
+        disciplinaRepository.updateDisciplina(disciplinaDTO.getSt_nome(),disciplinaDTO.getNu_carga_horaria(),disciplinaDTO.getTx_descricao(),disciplinaDTO.getUrl_img(),disciplinaDTO.getId_disciplina());
+
+        int id = -1;
+        for(AluDis aluDis: aluDisAntigos){
+            for(int i = 0; i < disciplinaDTO.getLs_alunos().size(); i++){
+                if(aluDis.getAlunofk().getId() == disciplinaDTO.getLs_alunos().get(i).getId_aluno()){
+                    id = i;
+                    break;
+                }
+            }
+            if(id >=0){
+                disciplinaDTO.getLs_alunos().remove(id);
+            }else{
+                aluDisRepository.deleteByIdAluno(aluDis.getAlunofk().getId());
+                aluAtividadeRepository.deleteAtividadeByIdAlunoAndIdDisciplina(aluDis.getAlunofk().getId(),disciplinaDTO.getId_disciplina());
+            }
+            id = -1;
+        }
+
+        for(AlunoListDTO alunoListDTO: disciplinaDTO.getLs_alunos()){
+            aluDisRepository.save(new AluDis(disciplinaRepository.getOne(disciplinaDTO.getId_disciplina()),alunoRepository.getOne(alunoListDTO.getId_aluno()),0));
+            List<Atividade> atividades = atividadeRepository.getAtividadeByIdDisciplina(disciplinaDTO.getId_disciplina());
+
+            for(Atividade atividade: atividades){
+                aluAtividadeRepository.save(new AluAtividade(disciplinaRepository.getOne(disciplinaDTO.getId_disciplina()),alunoRepository.getOne(alunoListDTO.getId_aluno()),atividade,-1,false,""));
+            }
+
+        }
+          return gson.toJson(true);
     }
 
     @PostMapping(path="/saveDisciplina",  consumes = "application/json", produces = "application/json")

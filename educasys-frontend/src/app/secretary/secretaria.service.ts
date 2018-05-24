@@ -15,6 +15,7 @@ export class SecretariaService{
   private urlDSet = 'http://localhost:8099/saveDisciplina';
   private urlDDelete = 'http://localhost:8099/deleteDisciplina';
   private urlDSearch = 'http://localhost:8099/searchDisciplinas';
+  private urlDUpdate= 'http://localhost:8099/updateDisciplina';
 
   private urlA = 'http://localhost:8099/getAlunos';
   private urlAById = 'http://localhost:8099/getAlunoById';
@@ -105,6 +106,10 @@ export class SecretariaService{
 
   getSecretariaByCode(id: string):Observable<Secretaria>{
     return this.http.get<Secretaria>(this.urlMenu+'/'+id);
+  }
+
+  updateDisciplina(d:Disciplina):Observable<Boolean>{
+    return this.http.put<Boolean>(this.urlDUpdate,d);
   }
 
 }

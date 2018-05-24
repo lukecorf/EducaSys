@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface AluDisRepository  extends JpaRepository<AluDis,Long> {
@@ -20,4 +21,7 @@ public interface AluDisRepository  extends JpaRepository<AluDis,Long> {
     @Modifying
     @Query("DELETE FROM AluDis a WHERE a.alunofk.id = :idAlu")
     void deleteByIdAluno(@Param("idAlu")long idAlu);
+
+    @Query("SELECT a FROM AluDis a WHERE a.disciplinafk.codigo = :id")
+    List<AluDis> getAluDisByIdDisciplina(@Param("id")Long id);
 }
