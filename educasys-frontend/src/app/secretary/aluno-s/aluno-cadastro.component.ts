@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SecretariaService} from "../secretaria.service";
 import {Aluno} from "./aluno-s.model";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'aluno-cadastro-component',
@@ -23,7 +24,7 @@ export class AlunoCadastroComponent implements OnInit {
   type: number;
   aluno: Aluno;
 
-  constructor(private router: Router, private route:ActivatedRoute, private secretariaService: SecretariaService) {
+  constructor(private toastr: ToastrService, private router: Router, private route:ActivatedRoute, private secretariaService: SecretariaService) {
     this.aluno = new Aluno();
     if(route.snapshot.params['type'] == 1){
       this.title = "Cadastrar";
@@ -71,12 +72,14 @@ export class AlunoCadastroComponent implements OnInit {
           this.aluno.url_img_aluno = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
           this.secretariaService.setAluno(this.aluno).subscribe(aluno => {
             if (aluno.st_nome_aluno !== null) {
+              this.toastr.success("Aluno cadastrado","Sucesso!");
               this.router.navigate(['aluno-s']);
             }
           });
         }
       }else{
         this.secretariaService.updateAluno(this.aluno).subscribe(ok =>{
+          this.toastr.success("Dados atualizados","Sucesso!");
           this.router.navigate(['aluno-s']);
         })
       }

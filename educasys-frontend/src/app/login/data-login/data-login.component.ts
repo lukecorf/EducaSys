@@ -54,7 +54,7 @@ export class DataLoginComponent implements OnInit {
       }else if(login.nu_type === 3){
         this.router.navigate(['home-secretaria/' + login.nu_code]);
       }else{
-        console.log("Teste");
+        this.toastr.error("Tipo de usuario invalido","Erro!");
       }
     }else{
       this.toastr.error("Login ou senha inválidos","Erro!")
@@ -69,6 +69,8 @@ export class DataLoginComponent implements OnInit {
       subscribe(
         result => this.verifyLogin(result)
        );
+    }else{
+      this.toastr.error("Campos não preenchidos","Erro!");
     }
   }
 

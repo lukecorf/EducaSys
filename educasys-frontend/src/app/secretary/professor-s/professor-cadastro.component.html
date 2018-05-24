@@ -67,7 +67,7 @@
                     <mat-icon style="vertical-align: middle;">https</mat-icon>
                   </button>
                 </div>
-                <input type="password" class="form-control" [disabled]="disabledEdit" name="pw_senha_prof2" placeholder="Repita a senha..." name="password2" #password >
+                <input type="password" class="form-control" [disabled]="disabledEdit" name="pw_senha_prof2" placeholder="Repita a senha..."  #pw_senha_prof2 >
               </div>
             </div>
           </div>
@@ -101,7 +101,7 @@
             <div class="col-md-12" style="margin-top: 15px;">
               <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-danger"  (click)="goBack()">Cancelar</button>
               <button *ngIf="disabledEdit" type="button" class="btn btn-outline-danger"  (click)="goBack()">Voltar</button>
-              <button *ngIf="!disabledEdit && type === 1" type="button" class="btn btn-outline-success align-bottom float-right" (click)="goSave(password.value)">Salvar</button>
+              <button *ngIf="!disabledEdit && type === 1" type="button" class="btn btn-outline-success align-bottom float-right" (click)="goSave(pw_senha_prof2.value)">Salvar</button>
               <button *ngIf="!disabledEdit && type === 3" type="button" class="btn btn-outline-success align-bottom float-right" (click)="goSave('')">Atualizar</button>
             </div>
           </div>
