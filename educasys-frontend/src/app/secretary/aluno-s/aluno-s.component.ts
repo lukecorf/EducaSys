@@ -4,6 +4,8 @@ import {Subscription} from "rxjs/Subscription";
 import {SecretariaService} from "../secretaria.service";
 import {Router} from "@angular/router";
 import {AlunoList} from "./aluno-s.model";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'aluno-s-component',
@@ -11,7 +13,7 @@ import {AlunoList} from "./aluno-s.model";
   styleUrls: ['./aluno-s.component.css']
 })
 export class AlunoSComponent implements OnInit {
-
+  @BlockUI() blockUI: NgBlockUI;
   private timer;
   private sub: Subscription;
   open: boolean = true;
@@ -22,13 +24,14 @@ export class AlunoSComponent implements OnInit {
 
   alunos : AlunoList[];
 
-  constructor(private router: Router, private secretariaService: SecretariaService) {
+  constructor(private toastr: ToastrService,private router: Router, private secretariaService: SecretariaService) {
     this.setClickedRow = function(index){
       this.selectedRow = index;
     }
-
+    this.blockUI.start("Carregando dados...");
     secretariaService.getAlunos().subscribe(
       alunos => {
+        this.blockUI.stop();
         this.alunos = alunos;
       }
     );
@@ -56,18 +59,18 @@ export class AlunoSComponent implements OnInit {
   }
 
   goSearch(search: string){
-    console.log('Buscando por:');
-    console.log(search);
+    this.blockUI.start("Buscando dados");
     if(search === ''){
       this.secretariaService.getAlunos().subscribe(
         alunos =>{
+          this.blockUI.stop();
           this.alunos = alunos;
         }
       );
     }else{
-      console.log('fui no certo');
       this.secretariaService.searchAlunos(search).subscribe(
         alunos =>{
+          this.blockUI.stop();
           this.alunos = alunos;
         }
       );
@@ -75,17 +78,17 @@ export class AlunoSComponent implements OnInit {
   }
 
   goDelete(){
+    this.blockUI.start("Carregando dados...");
     this.secretariaService.deleteAlunoById(this.alunos[this.selectedRow].id_aluno).subscribe(id => {
-      console.log('This is my ID: '+id);
+      this.toastr.success("Aluno deletado","Sucesso!");
       this.secretariaService.getAlunos().subscribe(
         alunos => {
+          this.blockUI.stop();
           this.alunos = alunos;
         }
       );
-      console.log("Excluido com sucesso");
-
     },error => {
-      console.log("Erro ao excluir");
+      this.toastr.error("Erro ao excluir","Erro!");
     });
     this.router.navigate(['aluno-s']);
   }

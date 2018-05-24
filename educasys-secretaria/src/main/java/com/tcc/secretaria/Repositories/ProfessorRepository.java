@@ -19,7 +19,7 @@ public interface ProfessorRepository extends JpaRepository<Professor,Long>{
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE Professor p SET p.cpf = :cpf, p.dataN=:dataN, p.email = :email, p.endereco = :endereco, p.nome = :nome, p.rg = :rg, p.senha = :senha, p.telefone = :telefone WHERE p.id = :id")
-    void updateProfessor(@Param("cpf")String cpf, @Param("dataN") Date dataN, @Param("email") String email, @Param("endereco")String endereco, @Param("nome") String nome, @Param("rg") String rg, @Param("senha") String  senha, @Param("telefone")String telefone, @Param("id") Long id);
+    @Query("UPDATE Professor p SET p.cpf = :cpf, p.dataN=:dataN, p.email = :email, p.endereco = :endereco, p.nome = :nome, p.rg = :rg, p.telefone = :telefone WHERE p.id = :id")
+    void updateProfessor(@Param("cpf")String cpf, @Param("dataN") Date dataN, @Param("email") String email, @Param("endereco")String endereco, @Param("nome") String nome, @Param("rg") String rg, @Param("telefone")String telefone, @Param("id") Long id);
 
 }

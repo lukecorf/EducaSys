@@ -3,6 +3,8 @@ export class AlunoList{
               public st_nome_aluno: string,
               public co_email: string,
               public co_telefone: string,
+              public dc_cpf: string,
+              public dt_data_nasc: Date
   ){}
 }
 
@@ -15,7 +17,7 @@ export class Aluno{
               public st_nome_mae?: string,
               public st_endereco?: string,
               public pw_senha_aluno?: string,
-              public dt_data_nasc?: Date,
+              public dt_data_nasc?: string,
               public dc_rg?: string,
               public dc_cpf?: string,
               public url_img_aluno?: string,

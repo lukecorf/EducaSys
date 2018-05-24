@@ -17,7 +17,7 @@
                     <mat-icon style="vertical-align: middle;">account_circle</mat-icon>
                   </button>
                 </div>
-                <input class="form-control" [disabled]="disabledEdit" name="st_nome_aluno" #st_nome_aluno = "ngModel" [(ngModel)]="aluno.st_nome_aluno" placeholder="Digite o nome..." name="nome" >
+                <input class="form-control" [disabled]="disabledEdit" name="st_nome_aluno" #st_nome_aluno = "ngModel" [(ngModel)]="aluno.st_nome_aluno" placeholder="Digite o nome...">
               </div>
             </div>
             <div class="col-md-4" style="padding-bottom: 10px;">
@@ -27,7 +27,7 @@
                     <mat-icon style="vertical-align: middle;">date_range</mat-icon>
                   </button>
                 </div>
-                <input class="form-control" [disabled]="disabledEdit" name="dt_data_nasc" #dt_data_nasc = "ngModel" [(ngModel)]="aluno.dt_data_nasc" type="date" placeholder="dd/mm/aaaa" name="dataNasc" >
+                <input class="form-control" [disabled]="disabledEdit" name="dt_data_nasc" name="dt_data_nasc" #dt_data_nasc = "ngModel" [(ngModel)]="aluno.dt_data_nasc" type="date" placeholder="dd/mm/aaaa">
               </div>
             </div>
             <div class="col-md-6" style="padding-bottom: 10px;">
@@ -37,7 +37,7 @@
                     <mat-icon style="vertical-align: middle;">account_box</mat-icon>
                   </button>
                 </div>
-                <input type="text" class="form-control" [disabled]="disabledEdit" name="st_nome_pai" #st_nome_pai = "ngModel" [(ngModel)]="aluno.st_nome_pai"  placeholder="Nome do pai..." name="nomeP" >
+                <input type="text" class="form-control" [disabled]="disabledEdit" name="st_nome_pai" #st_nome_pai = "ngModel" [(ngModel)]="aluno.st_nome_pai"  placeholder="Nome do pai...">
               </div>
             </div>
             <div class="col-md-6" style="padding-bottom: 10px;">
@@ -47,7 +47,7 @@
                     <mat-icon style="vertical-align: middle;">account_box</mat-icon>
                   </button>
                 </div>
-                <input type="text" class="form-control" [disabled]="disabledEdit" name="st_nome_mae" #st_nome_mae = "ngModel" [(ngModel)]="aluno.st_nome_mae"  placeholder="Nome da mãe..." name="nomeM" >
+                <input type="text" class="form-control" [disabled]="disabledEdit" name="st_nome_mae" #st_nome_mae = "ngModel" [(ngModel)]="aluno.st_nome_mae"  placeholder="Nome da mãe...">
               </div>
             </div>
             <div class="col-md-6" style="padding-bottom: 10px;">
@@ -57,7 +57,7 @@
                     <mat-icon style="vertical-align: middle;">account_box</mat-icon>
                   </button>
                 </div>
-                <input type="text" class="form-control" [disabled]="disabledEdit" name="dc_rg" #dc_rg = "ngModel" [(ngModel)]="aluno.dc_rg" mask="SS-99.999.999" placeholder="RG..." name="rg" >
+                <input type="text" class="form-control" [disabled]="disabledEdit" name="dc_rg" #dc_rg = "ngModel" [(ngModel)]="aluno.dc_rg" mask="SS-99.999.999" placeholder="RG...">
               </div>
             </div>
             <div class="col-md-6" style="padding-bottom: 10px;">
@@ -67,27 +67,27 @@
                     <mat-icon style="vertical-align: middle;">account_box</mat-icon>
                   </button>
                 </div>
-                <input type="text" class="form-control" [disabled]="disabledEdit" name="dc_cpf" #dc_cpf = "ngModel" [(ngModel)]="aluno.dc_cpf" mask="999.999.999-99" placeholder="CPF..." name="cpf" >
+                <input type="text" class="form-control" [disabled]="disabledEdit" name="dc_cpf" #dc_cpf = "ngModel" [(ngModel)]="aluno.dc_cpf" mask="999.999.999-99" placeholder="CPF...">
               </div>
             </div>
-            <div *ngIf="type !== 3" class="col-md-6" style="padding-bottom: 10px;">
+            <div *ngIf="type === 1 " class="col-md-6" style="padding-bottom: 10px;">
               <div class="input-group">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" disabled type="button">
                     <mat-icon style="vertical-align: middle;">https</mat-icon>
                   </button>
                 </div>
-                <input type="password" class="form-control" [disabled]="disabledEdit" name="pw_senha_aluno" #pw_senha_aluno = "ngModel" [(ngModel)]="aluno.pw_senha_aluno"  placeholder="Senha..." name="senha" >
+                <input type="password" class="form-control"  name="pw_senha_aluno" placeholder="Senha..." #pw_senha_aluno = "ngModel" [(ngModel)]="aluno.pw_senha_aluno">
               </div>
             </div>
-            <div *ngIf="type !== 3" class="col-md-6" style="padding-bottom: 10px;">
+            <div *ngIf="type === 1" class="col-md-6" style="padding-bottom: 10px;">
               <div class="input-group">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" disabled type="button">
                     <mat-icon style="vertical-align: middle;">https</mat-icon>
                   </button>
                 </div>
-                <input type="password" class="form-control" [disabled]="disabledEdit" name="pw_senha_aluno" #senha2 placeholder="Repita a senha..." name="senha2" >
+                <input type="password" class="form-control"  name="pw_senha_aluno2" placeholder="Repita a senha..." [(ngModel)]="password">
               </div>
             </div>
           </div>
@@ -122,8 +122,8 @@
             <div class="col-md-12" style="margin-top: 15px;">
               <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-danger"  (click)="goBack()">Cancelar</button>
               <button *ngIf="disabledEdit" type="button" class="btn btn-outline-danger"  (click)="goBack()">Voltar</button>
-              <button *ngIf="!disabledEdit && type === 1" type="button" class="btn btn-outline-success align-bottom float-right" (click)="goSave(senha2.value)">Salvar</button>
-              <button *ngIf="!disabledEdit && type === 3" type="button" class="btn btn-outline-success align-bottom float-right" (click)="goSave('')">Atualizar</button>
+              <button *ngIf="!disabledEdit && type === 1" type="button" class="btn btn-outline-success align-bottom float-right" (click)="goSave()">Salvar</button>
+              <button *ngIf="!disabledEdit && type === 3" type="button" class="btn btn-outline-success align-bottom float-right" (click)="goSave()">Atualizar</button>
             </div>
           </div>
         </div>

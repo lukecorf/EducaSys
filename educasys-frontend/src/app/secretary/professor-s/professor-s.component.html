@@ -32,7 +32,7 @@
           <tbody>
           <tr *ngFor="let professor of professores; let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
             <td scope="row">{{professor.st_nome_professor}}</td>
-            <td class="glyphicon-center-3" style="text-align: center;">{{professor.id_professor}}</td>
+            <td class="glyphicon-center-3" style="text-align: center;">{{professor.dc_cpf}}</td>
             <td class="glyphicon-center-3" style="text-align: center;">{{professor.co_email}}</td>
             <td class="glyphicon-center-3" style="text-align: center;">{{professor.co_telefone}}</td>
           </tr>

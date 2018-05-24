@@ -4,6 +4,8 @@ import {Subscription} from "rxjs/Subscription";
 import {Router} from "@angular/router";
 import {ProfessorList} from "./professor-s.model";
 import {SecretariaService} from "../secretaria.service";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'professor-s-component',
@@ -11,7 +13,7 @@ import {SecretariaService} from "../secretaria.service";
   styleUrls: ['./professor-s.component.css']
 })
 export class ProfessorSComponent implements OnInit {
-
+  @BlockUI() blockUI: NgBlockUI;
   private timer;
   private sub: Subscription;
   open: boolean = true;
@@ -22,14 +24,15 @@ export class ProfessorSComponent implements OnInit {
 
   professores: ProfessorList[];
 
-  constructor(private router: Router,private secretariaService: SecretariaService) {
+  constructor(private toastr: ToastrService,private router: Router,private secretariaService: SecretariaService) {
     this.setClickedRow = function(index){
       this.selectedRow = index;
     }
-
+    this.blockUI.start("Carregando dados...");
     secretariaService.getProfessores().subscribe(
       professores => {
         this.professores = professores;
+        this.blockUI.stop();
       }
     );
   }
@@ -56,15 +59,18 @@ export class ProfessorSComponent implements OnInit {
   }
 
   goSearch(search: string){
+    this.blockUI.start("Buscando dados...");
     if(search === ''){
       this.secretariaService.getProfessores().subscribe(
         professores =>{
+          this.blockUI.stop();
           this.professores= professores;
         }
       );
     }else{
       this.secretariaService.searchProfessores(search).subscribe(
         professores =>{
+          this.blockUI.stop();
           this.professores= professores;
         }
       );
@@ -72,17 +78,17 @@ export class ProfessorSComponent implements OnInit {
   }
 
   goDelete(){
+    this.blockUI.start("Carregando dados...");
     this.secretariaService.deleteProfessorById(this.professores[this.selectedRow].id_professor).subscribe(id => {
-      console.log('This is my ID: '+id);
+      this.toastr.success("Professor deletado","Sucesso!");
       this.secretariaService.getProfessores().subscribe(
         professores => {
+          this.blockUI.stop();
           this.professores = professores;
         }
       );
-      console.log("Excluido com sucesso");
-
     },error => {
-      console.log("Erro ao excluir");
+      this.toastr.error("Erro ao deletar professor","Erro!");
     });
     this.router.navigate(['professor-s']);
   }

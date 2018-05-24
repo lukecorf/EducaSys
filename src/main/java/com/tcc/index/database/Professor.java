@@ -1,5 +1,4 @@
 package com.tcc.index.database;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -35,6 +34,7 @@ public class Professor {
     @Size(max=11)
     private String telefone;
 
+
     @Column( name = "DT_DATA_NASC")
     private Date dataN;
 
@@ -51,10 +51,25 @@ public class Professor {
     @Column( name = "URL_IMG_PROFESSOR")
     private String url;
 
-    @NotNull
-    @Column( name = "PW_SENHA_PROFESSOR")
-    @Size(max=50)
-    private String senha;
+
+    public Professor(){
+
+    }
+
+    @Override
+    public String toString() {
+        return "Professor{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", email='" + email + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", dataN=" + dataN +
+                ", cpf='" + cpf + '\'' +
+                ", rg='" + rg + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 
     public long getId() {
         return id;
@@ -127,14 +142,5 @@ public class Professor {
     public void setUrl(String url) {
         this.url = url;
     }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
 
 }

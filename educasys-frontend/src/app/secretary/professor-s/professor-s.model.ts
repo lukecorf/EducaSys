@@ -3,6 +3,7 @@ export class ProfessorList{
               public st_nome_professor: string,
               public co_email: string,
               public co_telefone: string,
+              public dc_cpf: string
   ){}
 }
 
@@ -15,7 +16,7 @@ export class Professor{
               public dc_rg?: string,
               public st_endereco?: string,
               public pw_senha_prof?: string,
-              public dt_data_nasc?: Date,
+              public dt_data_nasc?: string,
               public url_img_professor?:string
   ){}
 }

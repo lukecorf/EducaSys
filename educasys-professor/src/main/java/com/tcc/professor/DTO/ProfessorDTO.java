@@ -1,7 +1,5 @@
 package com.tcc.professor.DTO;
 
-import java.util.Date;
-
 public class ProfessorDTO {
     private Long id_professor;
     private String st_nome_professor ;
@@ -11,10 +9,10 @@ public class ProfessorDTO {
     private String dc_rg ;
     private String st_endereco ;
     private String pw_senha_prof;
-    private Date dt_data_nasc;
+    private String dt_data_nasc;
     private String url_img_professor;
 
-    public ProfessorDTO(Long id_professor, String st_nome_professor, String co_telefone, String co_email, String dc_cpf, String dc_rg, String st_endereco, String pw_senha_prof, Date dt_data_nasc, String url_img_professor) {
+    public ProfessorDTO(Long id_professor, String st_nome_professor, String co_telefone, String co_email, String dc_cpf, String dc_rg, String st_endereco, String pw_senha_prof, String dt_data_nasc, String url_img_professor) {
         this.id_professor = id_professor;
         this.st_nome_professor = st_nome_professor;
         this.co_telefone = co_telefone;
@@ -103,11 +101,11 @@ public class ProfessorDTO {
         this.pw_senha_prof= pw_senha_prof;
     }
 
-    public Date getDt_data_nasc() {
+    public String getDt_data_nasc() {
         return dt_data_nasc;
     }
 
-    public void setDt_data_nasc(Date dt_data_nasc) {
+    public void setDt_data_nasc(String dt_data_nasc) {
         this.dt_data_nasc = dt_data_nasc;
     }
 

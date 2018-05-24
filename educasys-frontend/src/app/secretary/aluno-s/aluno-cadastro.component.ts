@@ -23,6 +23,7 @@ export class AlunoCadastroComponent implements OnInit {
   id: number;
   type: number;
   aluno: Aluno;
+  password: string = '';
 
   constructor(private toastr: ToastrService, private router: Router, private route:ActivatedRoute, private secretariaService: SecretariaService) {
     this.aluno = new Aluno();
@@ -64,18 +65,21 @@ export class AlunoCadastroComponent implements OnInit {
     this.router.navigate(['aluno-s']);
   }
 
-  goSave(senha: string) {
+  goSave() {
 
       if(this.type === 1) {
-        if(this.aluno.pw_senha_aluno === senha) {
-          this.aluno.dt_data_nasc = null;
+        if(this.aluno.pw_senha_aluno === this.password) {
           this.aluno.url_img_aluno = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
           this.secretariaService.setAluno(this.aluno).subscribe(aluno => {
             if (aluno.st_nome_aluno !== null) {
               this.toastr.success("Aluno cadastrado","Sucesso!");
               this.router.navigate(['aluno-s']);
+            }else{
+              this.toastr.error("Erro ao cadastrar aluno","Erro!");
             }
           });
+        }else{
+          this.toastr.error("As senhas são diferentes","Erro!");
         }
       }else{
         this.secretariaService.updateAluno(this.aluno).subscribe(ok =>{

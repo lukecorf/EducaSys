@@ -1,9 +1,8 @@
 package com.tcc.aluno.database;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "TBL_ALUNO")
@@ -45,8 +44,9 @@ public class Aluno {
     @Size(max=11)
     private String telefone;
 
+    @NotNull
     @Column( name = "DT_DATA_NASC")
-    private Date dataN;
+    private LocalDate dataN;
 
     @NotNull
     @Column( name = "DC_CPF")
@@ -59,11 +59,6 @@ public class Aluno {
 
     @Column( name = "URL_IMG_ALUNO")
     private String url;
-
-    @NotNull
-    @Column( name = "PW_SENHA_ALUNO")
-    @Size(max=50)
-    private String senha;
 
     public String getNomeP() {
         return nomeP;
@@ -121,11 +116,11 @@ public class Aluno {
         this.telefone = telefone;
     }
 
-    public Date getDataN() {
+    public LocalDate getDataN() {
         return dataN;
     }
 
-    public void setDataN(Date dataN) {
+    public void setDataN(LocalDate dataN) {
         this.dataN = dataN;
     }
 
@@ -151,14 +146,6 @@ public class Aluno {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
 }

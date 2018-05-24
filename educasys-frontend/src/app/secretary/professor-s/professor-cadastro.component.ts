@@ -4,6 +4,8 @@ import {Subscription} from "rxjs/Subscription";
 import {Observable} from "rxjs/Observable";
 import {SecretariaService} from "../secretaria.service";
 import {Professor} from "./professor-s.model";
+import {ToastrService} from "ngx-toastr";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
   selector: 'professor-cadastro-component',
@@ -11,6 +13,7 @@ import {Professor} from "./professor-s.model";
   styleUrls: ['./professor-cadastro.component.css']
 })
 export class ProfessorCadastroComponent implements OnInit {
+
 
   private timer;
   private sub: Subscription;
@@ -22,10 +25,10 @@ export class ProfessorCadastroComponent implements OnInit {
   id: number;
   professor: Professor;
   type: number;
+  password: string = '';
 
-  constructor(private router: Router, private route: ActivatedRoute, private secretariaService: SecretariaService) {
+  constructor(private toastr: ToastrService,private router: Router, private route: ActivatedRoute, private secretariaService: SecretariaService) {
     this.professor = new Professor();
-
     if(route.snapshot.params['type'] == 1){
       this.title = "Cadastrar";
       this.type = 1;
@@ -64,22 +67,25 @@ export class ProfessorCadastroComponent implements OnInit {
     this.router.navigate(['professor-s']);
   }
 
-  goSave(password: string){
+  goSave(){
     if(this.type === 1) {
-      if(password === this.professor.pw_senha_prof) {
-        this.professor.dt_data_nasc = null;
+      if(this.password === this.professor.pw_senha_prof) {
         this.professor.url_img_professor = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
         this.secretariaService.setProfessor(this.professor).subscribe(professor => {
           if (professor.st_nome_professor !== null) {
             this.router.navigate(['professor-s']);
+            this.toastr.success("Professor cadastrado","Sucesso!");
+          }else{
+            this.toastr.error("Erro ao cadastrar professor","Erro!");
           }
         });
       }else{
-
+        this.toastr.error("As senhas são diferentes","Erro!");
       }
     }else{
       this.secretariaService.updateProfessor(this.professor).subscribe(
         ok =>{
+          this.toastr.success("Dados atualizados","Sucesso!");
           this.router.navigate(['professor-s']);
         }
       );

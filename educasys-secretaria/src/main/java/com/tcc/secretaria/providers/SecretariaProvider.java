@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -112,6 +114,7 @@ public class SecretariaProvider {
 
     @PostMapping(path="/saveAluno",  consumes = "application/json", produces = "application/json")
     public String createAluno(@RequestBody AlunoDTO alunoDTO){
+        System.out.println(alunoDTO.toString());
         Aluno a = AlunoMapper.DTOtoEntity(alunoDTO);
         loginRepository.save(new Login(alunoDTO.getDc_cpf(),alunoDTO.getPw_senha_aluno(),1));
         return gson.toJson(alunoRepository.save(a));
@@ -140,7 +143,7 @@ public class SecretariaProvider {
     }
 
     @PostMapping(path="/saveProfessor",  consumes = "application/json", produces = "application/json")
-    public String createProfessor(@RequestBody ProfessorDTO professorDTO){
+    public String createProfessor(@RequestBody ProfessorDTO professorDTO) throws ParseException {
             System.out.println("Entrou");
             Professor p = ProfessorMapper.DTOtoEntity(professorDTO);
             loginRepository.save(new Login(professorDTO.getdc_cpf(),professorDTO.getPw_senha_prof(),2));
@@ -161,14 +164,21 @@ public class SecretariaProvider {
     }
 
     @PutMapping(path="/updateProfessor",  consumes = "application/json", produces = "application/json")
-    public @ResponseBody String updateProfessor(@RequestBody ProfessorDTO professorDTO){
-        professorRepository.updateProfessor(professorDTO.getdc_cpf(),professorDTO.getDt_data_nasc(), professorDTO.getCo_email(),professorDTO.getSt_endereco(),professorDTO.getSt_nome_professor(),professorDTO.getdc_rg(),professorDTO.getPw_senha_prof(),professorDTO.getCo_telefone(),professorDTO.getId_professor());
+    public @ResponseBody String updateProfessor(@RequestBody ProfessorDTO professorDTO) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        professorRepository.updateProfessor(professorDTO.getdc_cpf(),sdf.parse(professorDTO.getDt_data_nasc()), professorDTO.getCo_email(),professorDTO.getSt_endereco(),professorDTO.getSt_nome_professor(),professorDTO.getdc_rg(),professorDTO.getCo_telefone(),professorDTO.getId_professor());
         return gson.toJson(true);
     }
 
     @PutMapping(path="/updateAluno",  consumes = "application/json", produces = "application/json")
     public @ResponseBody String updateAluno(@RequestBody AlunoDTO alunoDTO){
-        alunoRepository.updateAluno(alunoDTO.getCo_telefone(),alunoDTO.getPw_senha_aluno(),alunoDTO.getDc_rg(),alunoDTO.getSt_nome_aluno(),alunoDTO.getSt_endereco(),alunoDTO.getCo_email(),alunoDTO.getDt_data_nasc(),alunoDTO.getDc_cpf(),alunoDTO.getSt_nome_mae(),alunoDTO.getSt_nome_pai(),alunoDTO.getId_aluno());
+
+        StringTokenizer st = new StringTokenizer(alunoDTO.getDt_data_nasc(),"-");
+        int year = Integer.parseInt(st.nextToken());
+        int mouth = Integer.parseInt(st.nextToken());
+        int day = Integer.parseInt(st.nextToken());
+        LocalDate localDate = LocalDate.of(year,mouth,day);
+        alunoRepository.updateAluno(alunoDTO.getCo_telefone(),alunoDTO.getDc_rg(),alunoDTO.getSt_nome_aluno(),alunoDTO.getSt_endereco(),alunoDTO.getCo_email(),localDate,alunoDTO.getDc_cpf(),alunoDTO.getSt_nome_mae(),alunoDTO.getSt_nome_pai(),alunoDTO.getId_aluno());
         return gson.toJson(true);
     }
 

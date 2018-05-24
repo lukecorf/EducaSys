@@ -1,5 +1,4 @@
 package com.tcc.professor.database;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -52,10 +51,6 @@ public class Professor {
     @Column( name = "URL_IMG_PROFESSOR")
     private String url;
 
-    @NotNull
-    @Column( name = "PW_SENHA_PROFESSOR")
-    @Size(max=50)
-    private String senha;
 
     public Professor(){
 
@@ -73,7 +68,6 @@ public class Professor {
                 ", cpf='" + cpf + '\'' +
                 ", rg='" + rg + '\'' +
                 ", url='" + url + '\'' +
-                ", senha='" + senha + '\'' +
                 '}';
     }
 
@@ -148,14 +142,5 @@ public class Professor {
     public void setUrl(String url) {
         this.url = url;
     }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
 
 }

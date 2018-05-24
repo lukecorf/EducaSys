@@ -1,6 +1,7 @@
 package com.tcc.secretaria.DTO;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public class AlunoDTO {
     private Long id_aluno;
@@ -13,10 +14,10 @@ public class AlunoDTO {
     private String pw_senha_aluno ;
     private String dc_cpf;
     private String dc_rg;
-    private Date dt_data_nasc;
+    private String dt_data_nasc;
     private String url_img_aluno;
 
-    public AlunoDTO(Long id_aluno, String st_nome_aluno, String co_telefone, String co_email, String st_nome_pai, String st_nome_mae, String st_endereco, String pw_senha_aluno, String dc_cpf, String dc_rg, Date dt_data_nasc, String url_img_aluno) {
+    public AlunoDTO(Long id_aluno, String st_nome_aluno, String co_telefone, String co_email, String st_nome_pai, String st_nome_mae, String st_endereco, String pw_senha_aluno, String dc_cpf, String dc_rg, String dt_data_nasc, String url_img_aluno) {
         this.id_aluno = id_aluno;
         this.st_nome_aluno = st_nome_aluno;
         this.co_telefone = co_telefone;
@@ -123,11 +124,11 @@ public class AlunoDTO {
         this.pw_senha_aluno = pw_senha_aluno;
     }
 
-    public Date getDt_data_nasc() {
+    public String getDt_data_nasc() {
         return dt_data_nasc;
     }
 
-    public void setDt_data_nasc(Date dt_data_nasc) {
+    public void setDt_data_nasc(String dt_data_nasc) {
         this.dt_data_nasc = dt_data_nasc;
     }
 
