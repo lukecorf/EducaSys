@@ -51,6 +51,9 @@ public class SecretariaProvider {
     @Autowired
     AtividadeRepository atividadeRepository;
 
+    @Autowired
+    ArquivoRepository arquivoRepository;
+
     @GetMapping(value = "/getDisciplinas")
     public @ResponseBody String getDisciplinas(){
         List<Disciplina> list;
@@ -74,12 +77,12 @@ public class SecretariaProvider {
         return gson.toJson(disciplinaDTO);
     }
 
-        @PutMapping(path="/updateDisciplina",  consumes = "application/json", produces = "application/json")
+    @PutMapping(path="/updateDisciplina",  consumes = "application/json", produces = "application/json")
     public @ResponseBody String updateDisciplina(@RequestBody DisciplinaDTO disciplinaDTO) throws ParseException {
         List<AluDis> aluDisAntigos = aluDisRepository.getAluDisByIdDisciplina(disciplinaDTO.getId_disciplina());
         DisciplinaMapper.DTOtoEntity(disciplinaDTO);
-
-        disciplinaRepository.updateDisciplina(disciplinaDTO.getSt_nome(),disciplinaDTO.getNu_carga_horaria(),disciplinaDTO.getTx_descricao(),disciplinaDTO.getUrl_img(),disciplinaDTO.getId_disciplina());
+        Professor professor = professorRepository.getOne(disciplinaDTO.getId_professor());
+        disciplinaRepository.updateDisciplina(professor, professor.getNome(), disciplinaDTO.getSt_nome(),disciplinaDTO.getNu_carga_horaria(),disciplinaDTO.getTx_descricao(),disciplinaDTO.getUrl_img(),disciplinaDTO.getId_disciplina());
 
         int id = -1;
         for(AluDis aluDis: aluDisAntigos){
@@ -107,7 +110,7 @@ public class SecretariaProvider {
             }
 
         }
-          return gson.toJson(true);
+        return gson.toJson(true);
     }
 
     @PostMapping(path="/saveDisciplina",  consumes = "application/json", produces = "application/json")
@@ -126,9 +129,11 @@ public class SecretariaProvider {
 
     @DeleteMapping("/deleteDisciplina/{id}")
     public String deleteDisciplina(@PathVariable Long id) {
-        System.out.println("Delete");
-        disciplinaRepository.deleteById(id);
         aluDisRepository.deleteByIdDisciplina(id);
+        aluAtividadeRepository.deleteAtividadeByIdDisciplina(id);
+        atividadeRepository.deleteAtividadeByIdDisciplina(id);
+        arquivoRepository.deleteArquivosByIdDisciplina(id);
+        disciplinaRepository.deleteById(id);
         return gson.toJson(id);
     }
 
@@ -175,8 +180,9 @@ public class SecretariaProvider {
 
     @DeleteMapping("/deleteAluno/{id}")
     public String deleteAluno(@PathVariable Long id) {
-        alunoRepository.deleteById(id);
+        loginRepository.deleteLoginByCode(alunoRepository.getOne(id).getCpf());
         aluDisRepository.deleteByIdAluno(id);
+        alunoRepository.deleteById(id);
         return gson.toJson(id);
     }
 
@@ -197,18 +203,22 @@ public class SecretariaProvider {
 
     @PostMapping(path="/saveProfessor",  consumes = "application/json", produces = "application/json")
     public String createProfessor(@RequestBody ProfessorDTO professorDTO) throws ParseException {
-            System.out.println("Entrou");
-            Professor p = ProfessorMapper.DTOtoEntity(professorDTO);
-            loginRepository.save(new Login(professorDTO.getdc_cpf(),professorDTO.getPw_senha_prof(),2));
-            return gson.toJson(professorRepository.save(p));
+        System.out.println("Entrou");
+        Professor p = ProfessorMapper.DTOtoEntity(professorDTO);
+        loginRepository.save(new Login(professorDTO.getdc_cpf(),professorDTO.getPw_senha_prof(),2));
+        return gson.toJson(professorRepository.save(p));
     }
 
     @DeleteMapping("/deleteProfessor/{id}")
     public String deleteProfessor(@PathVariable Long id) {
-        System.out.println("Delete");
-        professorRepository.deleteById(id);
 
-        return gson.toJson(id);
+        if(disciplinaRepository.countDisciplinaByProfessor(id) > 0){
+            return gson.toJson(-1L);
+        }else {
+            loginRepository.deleteLoginByCode(professorRepository.getOne(id).getCpf());
+            professorRepository.deleteById(id);
+            return gson.toJson(id);
+        }
     }
 
     @GetMapping("/getSecretariaByCode/{id}")

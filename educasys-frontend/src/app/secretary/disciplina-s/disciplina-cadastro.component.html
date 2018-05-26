@@ -13,9 +13,9 @@
           <div class = "row" style="width: 100%; margin-right: 0; margin-left: 0;" >
             <div class="col-md-6">
               <div ngbDropdown class="d-inline-block" style="margin-top: 15px; width: 100%;">
-                <button class="btn btn-outline-dark" id="dropdownBasic1" style="width: 60%" ngbDropdownToggle>{{professorText}}</button>
+                <button [disabled]="disabledEdit" class="btn btn-outline-dark" id="dropdownBasic1" style="width: 60%" ngbDropdownToggle>{{professorText}}</button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button class="dropdown-item"*ngFor="let professor of professores; let i = index" (click)="setClickedRow3(i)" [class.active]="i == selectedRow3">{{professor.st_nome_professor}}</button>
+                  <button class="dropdown-item"*ngFor="let professor of professores; let i = index" (click)="setClickProfessor(i)" [class.active]="i == selectedProfessor">{{professor.st_nome_professor}}</button>
                 </div>
               </div>
             </div>
@@ -53,7 +53,7 @@
         <div class="row" style="height: 90%;">
           <div style="height: 10%; width:100%;">
             <button *ngIf="!disabledEdit" class="btn btn-lg btn-outline-primary " style="display: inline-flex; vertical-align: middle;" (click)="openM(content)"><mat-icon>add</mat-icon></button>
-            <button *ngIf="!disabledEdit" class="btn btn-lg btn-outline-danger" [disabled]="(selectedRow < 0)" style="display: inline-flex; vertical-align: middle;"><mat-icon >delete</mat-icon></button>
+            <button *ngIf="!disabledEdit" class="btn btn-lg btn-outline-danger" [disabled]="(selectedAluno < 0)" style="display: inline-flex; vertical-align: middle;" (click)="deleteAluno()"><mat-icon >delete</mat-icon></button>
           </div>
           <div style="height: 90%; width:100%; background-color: white; margin-right: 15px;">
             <table class="table tabela">
@@ -64,7 +64,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let aluno of disciplina.ls_alunos; let i = index" (click)="setClickedRow(i)" [class.active]="i == selectedRow">
+              <tr *ngFor="let aluno of disciplina.ls_alunos; let i = index" (click)="setAluno(i)" [class.active]="i == selectedAluno">
                 <td scope="row">{{aluno.id_aluno}}</td>
                 <td class="glyphicon-center-3">{{aluno.st_nome_aluno}}</td>
               </tr>
@@ -87,9 +87,9 @@
   </div>
   <div class="modal-body" style="max-height: 80%; overflow-y: auto;">
     <div class="input-group" style="width: 90%; margin-left: 15px; margin-bottom: 10px;">
-      <input class="form-control" placeholder="Buscar..." name="dp"  ngbDatepicker #d="ngbDatepicker">
+      <input class="form-control" placeholder="Buscar..." name="search"  #search>
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button">
+        <button class="btn btn-outline-secondary" type="button" (click)="goSearch(search.value)" >
           <mat-icon style="vertical-align: middle;">search</mat-icon>
         </button>
       </div>

@@ -11,6 +11,9 @@ import {Upload} from "../secretaria.model";
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import {FirebaseConfig} from "../../../environments/firebase.config";
+import {isUndefined} from "util";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'disciplina-cadastro-component',
@@ -19,17 +22,18 @@ import {FirebaseConfig} from "../../../environments/firebase.config";
 })
 export class DisciplinaCadastroComponent implements OnInit {
 
+  @BlockUI() blockUI: NgBlockUI;
   private timer;
   private sub: Subscription;
   open: boolean = true;
   opened: string = 'open';
   closed: string = 'content';
-  selectedRow: number = -1;
+  selectedAluno: number = -1;
   selectedRow2: number = -1;
-  selectedRow3: number = -1;
-  setClickedRow : Function;
+  selectedProfessor: number = -1;
+  setAluno : Function;
   setClickedRow2 : Function;
-  setClickedRow3 : Function;
+  setClickProfessor : Function;
   closeResult: string;
   disabledEdit: boolean = false;
   id: number;
@@ -43,7 +47,7 @@ export class DisciplinaCadastroComponent implements OnInit {
   type: number = 0;
   selectedFile: boolean = false;
 
-  constructor( private modalService: NgbModal,private router: Router, private route:ActivatedRoute, private secretariaService: SecretariaService ) {
+  constructor(private toastr: ToastrService, private modalService: NgbModal,private router: Router, private route:ActivatedRoute, private secretariaService: SecretariaService ) {
     if (firebase.apps.length === 0) {
       firebase.initializeApp(FirebaseConfig);
     }
@@ -68,17 +72,17 @@ export class DisciplinaCadastroComponent implements OnInit {
       this.getProfessores();
     }
 
-    this.setClickedRow = function(index){
-      this.selectedRow = index;
+    this.setAluno = function(index){
+      this.selectedAluno = index;
     }
 
     this.setClickedRow2 = function(index){
       this.selectedRow2 = index;
     }
 
-    this.setClickedRow3 = function(index){
-      this.selectedRow3 = index;
-      this.professorText = this.professores[this.selectedRow3].st_nome_professor;
+    this.setClickProfessor = function(index){
+      this.selectedProfessor = index;
+      this.professorText = this.professores[this.selectedProfessor].st_nome_professor;
     }
   }
 
@@ -86,6 +90,7 @@ export class DisciplinaCadastroComponent implements OnInit {
     this.secretariaService.getDisciplinaById(this.id).subscribe(
       disciplina => {
         this.disciplina = disciplina;
+        this.professorText = this.disciplina.st_nome_prof;
       }
     );
   }
@@ -98,6 +103,12 @@ export class DisciplinaCadastroComponent implements OnInit {
     );
   }
 
+  deleteAluno(){
+    if(this.selectedAluno >= 0){
+      this.disciplina.ls_alunos.splice(this.selectedAluno,1);
+      this.selectedAluno = -1;
+    }
+  }
   ngOnInit() {
     this.timer = Observable.timer(500);
     this.sub = this.timer.subscribe(t => this.changeOpt());
@@ -117,7 +128,15 @@ export class DisciplinaCadastroComponent implements OnInit {
       this.closeResult = `Closed with: ${result}`;
       console.log(this.closeResult);
       if(result ==='Close click'){
+        for(let aluno of this.disciplina.ls_alunos){
+          if(aluno.id_aluno === this.alunos[this.selectedRow2].id_aluno){
+            this.toastr.error("Aluno já inserido","Erro!");
+            this.selectedRow2 = -1;
+            return;
+          }
+        }
         this.disciplina.ls_alunos.push(this.alunos[this.selectedRow2]);
+        this.selectedRow2 = -1;
       }
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -140,26 +159,32 @@ export class DisciplinaCadastroComponent implements OnInit {
   }
 
   goSave() {
-
+    this.blockUI.start("Salvando disciplina...");
     if (this.type === 1) {
       let file = this.selectedFiles.item(0)
       this.currentUpload = new Upload(file);
-      this.disciplina.id_professor = this.professores[this.selectedRow3].id_professor;
-      this.disciplina.st_nome_prof = this.professores[this.selectedRow3].st_nome_professor;
+      this.disciplina.id_professor = this.professores[this.selectedProfessor].id_professor;
+      this.disciplina.st_nome_prof = this.professores[this.selectedProfessor].st_nome_professor;
       this.disciplina.id_disciplina = 0;
       this.imagemUpload(this.currentUpload, this.disciplina);
     }else if (this.type === 3){
       if(this.selectedFile){
         let file = this.selectedFiles.item(0)
         this.currentUpload = new Upload(file);
-        this.disciplina.id_professor = this.professores[this.selectedRow3].id_professor;
-        this.disciplina.st_nome_prof = this.professores[this.selectedRow3].st_nome_professor;
+        if(this.selectedProfessor > -1){
+          this.disciplina.id_professor = this.professores[this.selectedProfessor].id_professor;
+          this.disciplina.st_nome_prof = this.professores[this.selectedProfessor].st_nome_professor;
+        }
         this.imagemUpload(this.currentUpload, this.disciplina);
       }else{
-        this.disciplina.id_professor = this.professores[this.selectedRow3].id_professor;
-        this.disciplina.st_nome_prof = this.professores[this.selectedRow3].st_nome_professor;
+        if(this.selectedProfessor > -1) {
+          this.disciplina.id_professor = this.professores[this.selectedProfessor].id_professor;
+          this.disciplina.st_nome_prof = this.professores[this.selectedProfessor].st_nome_professor;
+        }
         this.secretariaService.updateDisciplina(this.disciplina).subscribe(ok =>{
           if(ok){
+            this.blockUI.stop();
+            this.toastr.success("Disciplina atualizada","Sucesso!");
             this.router.navigate(['disciplina-s']);
           }
         });
@@ -190,18 +215,41 @@ export class DisciplinaCadastroComponent implements OnInit {
         if(this.type === 1) {
           this.secretariaService.setDisciplina(disciplina).subscribe(disciplina => {
             if (disciplina.st_nome !== null) {
+              this.blockUI.stop();
+              this.toastr.success("Disciplina cadastrada","Sucesso!");
               this.router.navigate(['disciplina-s']);
             }
           });
         }else if (this.type === 3){
           this.secretariaService.updateDisciplina(disciplina).subscribe(ok =>{
             if(ok){
+              this.toastr.success("Disciplina atualizada","Sucesso!");
+              this.blockUI.stop();
               this.router.navigate(['disciplina-s']);
             }
           });
         }
       }
     );
+  }
+
+  goSearch(search: string){
+    this.blockUI.start("Buscando dados");
+    if(search === ''){
+      this.secretariaService.getAlunos().subscribe(
+        alunos =>{
+          this.blockUI.stop();
+          this.alunos = alunos;
+        }
+      );
+    }else{
+      this.secretariaService.searchAlunos(search).subscribe(
+        alunos =>{
+          this.blockUI.stop();
+          this.alunos = alunos;
+        }
+      );
+    }
   }
 
   selectFile(event){

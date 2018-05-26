@@ -8,7 +8,6 @@ public class SecretariaMapper {
     public static SecretariaDTO EntitytoDTO(Secretaria s){
         SecretariaDTO set = new SecretariaDTO();
         set.setId_secretaria(s.getCodigo());
-        set.setPw_senha_secretaria(s.getPassword());
         set.setSt_code(s.getCode());
         set.setSt_nome_secretaria(s.getSecretaria());
 

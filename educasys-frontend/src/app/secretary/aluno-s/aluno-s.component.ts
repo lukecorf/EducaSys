@@ -80,6 +80,7 @@ export class AlunoSComponent implements OnInit {
   goDelete(){
     this.blockUI.start("Carregando dados...");
     this.secretariaService.deleteAlunoById(this.alunos[this.selectedRow].id_aluno).subscribe(id => {
+      this.selectedRow = -1;
       this.toastr.success("Aluno deletado","Sucesso!");
       this.secretariaService.getAlunos().subscribe(
         alunos => {

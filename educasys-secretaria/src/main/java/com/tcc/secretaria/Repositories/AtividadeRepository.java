@@ -16,4 +16,9 @@ import java.util.List;
 public interface AtividadeRepository extends JpaRepository<Atividade,Long> {
     @Query("SELECT a FROM Atividade a WHERE a.disciplinafk.codigo = :codigo")
     List<Atividade> getAtividadeByIdDisciplina(@Param("codigo") Long codigo);
+
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Atividade a WHERE a.disciplinafk.codigo = :codigo")
+    void deleteAtividadeByIdDisciplina(@Param("codigo")Long codigo);
 }

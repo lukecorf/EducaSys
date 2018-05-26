@@ -4,6 +4,8 @@ import {Subscription} from "rxjs/Subscription";
 import {Router} from "@angular/router";
 import {DisciplinaList} from "./disciplina-s.model";
 import {SecretariaService} from "../secretaria.service";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'disciplina-s-component',
@@ -12,6 +14,7 @@ import {SecretariaService} from "../secretaria.service";
 })
 export class DisciplinaSComponent implements OnInit {
 
+  @BlockUI() blockUI: NgBlockUI;
   private timer;
   private sub: Subscription;
   open: boolean = true;
@@ -22,14 +25,15 @@ export class DisciplinaSComponent implements OnInit {
 
   disciplinas: DisciplinaList[];
 
-  constructor(private router: Router, private secretariaService: SecretariaService) {
+  constructor(private toastr: ToastrService,private router: Router, private secretariaService: SecretariaService) {
     this.setClickedRow = function(index){
       this.selectedRow = index;
     };
-
+    this.blockUI.start("Carregando dados...");
     secretariaService.getDisciplinas().subscribe(
       disciplinas => {
         this.disciplinas = disciplinas;
+        this.blockUI.stop();
       }
     );
   }
@@ -56,15 +60,18 @@ export class DisciplinaSComponent implements OnInit {
   }
 
   goSearch(search: string){
+    this.blockUI.start("Carregando dados...");
     if(search === ''){
       this.secretariaService.getDisciplinas().subscribe(
         disciplinas =>{
+          this.blockUI.stop();
           this.disciplinas = disciplinas;
         }
       );
     }else{
       this.secretariaService.searchDisciplinas(search).subscribe(
         disciplinas =>{
+          this.blockUI.stop();
           this.disciplinas = disciplinas;
         }
       );
@@ -72,16 +79,18 @@ export class DisciplinaSComponent implements OnInit {
   }
 
   goDelete(){
+    this.blockUI.start("Deletando disciplina...");
     this.secretariaService.deleteDisciplinaById(this.disciplinas[this.selectedRow].nuId).subscribe(id => {
+      this.selectedRow = -1;
       this.secretariaService.getDisciplinas().subscribe(
         disciplinas => {
+          this.blockUI.stop();
+          this.toastr.success("Disciplina deletada","Sucesso!");
           this.disciplinas = disciplinas;
         }
       );
-      console.log("Excluido com sucesso");
-
     },error => {
-      console.log("Erro ao excluir");
+      this.toastr.error("Erro ao deletar disciplina","Erro!");
     });
     this.router.navigate(['disciplina-s']);
   }

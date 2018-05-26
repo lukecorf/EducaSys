@@ -17,4 +17,9 @@ public interface AluAtividadeRepository extends JpaRepository<AluAtividade, Long
     @Query("DELETE FROM AluAtividade a WHERE a.alunofk.id = :id AND a.disciplinafk.codigo = :idd")
     void deleteAtividadeByIdAlunoAndIdDisciplina(@Param("id") Long id, @Param("idd")Long idd);
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM AluAtividade  a WHERE a.disciplinafk.codigo =:codigo")
+    void deleteAtividadeByIdDisciplina(@Param("codigo") Long codigo);
+
 }

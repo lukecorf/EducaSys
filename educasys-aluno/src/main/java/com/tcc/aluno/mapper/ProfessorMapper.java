@@ -18,7 +18,6 @@ public class ProfessorMapper {
         pro.setNome(p.getSt_nome_professor());
         pro.setRg(p.getdc_rg());
         pro.setTelefone(p.getCo_telefone());
-        pro.setSenha(p.getPw_senha_prof());
         pro.setUrl(p.getUrl_img_professor());
         return pro;
 
@@ -33,7 +32,7 @@ public class ProfessorMapper {
         pro.setId_professor(p.getId());
         pro.setSt_nome_professor(p.getNome());
         pro.setdc_rg(p.getRg());
-        pro.setPw_senha_prof(p.getSenha());
+        pro.setPw_senha_prof("");
         pro.setUrl_img_professor(p.getUrl());
         pro.setCo_telefone(p.getTelefone());
         return pro;

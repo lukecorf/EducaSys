@@ -80,13 +80,19 @@ export class ProfessorSComponent implements OnInit {
   goDelete(){
     this.blockUI.start("Carregando dados...");
     this.secretariaService.deleteProfessorById(this.professores[this.selectedRow].id_professor).subscribe(id => {
-      this.toastr.success("Professor deletado","Sucesso!");
-      this.secretariaService.getProfessores().subscribe(
-        professores => {
-          this.blockUI.stop();
-          this.professores = professores;
-        }
-      );
+      this.selectedRow = -1;
+      if(id < 0){
+        this.blockUI.stop();
+        this.toastr.error("Este professor esta vinculado a disciplina(s)","Erro!");
+      }else {
+        this.toastr.success("Professor deletado", "Sucesso!");
+        this.secretariaService.getProfessores().subscribe(
+          professores => {
+            this.blockUI.stop();
+            this.professores = professores;
+          }
+        );
+      }
     },error => {
       this.toastr.error("Erro ao deletar professor","Erro!");
     });

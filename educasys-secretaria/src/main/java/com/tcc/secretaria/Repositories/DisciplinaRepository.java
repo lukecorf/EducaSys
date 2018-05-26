@@ -16,8 +16,11 @@ public interface DisciplinaRepository extends JpaRepository<Disciplina,Long> {
     @Query("SELECT d FROM Disciplina d WHERE UPPER(d.nome) LIKE CONCAT('%',UPPER(:nome),'%')")
     List<Disciplina> searchDisciplina(@Param("nome") String nome);
 
+    @Query("SELECT COUNT(d) FROM Disciplina d WHERE d.professorfk.id =:id")
+    int countDisciplinaByProfessor(@Param("id")Long id);
+
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE Disciplina d SET d.nome= :nome,  d.cargaH = :cargaH, d.descricao = :descricao, d.img = :img WHERE d.codigo = :codigo")
-    void updateDisciplina(@Param("nome")String nome, @Param("cargaH") int cargaH, @Param("descricao") String descricao, @Param("img")String img, @Param("codigo")Long codigo);
+    @Query("UPDATE Disciplina d SET d.professorfk =:professor,d.professor=:nomeProf, d.nome= :nome,  d.cargaH = :cargaH, d.descricao = :descricao, d.img = :img WHERE d.codigo = :codigo")
+    void updateDisciplina(@Param("professor")Professor professor,@Param("nomeProf")String nomeProf,@Param("nome")String nome, @Param("cargaH") int cargaH, @Param("descricao") String descricao, @Param("img")String img, @Param("codigo")Long codigo);
 }

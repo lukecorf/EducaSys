@@ -19,7 +19,6 @@ public class AlunoMapper {
         alu.setEndereco(a.getSt_endereco());
         alu.setId(0);
         alu.setNome(a.getSt_nome_aluno());
-        alu.setSenha(a.getPw_senha_aluno());
         alu.setNomeP(a.getSt_nome_pai());
         alu.setUrl(a.getUrl_img_aluno());
         alu.setNomeM(a.getSt_nome_mae());
@@ -36,7 +35,7 @@ public class AlunoMapper {
         alu.setSt_nome_aluno(a.getNome());
         alu.setDc_rg(a.getRg());
         alu.setCo_telefone(a.getTelefone());
-        alu.setPw_senha_aluno(a.getSenha());
+        alu.setPw_senha_aluno("");
         alu.setUrl_img_aluno(a.getUrl());
         alu.setSt_nome_mae(a.getNomeM());
         alu.setSt_nome_pai(a.getNomeP());

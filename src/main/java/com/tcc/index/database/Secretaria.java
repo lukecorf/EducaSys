@@ -26,16 +26,12 @@ public class Secretaria {
     @Size(max = 11)
     String code;
 
-    @NotNull
-    @Column(name = "PW_SENHA_SECRETARIA")
-    @Size(max = 100)
-    String password;
 
-    public Secretaria(@NotNull long codigo, @NotNull @Size(max = 100) String secretaria, @NotNull @Size(max = 11) String code, @NotNull @Size(max = 100) String password) {
+
+    public Secretaria(@NotNull long codigo, @NotNull @Size(max = 100) String secretaria, @NotNull @Size(max = 11) String code) {
         this.codigo = codigo;
         this.secretaria = secretaria;
         this.code = code;
-        this.password = password;
     }
 
     public Secretaria(){
@@ -66,11 +62,4 @@ public class Secretaria {
         this.code = code;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
