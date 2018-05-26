@@ -56,8 +56,8 @@ export class TeacherService{
     return this.http.post<Atividade>(this.urlSAtividade,a);
   }
 
-  setFaltas(array: Array<number>):Observable<Boolean>{
-    return this.http.post<Boolean>(this.urlSFaltas,array);
+  setFaltas(array: Array<number>, idd: number):Observable<Boolean>{
+    return this.http.post<Boolean>(this.urlSFaltas+"/"+idd,array);
   }
 
   setArquivo(a:Arquivo):Observable<Arquivo>{

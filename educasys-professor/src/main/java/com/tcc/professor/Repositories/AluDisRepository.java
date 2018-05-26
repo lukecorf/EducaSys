@@ -28,6 +28,6 @@ public interface AluDisRepository extends JpaRepository<AluDis,Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE AluDis a SET a.faltas = a.faltas+1 WHERE a.alunofk.id IN :list")
-    void setFaltas(@Param("list")List<Long> list);
+    @Query("UPDATE AluDis a SET a.faltas = a.faltas+1 WHERE a.alunofk.id IN :list AND a.disciplinafk.codigo =:idd")
+    void setFaltas(@Param("list")List<Long> list,@Param("idd") Long idd);
 }

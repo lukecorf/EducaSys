@@ -107,10 +107,10 @@ public class ProfessorProvider {
 
     }
 
-    @PostMapping(path="/setFaltas",  consumes = "application/json", produces = "application/json")
-    public String setFaltas(@RequestBody ArrayList<Long> ids){
+    @PostMapping(path="/setFaltas/{idd}",  consumes = "application/json", produces = "application/json")
+    public String setFaltas(@RequestBody ArrayList<Long> ids,@PathVariable Long idd){
 
-        aluDisRepository.setFaltas(ids);
+        aluDisRepository.setFaltas(ids,idd);
 
         return gson.toJson(true);
     }

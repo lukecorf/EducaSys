@@ -156,7 +156,7 @@ export class DisciplinaPComponent implements OnInit {
     }
 
     if(idFaltas.length > 0) {
-      this.teacherService.setFaltas(idFaltas).subscribe(
+      this.teacherService.setFaltas(idFaltas,this.disciplina.id_disciplina).subscribe(
         ok => {
           if (ok) {
             this.toastr.success("Chamada realizada","Sucesso!");
