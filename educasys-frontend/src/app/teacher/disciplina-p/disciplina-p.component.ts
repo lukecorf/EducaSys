@@ -40,6 +40,9 @@ export class DisciplinaPComponent implements OnInit {
 
   constructor(private toastr: ToastrService, private modalService: NgbModal, private route: ActivatedRoute, private teacherService: TeacherService) {
     this.id = this.route.snapshot.params['id'];
+    if (firebase.apps.length === 0) {
+      firebase.initializeApp(FirebaseConfig);
+    }
   }
 
   ngOnInit() {
@@ -193,7 +196,6 @@ export class DisciplinaPComponent implements OnInit {
 
   efetuarUpload(upload: Upload, arquivo: Arquivo){
     this.blockUI.start("Efetuando Upload...");
-    firebase.initializeApp(FirebaseConfig);
     let storageRef = firebase.storage().ref();
     let uploadTask = storageRef.child(`${'/files'}/${upload.file.name}`).put(upload.file);
 

@@ -11,15 +11,86 @@
       </div>
     </div>
     <div class="row disciplina-dados">
-      <div class="col-md-4 text-center button-disciplina a">
+      <div class="col-md-4 text-center button-disciplina a" (click)="openModal(1);openM(content)">
         <h2>Realizar <br> Chamada</h2>
       </div>
-      <div class="col-md-4 text-center button-disciplina a">
+      <div class="col-md-4 text-center button-disciplina a" (click)="openModal(2);openM(content)">
         <h2>Adicionar <br> Atividade</h2>
       </div>
-      <div class="col-md-4 text-center button-disciplina">
+      <div class="col-md-4 text-center button-disciplina" (click)="openModal(3);openM(content)">
         <h2>Enviar <br> Material</h2>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 *ngIf="opc===1" class="modal-title">Realizar Chamada</h4>
+    <h4 *ngIf="opc===2" class="modal-title">Cadastrar Atividade</h4>
+    <h4 *ngIf="opc===3" class="modal-title">Enviar Material</h4>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="max-height: 80%; overflow-y: auto;">
+    <div *ngIf="opc===1">
+      Selecione os alunos que faltaram
+      <table class="table tabela" style="margin-top: 10px;">
+        <thead>
+        <tr style="background-color: #374046; color:white;">
+          <th scope="col" style="width:75%;" class="glyphicon-center-3"  >Nome Aluno</th>
+          <th scope="col" style="width:25%;" class="glyphicon-center-3"  >Faltas</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let a of alunos; let j = index" >
+          <td class="glyphicon-center-3">{{a.st_nome_aluno}}</td>
+          <td class="glyphicon-center-3" (click)="changeFalta(j)"><input type="checkbox"/></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="opc===2">
+      <div style="padding-bottom: 10px;" class="input-group">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" disabled type="button">
+            <mat-icon style="vertical-align: middle;">account_circle</mat-icon>
+          </button>
+        </div>
+        <input class="form-control" name="st_nome_atividade" #st_nome_atividade = "ngModel" [(ngModel)]="atividade.st_nome_atividade"  [disabled]="opc===4" placeholder="Digite o nome..." >
+      </div>
+      <div style="padding-bottom: 10px;" class="input-group">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" disabled type="button">
+            <mat-icon style="vertical-align: middle;">create</mat-icon>
+          </button>
+        </div>
+        <input class="form-control" name="nu_valor_atividade" #nu_valor_atividade = "ngModel" [(ngModel)]="atividade.nu_valor_atividade" type="number" placeholder="Valor..."  >
+      </div>
+      <div style="padding-bottom: 10px;" class="form-check">
+        <input type="checkbox"  name="bo_tipo_atividade" #bo_tipo_atividade = "ngModel" [(ngModel)]="atividade.bo_tipo_atividade" [disabled]="opc===4" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Entrega</label>
+      </div>
+      <div style="padding-bottom: 10px;" class="input-group">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" disabled type="button">
+            <mat-icon style="vertical-align: middle;">date_range</mat-icon>
+          </button>
+        </div>
+        <input class="form-control" name="dt_data" #dt_data = "ngModel" [(ngModel)]="atividade.dt_data"  type="date" placeholder="dd/mm/aaaa" >
+      </div>
+    </div>
+    <div *ngIf="opc===3">
+      <div style="padding-bottom: 10px;" class="input-group">
+        <input type="file" id="imagem-input" (change)="selectFile($event)"/>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button *ngIf="opc ===1" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Concluir</button>
+    <button *ngIf="opc ===2" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Inserir</button>
+    <button *ngIf="opc ===3" type="button" class="btn btn-outline-primary" (click)="c('Close click')">Enviar</button>
+  </div>
+</ng-template>
+
