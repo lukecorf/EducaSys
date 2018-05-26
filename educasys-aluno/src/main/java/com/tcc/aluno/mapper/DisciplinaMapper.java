@@ -7,6 +7,7 @@ import com.tcc.aluno.database.AluDis;
 import com.tcc.aluno.database.Disciplina;
 import com.tcc.aluno.database.Professor;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,8 +59,12 @@ public class DisciplinaMapper {
         System.out.println("LISTA: "+list.size());
         for(int i = 0; i < list.size(); i++){
             DisciplinaADTO disciplinaADTO = new DisciplinaADTO();
-
-            disciplinaADTO.setDt_next_prova(datas.get(i));
+            if(datas.get(i) == null){
+                disciplinaADTO.setDt_next_prova("--/--");
+            }else{
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM");
+                disciplinaADTO.setDt_next_prova(sdf.format(datas.get(i)));
+            }
             disciplinaADTO.setId_aluno(id);
             disciplinaADTO.setId_disciplina(list.get(i).getCodigo());
             disciplinaADTO.setId_professor(list.get(i).getProfessorfk().getId());

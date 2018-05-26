@@ -10,12 +10,12 @@ public class DisciplinaADTO {
     private String st_nome_prof;
     private String url_img;
     private int nu_faltas;
-    private Date dt_next_prova;
+    private String dt_next_prova;
     private Double nu_nota;
     private Long id_aluno;
     private int nu_carga_horaria;
 
-    public DisciplinaADTO(Long id_disciplina, String st_nome, Long id_professor, String st_nome_prof, String url_img, int nu_faltas, Date dt_next_prova, Double nu_nota, Long id_aluno, int nu_carga_horaria) {
+    public DisciplinaADTO(Long id_disciplina, String st_nome, Long id_professor, String st_nome_prof, String url_img, int nu_faltas, String dt_next_prova, Double nu_nota, Long id_aluno, int nu_carga_horaria) {
         this.id_disciplina = id_disciplina;
         this.st_nome = st_nome;
         this.id_professor = id_professor;
@@ -88,11 +88,11 @@ public class DisciplinaADTO {
         this.nu_faltas = nu_faltas;
     }
 
-    public Date getDt_next_prova() {
+    public String getDt_next_prova() {
         return dt_next_prova;
     }
 
-    public void setDt_next_prova(Date dt_next_prova) {
+    public void setDt_next_prova(String dt_next_prova) {
         this.dt_next_prova = dt_next_prova;
     }
 

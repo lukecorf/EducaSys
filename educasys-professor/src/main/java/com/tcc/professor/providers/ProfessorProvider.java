@@ -9,7 +9,10 @@ import com.tcc.professor.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -84,7 +87,7 @@ public class ProfessorProvider {
     }
 
     @PostMapping(path="/saveAtividade",  consumes = "application/json", produces = "application/json")
-    public String createAtividade(@RequestBody AtividadeDTO atividadeDTO){
+    public String createAtividade(@RequestBody AtividadeDTO atividadeDTO) throws ParseException {
 
         List<AluDis> l = aluDisRepository.getAluDisByIdDisciplina(atividadeDTO.getId_diciplina());
 
@@ -188,8 +191,10 @@ public class ProfessorProvider {
     }
 
     @PutMapping(path="/updateAtividade",  consumes = "application/json", produces = "application/json")
-    public String updateAtividade(@RequestBody AtividadeDTO a){
-        atividadeRepository.updateAtividade(a.getDt_data(),a.getNu_valor_atividade(),a.getId_atividade());
+    public String updateAtividade(@RequestBody AtividadeDTO a) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date data = sdf.parse(a.getDt_data());
+        atividadeRepository.updateAtividade(data,a.getNu_valor_atividade(),a.getId_atividade());
         return gson.toJson(a.getId_atividade());
     }
 }

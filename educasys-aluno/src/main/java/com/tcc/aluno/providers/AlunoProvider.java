@@ -59,7 +59,6 @@ public class AlunoProvider {
         Date hoje = new Date( System.currentTimeMillis());
         List<Date> datas = new ArrayList<>();
         List<Double> notas = new ArrayList<>();
-        System.out.println("Tamanho Dis:" +disciplinas.size());
         for(Disciplina dis: disciplinas){
             List<Date> datasProvas = atividadeRepository.getDataNextProva(hoje,dis.getCodigo());
             Double notaDis = aluAtividadeRepository.getSumNotasByAluDis(dis.getCodigo(),id);
@@ -74,12 +73,8 @@ public class AlunoProvider {
                 datas.add(null);
             }
         }
-        System.out.println("Disciplina: "+disciplinas.size());
-        System.out.println("AluDis: "+aluDis.size());
-        System.out.println("Datas: "+datas.size());
-        System.out.println("Notas: "+notas.size());
+
         List<DisciplinaADTO> disciplinaADTOS = DisciplinaMapper.ListEntitytoListADTO(disciplinas,aluDis,datas,notas,id);
-        System.out.println("Lista Final:"+disciplinaADTOS.size());
         return gson.toJson(disciplinaADTOS);
     }
 
