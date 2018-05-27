@@ -7,12 +7,12 @@ public class AtividadeDTO {
     private long id_diciplina;
     private float nu_valor_atividade;
     private String st_nome_atividade;
-    private Date dt_data;
+    private String dt_data;
     private boolean bo_tipo_atividade;
     private boolean entrega;
     private float nota;
 
-    public AtividadeDTO(long id_atividade, float nu_valor_atividade, long id_diciplina, String st_nome_atividade, Date dt_data, boolean bo_tipo_atividade) {
+    public AtividadeDTO(long id_atividade, float nu_valor_atividade, long id_diciplina, String st_nome_atividade, String dt_data, boolean bo_tipo_atividade) {
         this.id_atividade = id_atividade;
         this.nu_valor_atividade = nu_valor_atividade;
         this.id_diciplina = id_diciplina;
@@ -73,11 +73,11 @@ public class AtividadeDTO {
         this.st_nome_atividade = st_nome_atividade;
     }
 
-    public Date getDt_data() {
+    public String getDt_data() {
         return dt_data;
     }
 
-    public void setDt_data(Date dt_data) {
+    public void setDt_data(String dt_data) {
         this.dt_data = dt_data;
     }
 

@@ -19,6 +19,7 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./disciplina-p.component.css']
 })
 export class DisciplinaPComponent implements OnInit {
+
   @BlockUI() blockUI: NgBlockUI;
   private timer;
   private sub: Subscription;
@@ -241,9 +242,9 @@ export class DisciplinaPComponent implements OnInit {
     }
 
     this.modalService.open(content).result.then((result) => {
+
       this.closeResult = `Closed with: ${result}`;
       if(result ==='Close click'){
-
         if(this.opc === 1){
           this.efetuaChamada();
         }
@@ -252,9 +253,11 @@ export class DisciplinaPComponent implements OnInit {
         }else if(this.opc === 3){
           this.enviaArquivo();
         }else if(this.opc === 4){
+          this.blockUI.start("Atualizando dados...");
           this.teacherService.updateAtividade(this.atividade).subscribe(
             atividade=>{
               this.getAtividades();
+              this.blockUI.stop();
               this.toastr.success("Atividade atualizada","Sucesso!");
             }
           )

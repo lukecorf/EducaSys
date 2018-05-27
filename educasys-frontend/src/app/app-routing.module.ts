@@ -13,7 +13,6 @@ import {AuthGuard} from "./auth-guard.service";
 import {HomeAComponent} from "./student/home-a/home-a.component";
 import { NotFoundComponent } from './not-found/not-found.component';
 import {DisciplinaAComponent} from "./student/disciplina-a/disciplina-a.component";
-import {HistoricoAComponent} from "./student/historico-a/historico-a.component";
 import {PerfilAComponent} from "./student/perfil-a/perfil-a.component";
 import {HomePComponent} from "./teacher/home-p/home-p.component";
 import {DisciplinaPComponent} from "./teacher/disciplina-p/disciplina-p.component";
@@ -24,6 +23,8 @@ import {ProfessorCadastroComponent} from "./secretary/professor-s/professor-cada
 import {AlunoSComponent} from "./secretary/aluno-s/aluno-s.component";
 import {ProfessorSComponent} from "./secretary/professor-s/professor-s.component";
 import {HomeSComponent} from "./secretary/home-s/home-s.component";
+import {DisciplinasAComponent} from "./student/historico-a/disciplinas-a.component";
+
 
 const appRoutes: Routes = [
   { path: '' , component: LoginComponent},
@@ -38,7 +39,7 @@ const appRoutes: Routes = [
   { path: 'disciplina-s-cadastro/:type/:id', canActivate: [AuthGuard] , component: DisciplinaCadastroComponent},
   { path: 'aluno-s-cadastro/:type/:id', canActivate: [AuthGuard] , component: AlunoCadastroComponent},
   { path: 'professor-s-cadastro/:type/:id', canActivate: [AuthGuard] , component: ProfessorCadastroComponent},
-  { path: 'historico-a/:id', canActivate: [AuthGuard] , component: HistoricoAComponent},
+  { path: 'disciplinas-a/:id', canActivate: [AuthGuard] , component: DisciplinasAComponent},
   { path: 'perfil-a/:id', canActivate: [AuthGuard] , component: PerfilAComponent},
 
   { path: 'not-found' , component: NotFoundComponent },

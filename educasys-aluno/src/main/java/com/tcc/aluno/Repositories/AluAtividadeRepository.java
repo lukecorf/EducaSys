@@ -21,6 +21,6 @@ public interface AluAtividadeRepository extends JpaRepository<AluAtividade, Long
     @Query("SELECT a FROM AluAtividade a WHERE a.alunofk.id = :ida AND a.disciplinafk.codigo = :id")
     List<AluAtividade> getAtividadeByDisAlu(@Param("ida") Long ida, @Param("id") Long id);
 
-    @Query("SELECT sum(a.nota) FROM AluAtividade a WHERE a.disciplinafk.codigo = :codigo AND a.alunofk.id = :id")
+    @Query("SELECT sum(a.nota) FROM AluAtividade a WHERE a.disciplinafk.codigo = :codigo AND a.alunofk.id = :id AND a.nota>-1")
     Double getSumNotasByAluDis(@Param("codigo")Long codigo, @Param("id") Long id);
 }

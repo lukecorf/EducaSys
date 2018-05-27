@@ -6,7 +6,7 @@ export class Atividade{
   bo_tipo_atividade : boolean;
   nu_valor_atividade : number;
   id_diciplina : number;
-  entregue: boolean;
+  entrega: boolean;
   nota: number;
 
   constructor(id_atividade ?: number,

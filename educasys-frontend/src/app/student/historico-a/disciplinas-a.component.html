@@ -1,0 +1,24 @@
+<menua-component></menua-component>
+<div [ngClass]="open ? opened : closed">
+  <div class="row menu">
+    <div class="col-md-1 menu-button">
+      <mat-icon class="md-48" (click)="changeOpt()"	>reorder</mat-icon>
+    </div>
+  </div>
+  <div class="col-md-12 data-area">
+    <div *ngFor="let item of materias" class="col-md-6 disciplina-style">
+      <disciplina-perfil-a
+                           [codigo]    ="item.id_disciplina"
+                           [nome]      ="item.st_nome"
+                           [idProf]    ="item.id_professor"
+                           [professor] ="item.st_nome_prof"
+                           [proxProva] ="item.dt_next_prova"
+                           [img]       ="item.url_img"
+                           [falta]     ="item.nu_faltas"
+                           [nota]      ="item.nu_nota"
+                           [idAluno]   ="item.id_aluno"
+                           [cargaH]    ="item.nu_carga_horaria">
+      </disciplina-perfil-a>
+    </div>
+  </div>
+</div>

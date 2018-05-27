@@ -33,8 +33,8 @@ export class MenuAComponent implements OnInit {
 
   }
 
-  goHistorico(){
-    this.router.navigate(['historico-a/'+this.code]);
+  goDisciplinas(){
+    this.router.navigate(['disciplinas-a/'+this.aluno.id_aluno]);
   }
 
   goHome(){

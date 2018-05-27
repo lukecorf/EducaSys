@@ -26,7 +26,7 @@ import { AuthService } from './auth.service';
 import {AuthGuard} from './auth-guard.service';
 import {HttpClientModule} from "@angular/common/http";
 import { DisciplinaAComponent } from './student/disciplina-a/disciplina-a.component';
-import { HistoricoAComponent } from './student/historico-a/historico-a.component';
+import { DisciplinasAComponent } from './student/historico-a/disciplinas-a.component';
 import { PerfilAComponent } from './student/perfil-a/perfil-a.component';
 import { HomePComponent } from './teacher/home-p/home-p.component';
 import { MenuPComponent } from './teacher/menu-p/menu-p.component';
@@ -59,7 +59,7 @@ import {ToastrModule} from "ngx-toastr";
     MenuAComponent,
     DisciplinaPerfilAComponent,
     DisciplinaAComponent,
-    HistoricoAComponent,
+    DisciplinasAComponent,
     PerfilAComponent,
     HomePComponent,
     MenuPComponent,

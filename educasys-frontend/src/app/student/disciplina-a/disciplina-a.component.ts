@@ -11,6 +11,8 @@ import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import {AtividadeEntrega} from "../student.model";
 import {FirebaseConfig} from "../../../environments/firebase.config";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'disciplina-a',
@@ -18,6 +20,8 @@ import {FirebaseConfig} from "../../../environments/firebase.config";
   styleUrls: ['./disciplina-a.component.css']
 })
 export class DisciplinaAComponent implements OnInit {
+
+  @BlockUI() blockUI: NgBlockUI;
   private timer;
   private sub: Subscription;
   open: boolean = true;
@@ -37,7 +41,7 @@ export class DisciplinaAComponent implements OnInit {
   public pieChartType:string = 'pie';
   public pieChartOptions: any = {responsive: true, maintainAspectRatio: false}
 
-  constructor(private modalService: NgbModal, private route: ActivatedRoute, private studentService: StudentService) {
+  constructor(private toastr: ToastrService, private modalService: NgbModal, private route: ActivatedRoute, private studentService: StudentService) {
     this.id = this.route.snapshot.params['id'];
     this.ida = this.route.snapshot.params['ida'];
   }
@@ -88,6 +92,8 @@ export class DisciplinaAComponent implements OnInit {
     this.studentService.getAtividadesByIdDisciplina(this.id,this.ida).subscribe(
       atividades=>{
         this.atividades = atividades;
+        console.log("=============================================");
+        console.log(this.atividades);
       }
     )
   }
@@ -105,6 +111,7 @@ export class DisciplinaAComponent implements OnInit {
   }
 
   enviaArquivo(){
+    this.blockUI.start("Realizando upload...");
     let file = this.selectedFiles.item(0)
     let currentUpload = new Upload(file);
     this.efetuarUpload(currentUpload);
@@ -133,7 +140,8 @@ export class DisciplinaAComponent implements OnInit {
 
         this.studentService.setFileAtividade(a).subscribe(
           arquivo=>{
-            console.log('Deu');
+            this.blockUI.stop();
+            this.toastr.success("Arquivo enviado","Sucesso!");
           }
         );
       }
@@ -143,7 +151,6 @@ export class DisciplinaAComponent implements OnInit {
   openc(content) {
     this.modalService.open(content).result.then((result) => {
       if(result){
-        console.log('Everything OK');
         this.enviaArquivo();
       }else{
         console.log('Problems here man');
@@ -153,13 +160,4 @@ export class DisciplinaAComponent implements OnInit {
     });
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
-  }
 }

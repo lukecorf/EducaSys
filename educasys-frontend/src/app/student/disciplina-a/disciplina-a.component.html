@@ -97,7 +97,7 @@
         <div class="modal-body">
           <span style="font-weight: bold;">Valor:</span>{{atividade.nu_valor_atividade}} Pontos
           <br>
-          <span style="font-weight: bold;">Data Final da Entrega:</span> {{atividade.dt_data}}
+          <span style="font-weight: bold;">Data Final da Entrega:</span> {{atividade.dt_data| date: 'dd/MM/yyyy'}}
           <br>
           <br>
           <div style="padding-bottom: 10px;" class="input-group">
@@ -122,10 +122,10 @@
         </thead>
         <tbody class="body-table">
         <tr *ngFor="let atividade of atividades; let k = index"  >
-          <th *ngIf="atividade.bo_tipo_atividade && (atividade.entregue === false)" scope="row">{{atividade.st_nome_atividade}}</th>
-          <td *ngIf="atividade.bo_tipo_atividade && (atividade.entregue === false)" class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
-          <td *ngIf="atividade.bo_tipo_atividade && (atividade.entregue === false)" class="glyphicon-center-3" >{{atividade.dt_data | date:'dd/MM'}}</td>
-          <td *ngIf="atividade.bo_tipo_atividade && (atividade.entregue === false)" class="glyphicon-center-3"><mat-icon class="mouse-houver" value = "cacete" id="a" (click)="openc(content);setAtividade(k)">file_upload</mat-icon></td>
+          <th *ngIf="atividade.bo_tipo_atividade && (!atividade.entrega)" scope="row">{{atividade.st_nome_atividade}}</th>
+          <td *ngIf="atividade.bo_tipo_atividade && (!atividade.entrega)" class="glyphicon-center-3" >{{atividade.nu_valor_atividade}}</td>
+          <td *ngIf="atividade.bo_tipo_atividade && (!atividade.entrega)" class="glyphicon-center-3" >{{atividade.dt_data | date: 'dd/MM'}}</td>
+          <td *ngIf="atividade.bo_tipo_atividade && (!atividade.entrega)" class="glyphicon-center-3"><mat-icon class="mouse-houver" value = "cacete" id="a" (click)="openc(content);setAtividade(k)">file_upload</mat-icon></td>
         </tr>
         </tbody>
       </table>
