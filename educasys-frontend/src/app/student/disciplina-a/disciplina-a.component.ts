@@ -92,8 +92,6 @@ export class DisciplinaAComponent implements OnInit {
     this.studentService.getAtividadesByIdDisciplina(this.id,this.ida).subscribe(
       atividades=>{
         this.atividades = atividades;
-        console.log("=============================================");
-        console.log(this.atividades);
       }
     )
   }
@@ -140,6 +138,7 @@ export class DisciplinaAComponent implements OnInit {
 
         this.studentService.setFileAtividade(a).subscribe(
           arquivo=>{
+            this.getAtividades();
             this.blockUI.stop();
             this.toastr.success("Arquivo enviado","Sucesso!");
           }

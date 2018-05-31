@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {UserData} from "../../services/userdata.service";
 import {SecretariaService} from "../secretaria.service";
 import {Secretaria} from "../secretaria.model";
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'menu-s-component',
@@ -14,7 +15,7 @@ export class MenuSComponent implements OnInit {
   code: string;
   secretaria: Secretaria = new Secretaria(0,"","","");
   cssType: string;
-  constructor(private router: Router, private secretariaService: SecretariaService) {
+  constructor(private router: Router, private secretariaService: SecretariaService, private authService: AuthService) {
     this.code = UserData.getUserCode();
   }
 
@@ -47,5 +48,10 @@ export class MenuSComponent implements OnInit {
 
   goAluno(){
     this.router.navigate(['aluno-s']);
+  }
+
+  logout(){
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }
