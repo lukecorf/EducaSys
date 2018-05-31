@@ -16,6 +16,9 @@ public interface AlunoRepository  extends JpaRepository<Aluno,Long> {
     @Query("SELECT a FROM Aluno a WHERE UPPER(a.nome) LIKE CONCAT('%',UPPER(:nome),'%')")
     List<Aluno> searchAluno(@Param("nome") String nome);
 
+    @Query("SELECT COUNT(a) FROM Aluno a WHERE a.cpf = :cpf OR a.rg = :rg")
+    int getExistAlunoWithRGorCPF(@Param("cpf") String cpf, @Param("rg") String rg);
+
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Aluno a SET a.telefone = :telefone, a.rg= :rg, a.nome= :nome, a.endereco= :endereco, a.email= :email, a.dataN= :dataN, a.cpf= :cpf, a.nomeM = :nomeM, a.nomeP = :nomeP WHERE a.id = :id")

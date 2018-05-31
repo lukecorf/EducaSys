@@ -1,7 +1,6 @@
 package com.tcc.aluno.providers;
 
 import com.google.gson.Gson;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.tcc.aluno.DTO.DisciplinaADTO;
 import com.tcc.aluno.DTO.EntregaDTO;
 import com.tcc.aluno.Repositories.*;
@@ -15,11 +14,14 @@ import com.tcc.aluno.mapper.AtividadeMapper;
 import com.tcc.aluno.mapper.DisciplinaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/*======================================================================================================================
+||Classe responsavel por receber as requisições referentes ao modulo de Aluno. Estas requisições são tratadas e seus  ||
+||resultados são retorados ao frontend para que o mesmo possa manipula-los.                                           ||
+======================================================================================================================*/
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class AlunoProvider {
@@ -43,7 +45,7 @@ public class AlunoProvider {
     @Autowired
     ArquivoRepository arquivoRepository;
 
-
+    //==Disciplinas=====================================================================================================
 
     @GetMapping(value = "/getDisciplinas/{id}")
     public @ResponseBody
@@ -78,15 +80,12 @@ public class AlunoProvider {
         return gson.toJson(disciplinaADTOS);
     }
 
-    @GetMapping(value ="/getAlunoByCode/{id}")
-    public @ResponseBody String getAlunoByCode(@PathVariable String id){
-        return gson.toJson(AlunoMapper.EntitytoDTO(alunoRepository.getAlunoByCode(id)));
-    }
-
     @GetMapping("/getDisciplinaById/{id}")
     public @ResponseBody String getDisciplinaById(@PathVariable Long id) {
         return gson.toJson(DisciplinaMapper.EntitytoDTO(disciplinaRepository.getOne(id)));
     }
+
+    //==Atividades======================================================================================================
 
     @GetMapping("/getAtividades/{id}/{ida}")
     public @ResponseBody String getAtividadesByIdDisciplina(@PathVariable Long id,@PathVariable Long ida) {
@@ -95,13 +94,19 @@ public class AlunoProvider {
         return gson.toJson(AtividadeMapper.ListEntitytoListDTO(a,aluAtividades));
     }
 
-
     @PostMapping(path="/setAtividade",  consumes = "application/json", produces = "application/json")
     public String entregaAtividade(@RequestBody EntregaDTO entregaDTO){
         aluAtividadeRepository.atualizaAtividade(entregaDTO.getUrl(),entregaDTO.getId_aluno(),entregaDTO.getId_atividade());
 
         return gson.toJson(entregaDTO);
 
+    }
+
+    //==Outros==========================================================================================================
+
+    @GetMapping(value ="/getAlunoByCode/{id}")
+    public @ResponseBody String getAlunoByCode(@PathVariable String id){
+        return gson.toJson(AlunoMapper.EntitytoDTO(alunoRepository.getAlunoByCode(id)));
     }
 
     @GetMapping("/getArquivos/{id}")

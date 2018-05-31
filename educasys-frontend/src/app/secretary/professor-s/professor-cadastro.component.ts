@@ -67,14 +67,24 @@ export class ProfessorCadastroComponent implements OnInit {
     this.router.navigate(['professor-s']);
   }
 
-  goSave(){
+  goSave(form){
+
+    if (!form.valid) {
+      this.toastr.error("Preencha todos os campos obrigatorios");
+      return;
+    }
+
     if(this.type === 1) {
       if(this.password === this.professor.pw_senha_prof) {
         this.professor.url_img_professor = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
         this.secretariaService.setProfessor(this.professor).subscribe(professor => {
           if (professor.st_nome_professor !== null) {
-            this.router.navigate(['professor-s']);
-            this.toastr.success("Professor cadastrado","Sucesso!");
+            if(professor.id_professor === -1){
+              this.toastr.error("Ja existe um professor com estes documentos","Erro!");
+            }else{
+              this.toastr.success("Professor cadastrado","Sucesso!");
+              this.router.navigate(['professor-s']);
+            }
           }else{
             this.toastr.error("Erro ao cadastrar professor","Erro!");
           }

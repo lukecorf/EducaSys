@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import javax.transaction.Transactional;
 import java.util.List;
 
+/*======================================================================================================================
+||Interface responsavel por implementar as Query's nativas para obtenção, atualização e remoção de dados. Referente   ||
+||ao modulo de alunos e a entidade AluDis.                                                                            ||
+======================================================================================================================*/
 @Repository
 public interface AluDisRepository  extends JpaRepository<AluDis,Long> {
     @Transactional

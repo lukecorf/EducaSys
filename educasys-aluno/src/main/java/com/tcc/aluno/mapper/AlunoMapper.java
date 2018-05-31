@@ -4,7 +4,6 @@ package com.tcc.aluno.mapper;
 import com.tcc.aluno.DTO.AlunoDTO;
 import com.tcc.aluno.DTO.AlunoListDTO;
 import com.tcc.aluno.database.Aluno;
-
 import java.util.ArrayList;
 import java.util.List;
 

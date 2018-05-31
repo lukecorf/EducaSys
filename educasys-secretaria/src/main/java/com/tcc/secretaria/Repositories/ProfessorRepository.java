@@ -17,6 +17,9 @@ public interface ProfessorRepository extends JpaRepository<Professor,Long>{
     @Query("SELECT p FROM Professor p WHERE UPPER(p.nome) LIKE CONCAT('%',UPPER(:nome),'%')")
     List<Professor> searchProfessor(@Param("nome") String nome);
 
+    @Query("SELECT COUNT(p) FROM Professor p WHERE p.cpf = :cpf OR p.rg = :rg")
+    int getExistProfessorWithRGorCPF(@Param("cpf") String cpf, @Param("rg") String rg);
+
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Professor p SET p.cpf = :cpf, p.dataN=:dataN, p.email = :email, p.endereco = :endereco, p.nome = :nome, p.rg = :rg, p.telefone = :telefone WHERE p.id = :id")

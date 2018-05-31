@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+/*======================================================================================================================
+||Interface responsavel por implementar as Query's nativas para obtenção, atualização e remoção de dados. Referente   ||
+||ao modulo de Professores. e a entidade Aluno.                                                                    ||
+======================================================================================================================*/
 @Repository
 public interface AlunoRepository extends JpaRepository<Aluno,Long> {
     @Query("SELECT a FROM Aluno a WHERE a.id IN :list")

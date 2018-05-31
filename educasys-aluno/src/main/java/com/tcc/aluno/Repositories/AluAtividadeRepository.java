@@ -7,10 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
-
+/*======================================================================================================================
+||Interface responsavel por implementar as Query's nativas para obtenção, atualização e remoção de dados. Referente   ||
+||ao modulo de alunos e a entidade AluAtividade.                                                                      ||
+======================================================================================================================*/
 @Repository
 public interface AluAtividadeRepository extends JpaRepository<AluAtividade, Long>{
     @Transactional

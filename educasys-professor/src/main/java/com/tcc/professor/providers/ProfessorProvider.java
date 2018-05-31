@@ -1,20 +1,22 @@
 package com.tcc.professor.providers;
 
 import com.google.gson.Gson;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.tcc.professor.DTO.*;
 import com.tcc.professor.Repositories.*;
 import com.tcc.professor.database.*;
 import com.tcc.professor.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/*======================================================================================================================
+||Classe responsavel por receber as requisições referentes ao modulo de Professor. Estas requisições são tratadas e   ||
+||seus resultados são retorados ao frontend para que o mesmo possa manipula-los.                                      ||
+======================================================================================================================*/
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class ProfessorProvider {
@@ -41,6 +43,7 @@ public class ProfessorProvider {
     @Autowired
     private AluAtividadeRepository aluAtividadeRepository;
 
+    //==Disciplinas=====================================================================================================
 
     @GetMapping(value = "/getDisciplinas/{id}")
     public @ResponseBody
@@ -51,14 +54,16 @@ public class ProfessorProvider {
         return gson.toJson(DisciplinaMapper.ListEntitytoListADTO(disciplinas));
     }
 
-    @GetMapping("/getProfessorByCode/{id}")
-    public @ResponseBody String getSecretariaByCode(@PathVariable String id) {
-        return gson.toJson(ProfessorMapper.EntitytoDTO(professorRepository.getProfessorByCode(id)));
-    }
-
     @GetMapping("/getDisciplinaById/{id}")
     public @ResponseBody String getDisciplinaById(@PathVariable Long id) {
         return gson.toJson(DisciplinaMapper.EntitytoDTO(disciplinaRepository.getOne(id)));
+    }
+
+    //==Atividades======================================================================================================
+
+    @GetMapping("/getAtividades/{id}")
+    public @ResponseBody String getAtividadesByIdDisciplina(@PathVariable Long id) {
+        return gson.toJson(AtividadeMapper.ListEntitytoListDTO(atividadeRepository.getAtividadeByIdDisciplina(id)));
     }
 
     @GetMapping("/getAtividadeEntregues/{ida}/{idd}")
@@ -107,42 +112,6 @@ public class ProfessorProvider {
 
     }
 
-    @PostMapping(path="/setFaltas/{idd}",  consumes = "application/json", produces = "application/json")
-    public String setFaltas(@RequestBody ArrayList<Long> ids,@PathVariable Long idd){
-
-        aluDisRepository.setFaltas(ids,idd);
-
-        return gson.toJson(true);
-    }
-
-    @PostMapping(path="/saveArquivo",  consumes = "application/json", produces = "application/json")
-    public String createArquivo(@RequestBody ArquivoDTO arquivoDTO){
-        return gson.toJson(arquivoRepository.save(ArquivoMapper.DTOtoEntity(arquivoDTO)));
-    }
-
-    @GetMapping("/getAtividades/{id}")
-    public @ResponseBody String getAtividadesByIdDisciplina(@PathVariable Long id) {
-        return gson.toJson(AtividadeMapper.ListEntitytoListDTO(atividadeRepository.getAtividadeByIdDisciplina(id)));
-    }
-
-    @GetMapping("/getArquivos/{id}")
-    public @ResponseBody String getArquivosByIdDisciplina(@PathVariable Long id) {
-        return gson.toJson(ArquivoMapper.ListEntitytoListDTO(arquivoRepository.getArquivosByIdDisciplina(id)));
-    }
-
-    @GetMapping("/getAlunosByDisciplina/{id}")
-    public @ResponseBody String getAlunosByDisciplina(@PathVariable Long id) {
-        List<AluDis> l = aluDisRepository.getAluDisByIdDisciplina(id);
-        List<Long> ll= new ArrayList<>();
-        for(AluDis a: l){
-            ll.add(a.getAlunofk().getId());
-        }
-
-        List<Aluno> la = alunoRepository.getAlunoByListId(ll);
-        return gson.toJson(AlunoMapper.ListEntitytoListDTO(la));
-
-    }
-
     @GetMapping("getNotasAtividade/{ida}")
     public @ResponseBody String getNotasAtividade(@PathVariable Long ida){
         List<AluAtividade> aluAtividades = aluAtividadeRepository.getAluAtividadeByIdAtividade(ida);
@@ -176,10 +145,12 @@ public class ProfessorProvider {
         return gson.toJson(true);
     }
 
-    @DeleteMapping("/deleteArquivo/{id}")
-    public String deleteArquivo(@PathVariable Long id) {
-        arquivoRepository.deleteById(id);
-        return gson.toJson(id);
+    @PutMapping(path="/updateAtividade",  consumes = "application/json", produces = "application/json")
+    public String updateAtividade(@RequestBody AtividadeDTO a) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date data = sdf.parse(a.getDt_data());
+        atividadeRepository.updateAtividade(data,a.getNu_valor_atividade(),a.getId_atividade());
+        return gson.toJson(a.getId_atividade());
     }
 
     @DeleteMapping("/deleteAtividade/{id}")
@@ -190,11 +161,51 @@ public class ProfessorProvider {
         return gson.toJson(id);
     }
 
-    @PutMapping(path="/updateAtividade",  consumes = "application/json", produces = "application/json")
-    public String updateAtividade(@RequestBody AtividadeDTO a) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date data = sdf.parse(a.getDt_data());
-        atividadeRepository.updateAtividade(data,a.getNu_valor_atividade(),a.getId_atividade());
-        return gson.toJson(a.getId_atividade());
+    //==Arquivos========================================================================================================
+
+    @GetMapping("/getArquivos/{id}")
+    public @ResponseBody String getArquivosByIdDisciplina(@PathVariable Long id) {
+        return gson.toJson(ArquivoMapper.ListEntitytoListDTO(arquivoRepository.getArquivosByIdDisciplina(id)));
     }
+
+    @PostMapping(path="/saveArquivo",  consumes = "application/json", produces = "application/json")
+    public String createArquivo(@RequestBody ArquivoDTO arquivoDTO){
+        return gson.toJson(arquivoRepository.save(ArquivoMapper.DTOtoEntity(arquivoDTO)));
+    }
+
+    @DeleteMapping("/deleteArquivo/{id}")
+    public String deleteArquivo(@PathVariable Long id) {
+        arquivoRepository.deleteById(id);
+        return gson.toJson(id);
+    }
+
+    //==Outros==========================================================================================================
+
+    @GetMapping("/getProfessorByCode/{id}")
+    public @ResponseBody String getSecretariaByCode(@PathVariable String id) {
+        return gson.toJson(ProfessorMapper.EntitytoDTO(professorRepository.getProfessorByCode(id)));
+    }
+
+    @GetMapping("/getAlunosByDisciplina/{id}")
+    public @ResponseBody String getAlunosByDisciplina(@PathVariable Long id) {
+        List<AluDis> l = aluDisRepository.getAluDisByIdDisciplina(id);
+        List<Long> ll= new ArrayList<>();
+        for(AluDis a: l){
+            ll.add(a.getAlunofk().getId());
+        }
+
+        List<Aluno> la = alunoRepository.getAlunoByListId(ll);
+        return gson.toJson(AlunoMapper.ListEntitytoListDTO(la));
+
+    }
+
+    @PostMapping(path="/setFaltas/{idd}",  consumes = "application/json", produces = "application/json")
+    public String setFaltas(@RequestBody ArrayList<Long> ids,@PathVariable Long idd){
+
+        aluDisRepository.setFaltas(ids,idd);
+
+        return gson.toJson(true);
+    }
+
+
 }

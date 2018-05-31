@@ -9,19 +9,18 @@ import com.tcc.secretaria.mapper.DisciplinaMapper;
 import com.tcc.secretaria.mapper.ProfessorMapper;
 import com.tcc.secretaria.mapper.SecretariaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
+/*======================================================================================================================
+||Classe responsavel por receber as requisições referentes ao modulo de Secretaria. Estas requisições são tratadas e  ||
+||seus resultados são retorados ao frontend para que o mesmo possa manipula-los.                                      ||
+======================================================================================================================*/
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class SecretariaProvider {
@@ -54,10 +53,18 @@ public class SecretariaProvider {
     @Autowired
     ArquivoRepository arquivoRepository;
 
+    //==Disciplinas=====================================================================================================
+
     @GetMapping(value = "/getDisciplinas")
     public @ResponseBody String getDisciplinas(){
         List<Disciplina> list;
         list = disciplinaRepository.findAll();
+        return gson.toJson(DisciplinaMapper.ListEntitytoListDTO(list));
+    }
+
+    @GetMapping(value = "/searchDisciplinas/{name}")
+    public @ResponseBody String searchDisciplinas(@PathVariable String name){
+        List<Disciplina> list = disciplinaRepository.searchDisciplina(name);
         return gson.toJson(DisciplinaMapper.ListEntitytoListDTO(list));
     }
 
@@ -137,6 +144,8 @@ public class SecretariaProvider {
         return gson.toJson(id);
     }
 
+    //==Alunos==========================================================================================================
+
     @GetMapping(value = "/getAlunos")
     public @ResponseBody String getAlunos(){
         List<Aluno> list;
@@ -151,18 +160,6 @@ public class SecretariaProvider {
 
     }
 
-    @GetMapping(value = "/searchDisciplinas/{name}")
-    public @ResponseBody String searchDisciplinas(@PathVariable String name){
-        List<Disciplina> list = disciplinaRepository.searchDisciplina(name);
-        return gson.toJson(DisciplinaMapper.ListEntitytoListDTO(list));
-    }
-
-    @GetMapping(value = "/searchProfessores/{name}")
-    public @ResponseBody String searchProfessores(@PathVariable String name){
-        List<Professor> list = professorRepository.searchProfessor(name);
-        return gson.toJson(ProfessorMapper.ListEntitytoListDTO(list));
-    }
-
     @GetMapping("/getAlunoById/{id}")
     public @ResponseBody String getAlunoById(@PathVariable Long id) {
         Aluno a = alunoRepository.getOne(id);
@@ -170,12 +167,28 @@ public class SecretariaProvider {
 
     }
 
+    @PutMapping(path="/updateAluno",  consumes = "application/json", produces = "application/json")
+    public @ResponseBody String updateAluno(@RequestBody AlunoDTO alunoDTO){
+        StringTokenizer st = new StringTokenizer(alunoDTO.getDt_data_nasc(),"-");
+        int year = Integer.parseInt(st.nextToken());
+        int mouth = Integer.parseInt(st.nextToken());
+        int day = Integer.parseInt(st.nextToken());
+        LocalDate localDate = LocalDate.of(year,mouth,day);
+        alunoRepository.updateAluno(alunoDTO.getCo_telefone(),alunoDTO.getDc_rg(),alunoDTO.getSt_nome_aluno(),alunoDTO.getSt_endereco(),alunoDTO.getCo_email(),localDate,alunoDTO.getDc_cpf(),alunoDTO.getSt_nome_mae(),alunoDTO.getSt_nome_pai(),alunoDTO.getId_aluno());
+        return gson.toJson(true);
+    }
+
     @PostMapping(path="/saveAluno",  consumes = "application/json", produces = "application/json")
     public String createAluno(@RequestBody AlunoDTO alunoDTO){
-        System.out.println(alunoDTO.toString());
-        Aluno a = AlunoMapper.DTOtoEntity(alunoDTO);
-        loginRepository.save(new Login(alunoDTO.getDc_cpf(),alunoDTO.getPw_senha_aluno(),1));
-        return gson.toJson(alunoRepository.save(a));
+        if(alunoRepository.getExistAlunoWithRGorCPF(alunoDTO.getDc_cpf(),alunoDTO.getDc_rg())>0){
+            AlunoDTO alunoDTO1 = new AlunoDTO();
+            alunoDTO1.setId_aluno(-1L);
+            return gson.toJson(alunoDTO1);
+        }else {
+            Aluno a = AlunoMapper.DTOtoEntity(alunoDTO);
+            loginRepository.save(new Login(alunoDTO.getDc_cpf(), alunoDTO.getPw_senha_aluno(), 1));
+            return gson.toJson(alunoRepository.save(a));
+        }
     }
 
     @DeleteMapping("/deleteAluno/{id}")
@@ -186,10 +199,18 @@ public class SecretariaProvider {
         return gson.toJson(id);
     }
 
+    //==Professores=====================================================================================================
+
     @GetMapping(value = "/getProfessores")
     public @ResponseBody String getProfessores(){
         List<Professor> list;
         list = professorRepository.findAll();
+        return gson.toJson(ProfessorMapper.ListEntitytoListDTO(list));
+    }
+
+    @GetMapping(value = "/searchProfessores/{name}")
+    public @ResponseBody String searchProfessores(@PathVariable String name){
+        List<Professor> list = professorRepository.searchProfessor(name);
         return gson.toJson(ProfessorMapper.ListEntitytoListDTO(list));
     }
 
@@ -201,12 +222,24 @@ public class SecretariaProvider {
 
     }
 
+    @PutMapping(path="/updateProfessor",  consumes = "application/json", produces = "application/json")
+    public @ResponseBody String updateProfessor(@RequestBody ProfessorDTO professorDTO) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        professorRepository.updateProfessor(professorDTO.getdc_cpf(),sdf.parse(professorDTO.getDt_data_nasc()), professorDTO.getCo_email(),professorDTO.getSt_endereco(),professorDTO.getSt_nome_professor(),professorDTO.getdc_rg(),professorDTO.getCo_telefone(),professorDTO.getId_professor());
+        return gson.toJson(true);
+    }
+
     @PostMapping(path="/saveProfessor",  consumes = "application/json", produces = "application/json")
     public String createProfessor(@RequestBody ProfessorDTO professorDTO) throws ParseException {
-        System.out.println("Entrou");
-        Professor p = ProfessorMapper.DTOtoEntity(professorDTO);
-        loginRepository.save(new Login(professorDTO.getdc_cpf(),professorDTO.getPw_senha_prof(),2));
-        return gson.toJson(professorRepository.save(p));
+        if(professorRepository.getExistProfessorWithRGorCPF(professorDTO.getdc_cpf(),professorDTO.getdc_rg())>0){
+            ProfessorDTO professorDTO1 = new ProfessorDTO();
+            professorDTO1.setId_professor(-1L);
+            return gson.toJson(professorDTO1);
+        }else {
+            Professor p = ProfessorMapper.DTOtoEntity(professorDTO);
+            loginRepository.save(new Login(professorDTO.getdc_cpf(), professorDTO.getPw_senha_prof(), 2));
+            return gson.toJson(professorRepository.save(p));
+        }
     }
 
     @DeleteMapping("/deleteProfessor/{id}")
@@ -221,28 +254,11 @@ public class SecretariaProvider {
         }
     }
 
+    //==Secretaria======================================================================================================
+
     @GetMapping("/getSecretariaByCode/{id}")
     public @ResponseBody String getSecretariaByCode(@PathVariable String id) {
         return gson.toJson(SecretariaMapper.EntitytoDTO(secretariaRepository.getSecretariaByCode(id)));
-    }
-
-    @PutMapping(path="/updateProfessor",  consumes = "application/json", produces = "application/json")
-    public @ResponseBody String updateProfessor(@RequestBody ProfessorDTO professorDTO) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        professorRepository.updateProfessor(professorDTO.getdc_cpf(),sdf.parse(professorDTO.getDt_data_nasc()), professorDTO.getCo_email(),professorDTO.getSt_endereco(),professorDTO.getSt_nome_professor(),professorDTO.getdc_rg(),professorDTO.getCo_telefone(),professorDTO.getId_professor());
-        return gson.toJson(true);
-    }
-
-    @PutMapping(path="/updateAluno",  consumes = "application/json", produces = "application/json")
-    public @ResponseBody String updateAluno(@RequestBody AlunoDTO alunoDTO){
-
-        StringTokenizer st = new StringTokenizer(alunoDTO.getDt_data_nasc(),"-");
-        int year = Integer.parseInt(st.nextToken());
-        int mouth = Integer.parseInt(st.nextToken());
-        int day = Integer.parseInt(st.nextToken());
-        LocalDate localDate = LocalDate.of(year,mouth,day);
-        alunoRepository.updateAluno(alunoDTO.getCo_telefone(),alunoDTO.getDc_rg(),alunoDTO.getSt_nome_aluno(),alunoDTO.getSt_endereco(),alunoDTO.getCo_email(),localDate,alunoDTO.getDc_cpf(),alunoDTO.getSt_nome_mae(),alunoDTO.getSt_nome_pai(),alunoDTO.getId_aluno());
-        return gson.toJson(true);
     }
 
 }

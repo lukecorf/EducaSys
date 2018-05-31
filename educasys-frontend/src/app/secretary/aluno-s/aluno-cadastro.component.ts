@@ -65,28 +65,37 @@ export class AlunoCadastroComponent implements OnInit {
     this.router.navigate(['aluno-s']);
   }
 
-  goSave() {
+  goSave(form) {
 
-      if(this.type === 1) {
-        if(this.aluno.pw_senha_aluno === this.password) {
-          this.aluno.url_img_aluno = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
-          this.secretariaService.setAluno(this.aluno).subscribe(aluno => {
-            if (aluno.st_nome_aluno !== null) {
-              this.toastr.success("Aluno cadastrado","Sucesso!");
+    if (!form.valid) {
+      this.toastr.error("Preencha todos os campos obrigatorios");
+      return;
+    }
+
+    if(this.type === 1) {
+      if(this.aluno.pw_senha_aluno === this.password) {
+        this.aluno.url_img_aluno = "http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png";
+        this.secretariaService.setAluno(this.aluno).subscribe(aluno => {
+          if (aluno.st_nome_aluno !== null) {
+            if(aluno.id_aluno === -1){
+              this.toastr.error("Ja existe um aluno com estes documentos","Erro!");
+            }else {
+              this.toastr.success("Aluno cadastrado", "Sucesso!");
               this.router.navigate(['aluno-s']);
-            }else{
-              this.toastr.error("Erro ao cadastrar aluno","Erro!");
             }
-          });
-        }else{
-          this.toastr.error("As senhas são diferentes","Erro!");
-        }
+          }else{
+            this.toastr.error("Erro ao cadastrar aluno","Erro!");
+          }
+        });
       }else{
-        this.secretariaService.updateAluno(this.aluno).subscribe(ok =>{
-          this.toastr.success("Dados atualizados","Sucesso!");
-          this.router.navigate(['aluno-s']);
-        })
+        this.toastr.error("As senhas são diferentes","Erro!");
       }
+    }else{
+      this.secretariaService.updateAluno(this.aluno).subscribe(ok =>{
+        this.toastr.success("Dados atualizados","Sucesso!");
+        this.router.navigate(['aluno-s']);
+      })
+    }
   }
 
 }
