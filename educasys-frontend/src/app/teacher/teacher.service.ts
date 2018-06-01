@@ -25,6 +25,7 @@ export class TeacherService{
   private urlSNotas= 'http://localhost:8090/setNotasAtividade';
   private urlGEntregas= 'http://localhost:8090/getAtividadeEntregues';
   private urlGNotas= 'http://localhost:8090/getNotasAtividade';
+  private urlUProfessor= 'http://localhost:8090/updateProfessor';
 
   constructor(private  http: HttpClient){}
 
@@ -88,5 +89,8 @@ export class TeacherService{
     return this.http.put<number>(this.urlUAtividade,atividade);
   }
 
+  updateProfessor(professor: Professor):Observable<Boolean>{
+    return this.http.put<Boolean>(this.urlUProfessor,professor);
+  }
 
 }

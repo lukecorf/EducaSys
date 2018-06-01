@@ -119,7 +119,7 @@ public class AlunoProvider {
     }
 
     @PutMapping(path="/updateAluno",  consumes = "application/json", produces = "application/json")
-    public @ResponseBody String updateProfessor(@RequestBody AlunoDTO alunoDTO) throws ParseException {
+    public @ResponseBody String updateAluno(@RequestBody AlunoDTO alunoDTO) throws ParseException {
 
         if(alunoDTO.getUrl_img_aluno() == "") {
             alunoRepository.updateAlunoNoAll(alunoDTO.getCo_telefone(), alunoDTO.getSt_endereco(), alunoDTO.getCo_email(), alunoDTO.getId_aluno());

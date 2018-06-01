@@ -43,6 +43,9 @@ public class ProfessorProvider {
     @Autowired
     private AluAtividadeRepository aluAtividadeRepository;
 
+    @Autowired
+    private LoginRepository loginRepository;
+
     //==Disciplinas=====================================================================================================
 
     @GetMapping(value = "/getDisciplinas/{id}")
@@ -184,6 +187,21 @@ public class ProfessorProvider {
     @GetMapping("/getProfessorByCode/{id}")
     public @ResponseBody String getSecretariaByCode(@PathVariable String id) {
         return gson.toJson(ProfessorMapper.EntitytoDTO(professorRepository.getProfessorByCode(id)));
+    }
+
+    @PutMapping(path="/updateProfessor",  consumes = "application/json", produces = "application/json")
+    public @ResponseBody String updateProfessor(@RequestBody ProfessorDTO professorDTO) throws ParseException {
+
+        if(professorDTO.getUrl_img_professor() == "") {
+            professorRepository.updateProfessorNoAll(professorDTO.getCo_telefone(), professorDTO.getSt_endereco(), professorDTO.getCo_email(), professorDTO.getId_professor());
+        }else {
+            professorRepository.updateProfessor(professorDTO.getCo_telefone(), professorDTO.getSt_endereco(), professorDTO.getCo_email(), professorDTO.getUrl_img_professor(), professorDTO.getId_professor());
+        }
+
+        if(professorDTO.getPw_senha_prof() != ""){
+            loginRepository.updateLogin(professorDTO.getPw_senha_prof(),professorDTO.getdc_cpf());
+        }
+        return gson.toJson(true);
     }
 
     @GetMapping("/getAlunosByDisciplina/{id}")

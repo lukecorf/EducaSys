@@ -1,28 +1,12 @@
 <menup-component></menup-component>
 <div [ngClass]="open ? opened : closed">
-  <div class="row menu-area">
-    <mat-icon class="menu-icon" (click)="changeOpt()"	>reorder</mat-icon>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4">
-          <img src={{professor.url_img_professor}} class="user-img" alt="">
-        </div>
-        <div class="col-md-6 student-info">
-          <h2>{{professor.st_nome_professor}}</h2>
-          <h3>Codigo: {{professor.dc_cpf}}</h3>
-          <h4>Email: {{professor.co_email}}</h4>
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-
-      </div>
+  <div class="row menu">
+    <div class="col-md-1 menu-button">
+      <mat-icon class="md-48" (click)="changeOpt()"	>reorder</mat-icon>
     </div>
-
-    <div class="col-md-6 disciplina-style" id="scroll-style">
+  </div>
+  <div class="col-md-12 data-area">
+    <div *ngFor="let item of materias" class="col-md-6 disciplina-style">
       <disciplina-perfil-p *ngFor="let item of materias"
                            [codigo]    ="item.id_disciplina"
                            [nome]      ="item.st_nome"

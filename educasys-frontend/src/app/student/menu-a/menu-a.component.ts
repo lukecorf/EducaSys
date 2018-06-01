@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {UserData} from "../../services/userdata.service";
 import {Aluno} from "../student.model";
 import {StudentService} from "../student.service";
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'menua-component',
@@ -13,7 +14,7 @@ export class MenuAComponent implements OnInit {
   code: string;
   aluno: Aluno = new Aluno(-1,"","","","","","","","","","","");
   cssType: string;
-  constructor(private router: Router, private studentService: StudentService) {
+  constructor(private router: Router, private studentService: StudentService,private authService: AuthService) {
     this.code = UserData.getUserCode();
   }
 
@@ -43,5 +44,10 @@ export class MenuAComponent implements OnInit {
 
   goPerfil(){
     this.router.navigate(['perfil-a/'+this.code]);
+  }
+
+  logout(){
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

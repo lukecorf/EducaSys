@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {UserData} from "../../services/userdata.service";
 import {TeacherService} from "../teacher.service";
 import {Professor} from "../../secretary/professor-s/professor-s.model";
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'menup-component',
@@ -14,7 +15,7 @@ export class MenuPComponent implements OnInit {
   code: string;
   professor: Professor = new Professor(-1,"","","","","","","");
   cssType: string;
-  constructor(private router: Router, private teacherService: TeacherService) {
+  constructor(private router: Router, private teacherService: TeacherService, private authService: AuthService) {
     this.code = UserData.getUserCode();
   }
 
@@ -33,8 +34,8 @@ export class MenuPComponent implements OnInit {
 
   }
 
-  goHistorico(){
-    this.router.navigate(['historico-a/'+this.code]);
+  goDisciplinas(){
+    this.router.navigate(['disciplinas-p/'+this.code]);
   }
 
   goHome(){
@@ -42,7 +43,11 @@ export class MenuPComponent implements OnInit {
   }
 
   goPerfil(){
-    this.router.navigate(['perfil-a/'+this.code]);
+    this.router.navigate(['perfil-p/'+this.code]);
   }
 
+  logout(){
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
 }

@@ -47,6 +47,8 @@ import {StudentService} from "./student/student.service";
 import {TeacherService} from "./teacher/teacher.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import { PerfilPComponent } from './teacher/perfil-p/perfil-p.component';
+import { DisciplinaListComponent } from './teacher/disciplina-list/disciplina-list.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import {ToastrModule} from "ngx-toastr";
     AlunoSComponent,
     AlunoCadastroComponent,
     ProfessorSComponent,
-    ProfessorCadastroComponent
+    ProfessorCadastroComponent,
+    PerfilPComponent,
+    DisciplinaListComponent
   ],
   imports: [
     BrowserModule,

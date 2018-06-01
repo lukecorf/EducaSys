@@ -24,6 +24,8 @@ import {AlunoSComponent} from "./secretary/aluno-s/aluno-s.component";
 import {ProfessorSComponent} from "./secretary/professor-s/professor-s.component";
 import {HomeSComponent} from "./secretary/home-s/home-s.component";
 import {DisciplinasAComponent} from "./student/historico-a/disciplinas-a.component";
+import {PerfilPComponent} from "./teacher/perfil-p/perfil-p.component";
+import {DisciplinaListComponent} from "./teacher/disciplina-list/disciplina-list.component";
 
 
 const appRoutes: Routes = [
@@ -40,7 +42,9 @@ const appRoutes: Routes = [
   { path: 'aluno-s-cadastro/:type/:id', canActivate: [AuthGuard] , component: AlunoCadastroComponent},
   { path: 'professor-s-cadastro/:type/:id', canActivate: [AuthGuard] , component: ProfessorCadastroComponent},
   { path: 'disciplinas-a/:id', canActivate: [AuthGuard] , component: DisciplinasAComponent},
+  { path: 'disciplinas-p/:id', canActivate: [AuthGuard] , component: DisciplinaListComponent},
   { path: 'perfil-a/:id', canActivate: [AuthGuard] , component: PerfilAComponent},
+  { path: 'perfil-p/:id', canActivate: [AuthGuard] , component: PerfilPComponent},
 
   { path: 'not-found' , component: NotFoundComponent },
   { path: '**', redirectTo: '/not-found'}

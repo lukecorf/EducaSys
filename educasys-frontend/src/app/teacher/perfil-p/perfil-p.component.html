@@ -1,4 +1,4 @@
-<menua-component></menua-component>
+<menup-component></menup-component>
 <div [ngClass]="open ? opened : closed">
   <div class="row menu-area">
     <mat-icon class="menu-icon" (click)="changeOpt()"	>reorder</mat-icon>
@@ -9,7 +9,7 @@
       <div class="col-md-12">
         <div class="profile-data">
           <h3>Informações Pessoais</h3>
-          <form  #editForm="ngForm">
+          <form #editForm="ngForm">
             <div class="row">
               <div class="col-md-8" style="padding-bottom: 10px;">
                 <div class="input-group">
@@ -18,7 +18,7 @@
                       <mat-icon style="vertical-align: middle;">account_circle</mat-icon>
                     </button>
                   </div>
-                  <input class="form-control" [disabled]="true" name="st_nome_aluno" #st_nome_aluno = "ngModel" [(ngModel)]="aluno.st_nome_aluno" placeholder="Digite o nome..." required>
+                  <input class="form-control" [disabled]="true" name="st_nome_professor" #st_nome_professor = "ngModel" [(ngModel)]="professor.st_nome_professor"  placeholder="Digite o nome..." required>
                 </div>
               </div>
               <div class="col-md-4" style="padding-bottom: 10px;">
@@ -28,7 +28,7 @@
                       <mat-icon style="vertical-align: middle;">date_range</mat-icon>
                     </button>
                   </div>
-                  <input class="form-control" [disabled]="true" name="dt_data_nasc" name="dt_data_nasc" #dt_data_nasc = "ngModel" [(ngModel)]="aluno.dt_data_nasc" type="date" placeholder="dd/mm/aaaa" required>
+                  <input class="form-control" [disabled]="true" name="dt_data_nasc" #dt_data_nasc = "ngModel" [(ngModel)]="professor.dt_data_nasc"  type="date" placeholder="dd/mm/aaaa" required>
                 </div>
               </div>
               <div class="col-md-6" style="padding-bottom: 10px;">
@@ -38,7 +38,7 @@
                       <mat-icon style="vertical-align: middle;">account_box</mat-icon>
                     </button>
                   </div>
-                  <input type="text" class="form-control" [disabled]="true" name="st_nome_pai" #st_nome_pai = "ngModel" [(ngModel)]="aluno.st_nome_pai"  placeholder="Nome do pai..." required>
+                  <input type="text" class="form-control" [disabled]="true" name="dc_cpf" #dc_cpf = "ngModel" [(ngModel)]="professor.dc_cpf"  mask="999.999.999-99" placeholder="CPF..." required>
                 </div>
               </div>
               <div class="col-md-6" style="padding-bottom: 10px;">
@@ -48,32 +48,12 @@
                       <mat-icon style="vertical-align: middle;">account_box</mat-icon>
                     </button>
                   </div>
-                  <input type="text" class="form-control" [disabled]="true" name="st_nome_mae" #st_nome_mae = "ngModel" [(ngModel)]="aluno.st_nome_mae"  placeholder="Nome da mãe..." required>
+                  <input type="text" class="form-control" [disabled]="true" name="dc_rg" #dc_rg = "ngModel" [(ngModel)]="professor.dc_rg"  mask="SS-99.999.999" placeholder="RG..." >
                 </div>
               </div>
-              <div class="col-md-6" style="padding-bottom: 10px;">
-                <div class="input-group">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" disabled type="button">
-                      <mat-icon style="vertical-align: middle;">account_box</mat-icon>
-                    </button>
-                  </div>
-                  <input type="text" class="form-control" [disabled]="true" name="dc_rg" #dc_rg = "ngModel" [(ngModel)]="aluno.dc_rg" mask="SS-99.999.999" placeholder="RG...">
-                </div>
-              </div>
-              <div class="col-md-6" style="padding-bottom: 10px;">
-                <div class="input-group">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" disabled type="button">
-                      <mat-icon style="vertical-align: middle;">account_box</mat-icon>
-                    </button>
-                  </div>
-                  <input type="text" class="form-control" [disabled]="true" name="dc_cpf" #dc_cpf = "ngModel" [(ngModel)]="aluno.dc_cpf" mask="999.999.999-99" placeholder="CPF..." required>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <hr>
-              </div>
+            </div>
+            <div class="col-md-12">
+              <hr>
             </div>
             <h3>Imagem de Perfil</h3>
             <div class="col-md-12">
@@ -91,25 +71,26 @@
                       <mat-icon style="vertical-align: middle;">call</mat-icon>
                     </button>
                   </div>
-                  <input type="text" class="form-control" [disabled]="disabledEdit" name="co_telefone" #co_telefone = "ngModel" [(ngModel)]="aluno.co_telefone"  mask="(99) 9999-9999" placeholder="Telefone..." required >
+                  <input type="text" class="form-control"  name="co_telefone" #co_telefone = "ngModel" [(ngModel)]="professor.co_telefone"  mask="(99) 9999-9999" placeholder="Telefone..." required >
                 </div>
               </div>
               <div class="col-md-6" style="padding-bottom: 10px;">
                 <div class="input-group">
+
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary" disabled type="button">
                       <mat-icon style="vertical-align: middle;">chat</mat-icon>
                     </button>
                   </div>
-                  <input type="email" class="form-control" [disabled]="disabledEdit" name="co_email" #co_email = "ngModel" [(ngModel)]="aluno.co_email"  placeholder="Email..." id="email" required>
+                  <input type="email"  name="co_email" #co_email = "ngModel" [(ngModel)]="professor.co_email" class="form-control" placeholder="Email..." required>
                 </div>
               </div>
               <div class="col-md-12">
                 <label for="st_endereco">Endereço:</label>
-                <textarea class="form-control" [disabled]="disabledEdit" name="st_endereco" #st_endereco = "ngModel" [(ngModel)]="aluno.st_endereco"  rows="5" required></textarea>
+                <textarea class="form-control" [disabled]="disabledEdit" name="st_endereco" #st_endereco = "ngModel" [(ngModel)]="professor.st_endereco" rows="5" required></textarea>
               </div>
               <div class="col-md-12" style="margin-top: 15px;">
-                <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-dark"  (click)="openc(content)">Alterar Senha</button>
+                <button type="button" class="btn btn-outline-dark"  (click)="openc(content)">Alterar Senha</button>
                 <button type="button" class="btn btn-outline-success align-bottom float-right" (click)="enviaArquivo()">Salvar</button>
               </div>
             </div>
@@ -120,29 +101,33 @@
   </div>
 </div>
 
+
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title">Alterar Senha</h4>
   </div>
   <div class="modal-body">
     <div  class="col-md-12" style="padding-bottom: 10px;">
-      <div class="input-group">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" disabled type="button">
-            <mat-icon style="vertical-align: middle;">https</mat-icon>
-          </button>
+
+      <div class="col-md-12" style="padding-bottom: 10px;">
+        <div class="input-group">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" disabled type="button">
+              <mat-icon style="vertical-align: middle;">https</mat-icon>
+            </button>
+          </div>
+          <input type="password" class="form-control" name="pw_senha_prof" #pw_senha_prof= "ngModel" [(ngModel)]="professor.pw_senha_prof"  placeholder="Senha..." required>
         </div>
-        <input type="password" class="form-control"  name="pw_senha_aluno" placeholder="Senha..." #pw_senha_aluno = "ngModel" [(ngModel)]="aluno.pw_senha_aluno">
       </div>
-    </div>
-    <div  class="col-md-12" style="padding-bottom: 10px;">
-      <div class="input-group">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" disabled type="button">
-            <mat-icon style="vertical-align: middle;">https</mat-icon>
-          </button>
+      <div class="col-md-12" style="padding-bottom: 10px;">
+        <div class="input-group">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" disabled type="button">
+              <mat-icon style="vertical-align: middle;">https</mat-icon>
+            </button>
+          </div>
+          <input type="password" class="form-control" name="pw_senha_prof2" placeholder="Repita a senha..." #pw_senha_prof2= "ngModel" [(ngModel)]="password" required>
         </div>
-        <input type="password" class="form-control"  name="pw_senha_aluno2" placeholder="Repita a senha..." [(ngModel)]="password">
       </div>
     </div>
   </div>
@@ -151,5 +136,7 @@
     <button type="button" class="btn btn-outline-dark" (click)="c(true)">Ok</button>
   </div>
 </ng-template>
+
+
 
 

@@ -1,0 +1,81 @@
+.md-48 {
+  font-size: 48px;
+  cursor: pointer;
+}
+
+
+
+.open{
+  transform: translateX(15vw);
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #eee;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.content{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #eee;
+  padding: 30px;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.open-mobile{
+  transform: translateX(65vw);
+  padding: 30px;
+  width: 100vw;
+  height: 100%;
+  background: #eee;
+  transition: all 0.3s;
+  overflow: hidden;
+  position:fixed;
+  z-index: 100;
+  top: inherit;
+}
+
+.content-mobile{
+  width: 100vw;
+  height: 100%;
+  background: #eee;
+  padding: 30px;
+  transition: all 0.3s;
+  overflow: hidden;
+  position:fixed;
+  z-index: 100;
+  top: inherit;
+}
+
+.menu{
+  font-size: 36px;
+  display:block;
+  vertical-align: middle;
+  margin: 0px;
+  padding:0px;
+
+}
+
+.menu-button{
+  z-index:10;
+  padding-left: 0px;
+  margin-left: 0px;
+
+}
+
+.data-area{
+  padding-top: 10px;
+  background: #eee;
+  height: 92%;
+  overflow-x: hidden;
+  overflow-y:auto;
+}
+
+.disciplina-style{
+  margin-left: 25%;
+  margin-right: 25%;
+}

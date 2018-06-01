@@ -4,6 +4,8 @@ package com.tcc.professor.mapper;
 import com.tcc.professor.DTO.ProfessorDTO;
 import com.tcc.professor.database.Professor;
 
+import java.text.SimpleDateFormat;
+
 public class ProfessorMapper {
     public static Professor DTOtoEntity(ProfessorDTO p){
         Professor pro = new Professor();
@@ -22,7 +24,8 @@ public class ProfessorMapper {
 
     public static ProfessorDTO EntitytoDTO(Professor p){
         ProfessorDTO pro = new ProfessorDTO();
-        pro.setDt_data_nasc(null);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        pro.setDt_data_nasc(sdf.format(p.getDataN()));
         pro.setdc_cpf(p.getCpf());
         pro.setCo_email(p.getEmail());
         pro.setSt_endereco(p.getEndereco());
