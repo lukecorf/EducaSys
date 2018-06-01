@@ -27,7 +27,11 @@ public class AlunoMapper {
     public static AlunoDTO EntitytoDTO(Aluno a){
         AlunoDTO alu = new AlunoDTO();
         alu.setDc_cpf(a.getCpf());
-        alu.setDt_data_nasc(null);
+        if(a.getDataN().getDayOfMonth()<= 9) {
+            alu.setDt_data_nasc(a.getDataN().getYear() + "-" + a.getDataN().getMonth().getValue() + "-0" + a.getDataN().getDayOfMonth());
+        }else {
+            alu.setDt_data_nasc(a.getDataN().getYear() + "-" + a.getDataN().getMonth().getValue() + "-" + a.getDataN().getDayOfMonth());
+        }
         alu.setCo_email(a.getEmail());
         alu.setSt_endereco(a.getEndereco());
         alu.setId_aluno(a.getId());

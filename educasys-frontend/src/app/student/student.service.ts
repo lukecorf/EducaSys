@@ -1,9 +1,10 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Aluno, AtividadeEntrega, DisciplinaA} from "./student.model";
+import { AtividadeEntrega, DisciplinaA} from "./student.model";
 import {Observable} from "rxjs/Observable";
 import {Disciplina} from "./home-a/models/materia.model";
 import {Arquivo, Atividade} from "../teacher/teacher.module";
+import {Aluno} from "../secretary/aluno-s/aluno-s.model";
 
 @Injectable()
 export class StudentService{
@@ -15,6 +16,7 @@ export class StudentService{
   private urlGArquivos= 'http://localhost:8888/getArquivos';
   private urlGFaltas= 'http://localhost:8888/getFaltas';
   private urlSAtividade= 'http://localhost:8888/setAtividade';
+  private urlUAluno= 'http://localhost:8888/updateAluno';
   constructor(private  http: HttpClient){}
 
   getAlunoByCode(id: string):Observable<Aluno>{
@@ -43,6 +45,10 @@ export class StudentService{
 
   getFaltasByDisciplina(id:number, ida:number):Observable<number>{
     return this.http.get<number>(this.urlGFaltas+'/'+id+'/'+ida);
+  }
+
+  updateAluno(aluno: Aluno):Observable<Boolean>{
+    return this.http.put<Boolean>(this.urlUAluno,aluno);
   }
 
 }

@@ -1,64 +1,155 @@
 <menua-component></menua-component>
 <div [ngClass]="open ? opened : closed">
-  <div class="row menu">
-    <div class="col-md-1 menu-button">
-      <mat-icon class="md-48" (click)="changeOpt()"	>reorder</mat-icon>
-    </div>
+  <div class="row menu-area">
+    <mat-icon class="menu-icon" (click)="changeOpt()"	>reorder</mat-icon>
   </div>
-
-  <div class="row perfil-data">
-      <div class="col-md-4 info-perfil">
-        <img src="http://www.rafacademy.com/wp-content/uploads/2017/03/user-default.png" class="user-img" alt="">
-        <br>
-        <hr>
-        <h1>Lucas Alves de Faria</h1>
-        <h2>Aluno - 0011916</h2>
-        <br>
-        <h3>CPF: 192.168.122-55</h3>
-        <br>
-        <hr>
-        <h3>Mãe: Edilamar Maria</h3>
-        <h3>Pai: Rafael José</h3>
-      </div>
-      <div class="col-md-8 data-perfil">
-        <div class="edit-perfil">
-            <h2>Endereço</h2>
-            <br>
+  <div class="col-md-12 data-area">
+    <h2 style="text-align: center;">Perfil</h2>
+    <div class="row data">
+      <div class="col-md-12">
+        <div class="profile-data">
+          <h3>Informações Pessoais</h3>
+          <form  #editForm="ngForm">
             <div class="row">
-              <div class="col-md-6">
-                <label for="cep">CEP</label>
-                <input type="text" class="form-control" style="width: 100%" id="cep" aria-describedby="emailHelp" placeholder="Digite seu CEP...">
+              <div class="col-md-8" style="padding-bottom: 10px;">
+                <div class="input-group">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" disabled type="button">
+                      <mat-icon style="vertical-align: middle;">account_circle</mat-icon>
+                    </button>
+                  </div>
+                  <input class="form-control" [disabled]="true" name="st_nome_aluno" #st_nome_aluno = "ngModel" [(ngModel)]="aluno.st_nome_aluno" placeholder="Digite o nome..." required>
+                </div>
               </div>
-              <div class="col-md-6">
-                <label for="cidade">Cidade</label>
-                <input type="text" class="form-control" style="width: 100%" id="cidade" aria-describedby="emailHelp" placeholder="Digite sua cidade...">
+              <div class="col-md-4" style="padding-bottom: 10px;">
+                <div class="input-group">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" disabled type="button">
+                      <mat-icon style="vertical-align: middle;">date_range</mat-icon>
+                    </button>
+                  </div>
+                  <input class="form-control" [disabled]="true" name="dt_data_nasc" name="dt_data_nasc" #dt_data_nasc = "ngModel" [(ngModel)]="aluno.dt_data_nasc" type="date" placeholder="dd/mm/aaaa" required>
+                </div>
+              </div>
+              <div class="col-md-6" style="padding-bottom: 10px;">
+                <div class="input-group">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" disabled type="button">
+                      <mat-icon style="vertical-align: middle;">account_box</mat-icon>
+                    </button>
+                  </div>
+                  <input type="text" class="form-control" [disabled]="true" name="st_nome_pai" #st_nome_pai = "ngModel" [(ngModel)]="aluno.st_nome_pai"  placeholder="Nome do pai..." required>
+                </div>
+              </div>
+              <div class="col-md-6" style="padding-bottom: 10px;">
+                <div class="input-group">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" disabled type="button">
+                      <mat-icon style="vertical-align: middle;">account_box</mat-icon>
+                    </button>
+                  </div>
+                  <input type="text" class="form-control" [disabled]="true" name="st_nome_mae" #st_nome_mae = "ngModel" [(ngModel)]="aluno.st_nome_mae"  placeholder="Nome da mãe..." required>
+                </div>
+              </div>
+              <div class="col-md-6" style="padding-bottom: 10px;">
+                <div class="input-group">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" disabled type="button">
+                      <mat-icon style="vertical-align: middle;">account_box</mat-icon>
+                    </button>
+                  </div>
+                  <input type="text" class="form-control" [disabled]="true" name="dc_rg" #dc_rg = "ngModel" [(ngModel)]="aluno.dc_rg" mask="SS-99.999.999" placeholder="RG...">
+                </div>
+              </div>
+              <div class="col-md-6" style="padding-bottom: 10px;">
+                <div class="input-group">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" disabled type="button">
+                      <mat-icon style="vertical-align: middle;">account_box</mat-icon>
+                    </button>
+                  </div>
+                  <input type="text" class="form-control" [disabled]="true" name="dc_cpf" #dc_cpf = "ngModel" [(ngModel)]="aluno.dc_cpf" mask="999.999.999-99" placeholder="CPF..." required>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <hr>
               </div>
             </div>
-            <label for="rua">Rua</label>
-            <input type="text" class="form-control" id="rua" aria-describedby="emailHelp" placeholder="Digite sua rua e numero...">
-            <label for="bairro">Bairro</label>
-            <input type="text" class="form-control" id="bairro" aria-describedby="emailHelp" placeholder="Digite seu bairro...">
-          <hr>
-            <h2>Contato</h2>
-            <br>
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Digite seu email...">
+            <h3>Imagem de Perfil</h3>
+            <div class="col-md-12">
+              <input type="file" id="imagem-input" (change)="selectFile($event)"/>
+            </div>
+            <div class="col-md-12" style="margin: 0; padding: 0;">
+              <hr>
+            </div>
+            <h3>Contato</h3>
             <div class="row">
-              <div class="col-md-6">
-                <label for="tel1">Telefone 1</label>
-                <input type="text" class="form-control" style="width: 100%" id="tel1" aria-describedby="emailHelp" placeholder="Digite seu primeiro numero...">
+              <div class="col-md-6" style="padding-bottom: 10px;">
+                <div class="input-group">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" disabled type="button">
+                      <mat-icon style="vertical-align: middle;">call</mat-icon>
+                    </button>
+                  </div>
+                  <input type="text" class="form-control" [disabled]="disabledEdit" name="co_telefone" #co_telefone = "ngModel" [(ngModel)]="aluno.co_telefone"  mask="(99) 9999-9999" placeholder="Telefone..." required >
+                </div>
               </div>
-              <div class="col-md-6">
-                <label for="tel2">Telefone 2</label>
-                <input type="text" class="form-control" style="width: 100%" id="tel2" aria-describedby="emailHelp" placeholder="Digite seu segundo numero...">
+              <div class="col-md-6" style="padding-bottom: 10px;">
+                <div class="input-group">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" disabled type="button">
+                      <mat-icon style="vertical-align: middle;">chat</mat-icon>
+                    </button>
+                  </div>
+                  <input type="email" class="form-control" [disabled]="disabledEdit" name="co_email" #co_email = "ngModel" [(ngModel)]="aluno.co_email"  placeholder="Email..." id="email" required>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <label for="st_endereco">Endereço:</label>
+                <textarea class="form-control" [disabled]="disabledEdit" name="st_endereco" #st_endereco = "ngModel" [(ngModel)]="aluno.st_endereco"  rows="5" required></textarea>
+              </div>
+              <div class="col-md-12" style="margin-top: 15px;">
+                <button *ngIf="!disabledEdit" type="button" class="btn btn-outline-dark"  (click)="openc(content)">Alterar Senha</button>
+                <button type="button" class="btn btn-outline-success align-bottom float-right" (click)="enviaArquivo()">Salvar</button>
               </div>
             </div>
-            <br>
-            <br>
-            <button type="submit" class="btn btn-primary btn-block btn-lg btn-style" style="float: right; width: 30%" >Salvar</button>
-
+          </form>
         </div>
       </div>
-
+    </div>
   </div>
 </div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Enviar - Trabalho 1</h4>
+  </div>
+  <div class="modal-body">
+    <div  class="col-md-12" style="padding-bottom: 10px;">
+      <div class="input-group">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" disabled type="button">
+            <mat-icon style="vertical-align: middle;">https</mat-icon>
+          </button>
+        </div>
+        <input type="password" class="form-control"  name="pw_senha_aluno" placeholder="Senha..." #pw_senha_aluno = "ngModel" [(ngModel)]="aluno.pw_senha_aluno">
+      </div>
+    </div>
+    <div  class="col-md-12" style="padding-bottom: 10px;">
+      <div class="input-group">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" disabled type="button">
+            <mat-icon style="vertical-align: middle;">https</mat-icon>
+          </button>
+        </div>
+        <input type="password" class="form-control"  name="pw_senha_aluno2" placeholder="Repita a senha..." [(ngModel)]="password">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c(false)">Cancelar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="c(true)">Ok</button>
+  </div>
+</ng-template>
+
+

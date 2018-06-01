@@ -1,6 +1,7 @@
 package com.tcc.aluno.providers;
 
 import com.google.gson.Gson;
+import com.tcc.aluno.DTO.AlunoDTO;
 import com.tcc.aluno.DTO.DisciplinaADTO;
 import com.tcc.aluno.DTO.EntregaDTO;
 import com.tcc.aluno.Repositories.*;
@@ -14,9 +15,14 @@ import com.tcc.aluno.mapper.AtividadeMapper;
 import com.tcc.aluno.mapper.DisciplinaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /*======================================================================================================================
 ||Classe responsavel por receber as requisições referentes ao modulo de Aluno. Estas requisições são tratadas e seus  ||
@@ -44,6 +50,9 @@ public class AlunoProvider {
 
     @Autowired
     ArquivoRepository arquivoRepository;
+
+    @Autowired
+    LoginRepository loginRepository;
 
     //==Disciplinas=====================================================================================================
 
@@ -107,6 +116,21 @@ public class AlunoProvider {
     @GetMapping(value ="/getAlunoByCode/{id}")
     public @ResponseBody String getAlunoByCode(@PathVariable String id){
         return gson.toJson(AlunoMapper.EntitytoDTO(alunoRepository.getAlunoByCode(id)));
+    }
+
+    @PutMapping(path="/updateAluno",  consumes = "application/json", produces = "application/json")
+    public @ResponseBody String updateProfessor(@RequestBody AlunoDTO alunoDTO) throws ParseException {
+
+        if(alunoDTO.getUrl_img_aluno() == "") {
+            alunoRepository.updateAlunoNoAll(alunoDTO.getCo_telefone(), alunoDTO.getSt_endereco(), alunoDTO.getCo_email(), alunoDTO.getId_aluno());
+        }else {
+            alunoRepository.updateAluno(alunoDTO.getCo_telefone(), alunoDTO.getSt_endereco(), alunoDTO.getCo_email(), alunoDTO.getUrl_img_aluno(), alunoDTO.getId_aluno());
+        }
+
+        if(alunoDTO.getPw_senha_aluno() != ""){
+            loginRepository.updateLogin(alunoDTO.getPw_senha_aluno(),alunoDTO.getDc_cpf());
+        }
+        return gson.toJson(true);
     }
 
     @GetMapping("/getArquivos/{id}")
