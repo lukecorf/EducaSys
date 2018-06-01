@@ -116,7 +116,9 @@ export class DisciplinaAComponent implements OnInit {
   }
 
   efetuarUpload(upload: Upload){
-    firebase.initializeApp(FirebaseConfig);
+    if (firebase.apps.length === 0) {
+      firebase.initializeApp(FirebaseConfig);
+    }
     let storageRef = firebase.storage().ref();
     let uploadTask = storageRef.child(`${'/files'}/${upload.file.name}`).put(upload.file);
 
